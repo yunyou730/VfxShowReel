@@ -18,10 +18,8 @@ float3 GetWorldPosWithScreenUVAndDepth(float4 screenPos,float linear01Depth)
 void MyFunction_float(float4 screenPos,float linear01Depth,float3 fragWorldPos,out float3 Out)
 {
     float3 depthWorldPos = GetWorldPosWithScreenUVAndDepth(screenPos,linear01Depth);
-
-
     float3 depthModelPos = mul(UNITY_MATRIX_I_M,float4(depthWorldPos,1)).xyz;
-
+    //float dis = distance(depthWorldPos,depthModelPos);
 
     Out = float3(1,1,1);
     if(abs(depthModelPos.x) <= 0.5 && abs(depthModelPos.y) <= 0.5 && abs(depthModelPos.z) <= 0.5)
