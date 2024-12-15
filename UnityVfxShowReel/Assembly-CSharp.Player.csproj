@@ -44,6 +44,7 @@
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Common\CameraController.cs" />
      <None Include="Assets\_CameraDepthDecal\CameraDepthDecalShader.hlsl" />
+     <None Include="Assets\_DepthIntersection\IntersectorShaderFunc.hlsl" />
      <Reference Include="UnityEngine.AIModule">
      <HintPath>D:\micode\tools\WindowsEditor\WindowsEditor\x64\Release\Data\Managed\UnityEngine\UnityEngine.AIModule.dll</HintPath>
      </Reference>

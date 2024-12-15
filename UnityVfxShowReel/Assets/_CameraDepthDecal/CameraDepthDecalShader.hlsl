@@ -1,5 +1,5 @@
-#ifndef DEPTH_INTERSECTION_SHADER_INCLUDED
-#define DEPTH_INTERSECTION_SHADER_INCLUDED
+#ifndef DEPTH_DECAL_SHADER_INCLUDED
+#define DEPTH_DECAL_SHADER_INCLUDED
 
 
 float3 GetWorldPosWithScreenUVAndDepth(float4 screenPos,float linear01Depth)
@@ -32,4 +32,4 @@ void MyFunction_float(float4 screenPos,float linear01Depth,float3 fragWorldPos,o
     }
 }
 
-#endif //DEPTH_INTERSECTION_SHADER_INCLUDED
+#endif
