@@ -49,13 +49,14 @@ Material:
     m_Floats:
     - _DissolvePower: 1
     - _NoiseIntensity: 4
+    - _NotHDRColorFactor: 16.72
     - _QueueControl: 0
     - _QueueOffset: 0
     - _TwirlSpeed: 0.15
     - _TwirlStrength: 19.23
     m_Colors:
     - _Color: {r: 0.9372549, g: 0.29917955, b: 1, a: 1}
-    - _Maincolor: {r: 10.956569, g: 6.0862746, b: 11.984314, a: 1}
+    - _Maincolor: {r: 0.6989827, g: 0.3803921, b: 0.7490196, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2461855304074669717
