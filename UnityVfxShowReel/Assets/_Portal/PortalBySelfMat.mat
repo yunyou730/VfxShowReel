@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2236448518908037937
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 9
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PortalMat
-  m_Shader: {fileID: -6465566751694194690, guid: ecaef3cca460a1846a6420a7a27dc756,
+  m_Name: PortalBySelfMat
+  m_Shader: {fileID: -6465566751694194690, guid: 51e0c4c1ee0b84c48ba51f307e0b11ab,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,7 +25,11 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _MaskTex:
+    - _SampleTexture2D_3087aa0b83d74238ab3b1f3a88306c50_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 91f0ca6f7236c984db543a192be3a47b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_e14a462a76144947a45bc3b57afc2a09_Texture_1_Texture2D:
         m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -56,13 +47,27 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveAmount: 1
-    - _NoiseIntensity: 6.67
+    - _DissolvePower: 1
+    - _NoiseIntensity: 4
     - _QueueControl: 0
     - _QueueOffset: 0
     - _TwirlSpeed: 0.15
-    - _TwirlStrength: 10
+    - _TwirlStrength: 19.23
     m_Colors:
-    - _MainColor: {r: 14.787692, g: 7.4635987, b: 13.768555, a: 1}
+    - _Color: {r: 0.9372549, g: 0.29917955, b: 1, a: 1}
+    - _Maincolor: {r: 10.956569, g: 6.0862746, b: 11.984314, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &2461855304074669717
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 9

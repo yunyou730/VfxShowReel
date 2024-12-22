@@ -69,6 +69,7 @@
     <None Include="Library\PackageCache\com.unity.visualscripting\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.ide.visualstudio\ValidationExceptions.json" />
     <None Include="Assets\_DepthIntersection\IntersectorShaderFunc.hlsl" />
+    <None Include="Assets\_Portal\MyTwirl.hlsl" />
     <None Include="Library\PackageCache\com.unity.collab-proxy\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.ai.navigation\package.json" />
     <None Include="Library\PackageCache\com.unity.ide.vscode\ValidationExceptions.json" />
