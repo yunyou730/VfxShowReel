@@ -84,12 +84,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BaseStrength: 0.5
+    - _BaseStrength: 3
     - _BaseTiling: 14.3
-    - _Blend_Amount: 8
+    - _Blend_Amount: 4.72
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RedStrength: 1.34
+    - _RedStrength: 2.27
     - _RedTiling: 20
     m_Colors: []
   m_BuildTextureStacks: []
