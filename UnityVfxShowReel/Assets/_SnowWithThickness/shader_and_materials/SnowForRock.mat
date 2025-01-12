@@ -38,8 +38,24 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _SampleTexture2D_13b0d93ef387420686d282eb7de14229_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 7d9e612f373db45ad94bff7b95918978, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_24ec9f021517493b935c28207275cac9_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 40cd3b3b17f44584bae825063c5db4a1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_397f00203ecf4128888c23fd88cac228_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2f5ec1717566ef940bb1135ce08d3b9b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_5e81bc651a43499190d66a6f94a26be8_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: 4abe14867e984394ab3036b7058b6a6d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Snow_Bump:
+        m_Texture: {fileID: 2800000, guid: b732a35a785294cdb9d18b9857f59d6f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -56,11 +72,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _GroundHeightFactor: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SnowPower: 3.39
-    - _SnowRangeFactor: -0.45
+    - _SnowHeightFactor: 0.07
+    - _SnowPower: 2
+    - _SnowRangeFactor: -0.06
+    - _SnowRoughness: 0.4
     m_Colors:
     - _SnowColor: {r: 1, g: 1, b: 1, a: 0}
+    - _SnowUVTiling: {r: 2, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
