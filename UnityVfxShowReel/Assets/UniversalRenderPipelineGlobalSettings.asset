@@ -56,7 +56,17 @@ MonoBehaviour:
       - rid: 1950522986890264596
       - rid: 1950522986890264597
     m_RuntimeSettings:
-      m_List: []
+      m_List:
+      - rid: 1950522986890264578
+      - rid: 1950522986890264579
+      - rid: 1950522986890264580
+      - rid: 1950522986890264581
+      - rid: 1950522986890264582
+      - rid: 1950522986890264584
+      - rid: 1950522986890264585
+      - rid: 1950522986890264589
+      - rid: 1950522986890264593
+      - rid: 1950522986890264596
   m_AssetVersion: 8
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
@@ -87,6 +97,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 1950522986890264576
       type: {class: UniversalRenderPipelineEditorAssets, ns: UnityEngine.Rendering.Universal,
         asm: Unity.RenderPipelines.Universal.Runtime}
@@ -106,8 +118,6 @@ MonoBehaviour:
         m_DefaultTerrainMaterial: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e,
           type: 2}
         m_DefaultDecalMaterial: {fileID: 2100000, guid: 31d0dcc6f2dd4e4408d18036a2c93862,
-          type: 2}
-        m_DefaultSpriteMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40,
           type: 2}
     - rid: 1950522986890264578
       type: {class: UniversalRenderPipelineRuntimeTextures, ns: UnityEngine.Rendering.Universal,
@@ -196,8 +206,6 @@ MonoBehaviour:
         m_CameraMotionVector: {fileID: 4800000, guid: c56b7e0d4c7cb484e959caeeedae9bbf,
           type: 3}
         m_StencilDeferredPS: {fileID: 4800000, guid: e9155b26e1bc55942a41e518703fe304,
-          type: 3}
-        m_StencilDitherMaskSeedPS: {fileID: 4800000, guid: 8c3ee818f2efa514c889881ccb2e95a2,
           type: 3}
         m_DBufferClear: {fileID: 4800000, guid: f056d8bd2a1c7e44e9729144b4c70395,
           type: 3}
