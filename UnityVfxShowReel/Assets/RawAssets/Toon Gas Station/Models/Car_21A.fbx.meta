@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: 0956088278b889348bef01895b1c80c2
+timeCreated: 1567594187
+licenseType: Store
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Car_21A
+    100004: Car_21A_Addon
+    100006: Car_21A_Addon_Wheel_F.L
+    100008: Car_21A_Addon_Wheel_F.R
+    100010: Car_21A_Addon_Wheel_R.L
+    100012: Car_21A_Addon_Wheel_R.R
+    100014: Wheel_21A_F.L
+    100016: Wheel_21A_F.R
+    100018: Wheel_21A_M.L
+    100020: Wheel_21A_M.R
+    100022: Wheel_21A_R.L
+    100024: Wheel_21A_R.R
+    400000: //RootNode
+    400002: Car_21A
+    400004: Car_21A_Addon
+    400006: Car_21A_Addon_Wheel_F.L
+    400008: Car_21A_Addon_Wheel_F.R
+    400010: Car_21A_Addon_Wheel_R.L
+    400012: Car_21A_Addon_Wheel_R.R
+    400014: Wheel_21A_F.L
+    400016: Wheel_21A_F.R
+    400018: Wheel_21A_M.L
+    400020: Wheel_21A_M.R
+    400022: Wheel_21A_R.L
+    400024: Wheel_21A_R.R
+    2300000: Car_21A
+    2300002: Car_21A_Addon
+    2300004: Car_21A_Addon_Wheel_F.L
+    2300006: Car_21A_Addon_Wheel_F.R
+    2300008: Car_21A_Addon_Wheel_R.L
+    2300010: Car_21A_Addon_Wheel_R.R
+    2300012: Wheel_21A_F.L
+    2300014: Wheel_21A_F.R
+    2300016: Wheel_21A_M.L
+    2300018: Wheel_21A_M.R
+    2300020: Wheel_21A_R.L
+    2300022: Wheel_21A_R.R
+    3300000: Car_21A
+    3300002: Car_21A_Addon
+    3300004: Car_21A_Addon_Wheel_F.L
+    3300006: Car_21A_Addon_Wheel_F.R
+    3300008: Car_21A_Addon_Wheel_R.L
+    3300010: Car_21A_Addon_Wheel_R.R
+    3300012: Wheel_21A_F.L
+    3300014: Wheel_21A_F.R
+    3300016: Wheel_21A_M.L
+    3300018: Wheel_21A_M.R
+    3300020: Wheel_21A_R.L
+    3300022: Wheel_21A_R.R
+    4300000: Car_21A
+    4300002: Wheel_21A_M.R
+    4300004: Wheel_21A_M.L
+    4300006: Wheel_21A_R.L
+    4300008: Wheel_21A_F.R
+    4300010: Wheel_21A_F.L
+    4300012: Wheel_21A_R.R
+    4300014: Car_21A_Addon
+    4300016: Car_21A_Addon_Wheel_R.R
+    4300018: Car_21A_Addon_Wheel_R.L
+    4300020: Car_21A_Addon_Wheel_F.R
+    4300022: Car_21A_Addon_Wheel_F.L
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Models/Car_21A.fbx
+  uploadId: 358113

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0f2048f2e052b3e4bb4aa5f780a2a9ad
+timeCreated: 1567755284
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Models/Materials/Tree_6A_D.mat
+  uploadId: 358113

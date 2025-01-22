@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 28873728e197368499b83d29c018c1d8
+timeCreated: 1569690632
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Animations/Bilboard_1E.controller
+  uploadId: 358113

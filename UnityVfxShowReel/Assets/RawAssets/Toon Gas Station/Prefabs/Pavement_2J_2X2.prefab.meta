@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b3b30da2af31dfe44b078040b1ed3e5e
+timeCreated: 1570737235
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Pavement_2J_2X2.prefab
+  uploadId: 358113

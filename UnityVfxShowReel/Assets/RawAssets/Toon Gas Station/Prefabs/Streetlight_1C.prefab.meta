@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: fa1171c4c28a81e40a4541222c24d8ad
+timeCreated: 1570737489
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Streetlight_1C.prefab
+  uploadId: 358113

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: fe8b0e285ec80f6408f9ac4b0060b46a
+timeCreated: 1570735961
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Barrel_1G.prefab
+  uploadId: 358113

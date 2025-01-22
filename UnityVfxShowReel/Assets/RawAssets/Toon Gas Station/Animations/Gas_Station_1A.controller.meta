@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 212aa35ba4e1f514292b49f3cf7a69f3
+timeCreated: 1569691978
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Animations/Gas_Station_1A.controller
+  uploadId: 358113

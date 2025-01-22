@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e6ef01c18f3b9b647b9baaec4b8cb1a5
+timeCreated: 1570739499
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Road_3Y.prefab
+  uploadId: 358113

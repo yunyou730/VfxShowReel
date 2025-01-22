@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 416db31efad293d4da73c87b615cf55a
+timeCreated: 1570736902
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Car_21A.prefab
+  uploadId: 358113

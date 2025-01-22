@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b6c857a625d992540a6520f3c0549972
+timeCreated: 1570737525
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Streetsign_3E.prefab
+  uploadId: 358113

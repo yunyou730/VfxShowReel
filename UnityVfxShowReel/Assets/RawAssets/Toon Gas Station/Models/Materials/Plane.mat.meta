@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 740daccb533e61440b5d50fc9f689a10
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Models/Materials/Plane.mat
+  uploadId: 358113

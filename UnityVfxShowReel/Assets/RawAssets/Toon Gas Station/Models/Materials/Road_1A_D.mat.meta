@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0569e8dd6cfee6148bf9b517d9d5ac2b
+timeCreated: 1567633065
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Models/Materials/Road_1A_D.mat
+  uploadId: 358113

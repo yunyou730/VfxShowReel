@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ab5889db9ef32864e8078c477699cd3c
+timeCreated: 1569693610
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Models/Materials/Building_7B_D.mat
+  uploadId: 358113

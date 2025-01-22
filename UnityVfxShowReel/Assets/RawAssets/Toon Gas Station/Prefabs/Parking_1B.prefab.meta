@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 50fbd2c5a4d114b4ebd7aa2fd7d173f4
+timeCreated: 1570727329
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Parking_1B.prefab
+  uploadId: 358113

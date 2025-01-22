@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 660eac0628c5a604393da34ac5f7932c
+timeCreated: 1570739471
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Road_3X.prefab
+  uploadId: 358113

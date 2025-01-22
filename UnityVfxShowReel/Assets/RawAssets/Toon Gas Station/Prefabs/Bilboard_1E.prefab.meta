@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ea4757a70ebfed4468cd2ba937ce980a
+timeCreated: 1570736062
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Bilboard_1E.prefab
+  uploadId: 358113

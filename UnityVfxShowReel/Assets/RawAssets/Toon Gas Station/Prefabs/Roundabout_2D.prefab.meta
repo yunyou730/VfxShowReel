@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 27b08e018f6e62c468a259c642ca2b0d
+timeCreated: 1570708938
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Roundabout_2D.prefab
+  uploadId: 358113

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: bba84dffd74116f409ff2fdb22a8855d
+timeCreated: 1570728140
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Rock_Cluster_1A.prefab
+  uploadId: 358113
