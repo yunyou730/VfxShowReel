@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 14cbbc4aabee1584895f6723e09fbbec
+timeCreated: 1570727293
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Building_7B.prefab
+  uploadId: 358113

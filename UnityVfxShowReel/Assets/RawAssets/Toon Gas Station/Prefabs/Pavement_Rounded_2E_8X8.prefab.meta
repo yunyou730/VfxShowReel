@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: eb833c28482ce2f459dfdf7aa225bb1d
+timeCreated: 1570737287
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Pavement_Rounded_2E_8X8.prefab
+  uploadId: 358113

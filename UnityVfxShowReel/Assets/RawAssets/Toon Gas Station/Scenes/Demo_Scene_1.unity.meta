@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 40ef6e60490d68541971945758777f58
+timeCreated: 1567596439
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Scenes/Demo_Scene_1.unity
+  uploadId: 358113

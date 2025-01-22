@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b29492eefa7b92d44a661766cdf8b09f
+timeCreated: 1567711359
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Models/Materials/Car_6G_D.mat
+  uploadId: 358113

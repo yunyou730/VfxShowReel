@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 96136cfa509cd4742ae0aea7b9036286
+timeCreated: 1569688305
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Animations/Roundabout_2D_Idle.anim
+  uploadId: 358113

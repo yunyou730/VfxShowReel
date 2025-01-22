@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f9c0c5242bdcdca47833bef7ca7868d3
+timeCreated: 1569686617
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Animations/Gas_Station_2A_Idle.anim
+  uploadId: 358113

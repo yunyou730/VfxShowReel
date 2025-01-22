@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 89259a8f42c263445b95c40f917f798e
+timeCreated: 1570728645
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Tree_7D.prefab
+  uploadId: 358113

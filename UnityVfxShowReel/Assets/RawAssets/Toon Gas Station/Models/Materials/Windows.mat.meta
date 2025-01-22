@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f0e2c4be90e671c4e82f093806ff6784
+timeCreated: 1567633064
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Models/Materials/Windows.mat
+  uploadId: 358113

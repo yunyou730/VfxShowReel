@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2fffb52c4e6f2054ca745270091c5726
+timeCreated: 1569690632
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Animations/Bilboard_1E_Idle.anim
+  uploadId: 358113

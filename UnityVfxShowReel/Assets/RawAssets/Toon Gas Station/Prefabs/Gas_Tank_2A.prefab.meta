@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1923985024f6f81458e33b237f339aa8
+timeCreated: 1570737063
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155369
+  packageName: Toon Gas Station
+  packageVersion: 1.2
+  assetPath: Assets/Toon Gas Station/Prefabs/Gas_Tank_2A.prefab
+  uploadId: 358113
