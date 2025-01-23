@@ -25,6 +25,7 @@ Shader "Ayy/TessellationTest"
             {
                 float4 positionOS   : POSITION;
                 float3 normalOS : NORMAL;
+                float2 UV : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -32,6 +33,7 @@ Shader "Ayy/TessellationTest"
             {
                 float3 positionWS : INTERNALTESSPOS;
                 float3 normalWS : NORMAL;
+                float2 UV : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
             
@@ -46,6 +48,7 @@ Shader "Ayy/TessellationTest"
 
                 output.positionWS = posnInputs.positionWS;
                 output.normalWS = normalInputs.normalWS;
+                output.UV = input.UV;
                 
                 return output;
             }
@@ -84,15 +87,14 @@ Shader "Ayy/TessellationTest"
                 f.inside = 1;
                 return f;
             }
-
-
             
             struct Interpolators
             {
-                float3 normalWS : TEXCOORD0;
-                float3 positionWS : TEXCOORD1;
+                float2 UV : TEXCOORD0;
+                float3 normalWS : TEXCOORD3;
+                float3 positionWS : TEXCOORD4;
                 float4 positionCS : SV_POSITION;
-
+                
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
             };
@@ -118,21 +120,21 @@ Shader "Ayy/TessellationTest"
 
                 float3 positionWS = BARYCENTRIC_INTERPOLATE(positionWS);
                 float3 normalWS = BARYCENTRIC_INTERPOLATE(normalWS);
+                float2 UV = BARYCENTRIC_INTERPOLATE(UV);
 
-                
                 output.positionCS = TransformWorldToHClip(positionWS);
                 output.normalWS = normalWS;
                 output.positionWS = positionWS;
+                output.UV = UV;
                 
                 return output;
             }
             
-            half4 frag() : SV_Target
+            half4 frag(Interpolators input) : SV_Target
             {
-                return half4(1.0,0.0,0.0,1.0);
+                return half4(input.UV.x,input.UV.y,0.0,1.0);
             }
 
-            
             ENDHLSL
         }
 
