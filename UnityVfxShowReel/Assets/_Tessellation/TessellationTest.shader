@@ -1,7 +1,10 @@
 Shader "Ayy/TessellationTest"
 {
     Properties
-    { }
+    {
+        _TessEdgeFactor("Tess Edge Factor",Vector) = (1,1,1,1)
+        _TessInsideFactor("Tess Inside Factor",Float) = 1.0
+    }
     
     SubShader
     {
@@ -9,10 +12,9 @@ Shader "Ayy/TessellationTest"
 
         Pass
         {
-//            Cull Off
             HLSLPROGRAM
             
-            #pragma target 5.0
+            #pragma target 5.0  // 5.0 required for tessellation
             
             #pragma vertex vert
             #pragma hull Hull
@@ -36,6 +38,12 @@ Shader "Ayy/TessellationTest"
                 float2 UV : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
+
+            CBUFFER_START(UnityPerMaterial)
+            // Tessellation factors for Hull PatchConstantFunction 
+            float4 _TessEdgeFactor;
+            float _TessInsideFactor;
+            CBUFFER_END
             
             TessellationControlPoint vert(Attributes input)
             {
@@ -81,10 +89,10 @@ Shader "Ayy/TessellationTest"
 
                 // Calculate tessellation factors
                 TessellationFactors f;
-                f.edge[0] = 1;
-                f.edge[1] = 1;
-                f.edge[2] = 1;
-                f.inside = 1;
+                f.edge[0] = _TessEdgeFactor.x;  // 1.0 by default
+                f.edge[1] = _TessEdgeFactor.y;  // 1.0 by default
+                f.edge[2] = _TessEdgeFactor.z;  // 1.0 by default
+                f.inside = _TessInsideFactor;   // 1.0 by default
                 return f;
             }
             
