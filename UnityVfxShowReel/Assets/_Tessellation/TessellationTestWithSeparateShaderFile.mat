@@ -25,8 +25,8 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _TessInsideFactor: 5
+    - _TessInsideFactor: 8
     m_Colors:
-    - _TessEdgeFactor: {r: 5, g: 5, b: 5, a: 1}
+    - _TessEdgeFactor: {r: 3, g: 3, b: 3, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
