@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TessMat2
-  m_Shader: {fileID: 4800000, guid: 492653b8eb94f95419031b9758d885f7, type: 3}
+  m_Name: TessellationTestWithSeparateShaderFile
+  m_Shader: {fileID: 4800000, guid: 6022316451a739f468016365a453f78f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -25,8 +25,8 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _TessInsideFactor: 4
+    - _TessInsideFactor: 5
     m_Colors:
-    - _TessEdgeFactor: {r: 4, g: 4, b: 4, a: 1}
+    - _TessEdgeFactor: {r: 5, g: 5, b: 5, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
