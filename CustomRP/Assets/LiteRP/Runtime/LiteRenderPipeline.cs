@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LiteRP.FrameData;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
@@ -44,7 +45,19 @@ namespace LiteRP
 
         private bool PrepareFrameData(ScriptableRenderContext context, Camera camera)
         {
-            // @miao @todo
+            ScriptableCullingParameters cullingParameters;
+            if (!camera.TryGetCullingParameters(out cullingParameters))
+            {
+                return false;
+            }
+            
+            CullingResults cullingResults = context.Cull(ref cullingParameters);
+            
+            
+            CameraData cameraData = _contextContainer.GetOrCreate<CameraData>();
+            cameraData.camera = camera;
+            cameraData.cullingResults = cullingResults;
+            
             
             return true;
         }
@@ -96,11 +109,11 @@ namespace LiteRP
                 }
                 
                 // Culling 
-                if (!camera.TryGetCullingParameters(out var cullingParams))
-                {
-                    return;
-                }
-                CullingResults cullingResults = context.Cull(ref cullingParams);
+                // if (!camera.TryGetCullingParameters(out var cullingParams))
+                // {
+                //     return;
+                // }
+                // CullingResults cullingResults = context.Cull(ref cullingParams);
                 context.SetupCameraProperties(camera);
                 
             
