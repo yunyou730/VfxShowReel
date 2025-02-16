@@ -108,19 +108,11 @@ namespace LiteRP
                     return;
                 }
                 
-                // Culling 
-                // if (!camera.TryGetCullingParameters(out var cullingParams))
-                // {
-                //     return;
-                // }
-                // CullingResults cullingResults = context.Cull(ref cullingParams);
                 context.SetupCameraProperties(camera);
-                
             
                 // Prepare command buffer
                 CommandBuffer cmd = CommandBufferPool.Get(camera.name);
-
-
+                
                 //RenderByRendererList(camera,context, cmd, ref cullingResults);
                 RecordAndExecuteRenderGraph(context, camera, cmd);
                 
@@ -138,7 +130,8 @@ namespace LiteRP
 
             EndCameraRendering(context, camera);
         }
-
+        
+        /*
         private void RenderByRendererList(Camera camera,ScriptableRenderContext context,CommandBuffer cmd,ref CullingResults cullingResults)
         {
             
@@ -189,6 +182,7 @@ namespace LiteRP
                 }
 
         }
+        */
 
     }
 }
