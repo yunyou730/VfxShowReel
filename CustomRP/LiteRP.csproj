@@ -46,6 +46,8 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/6000.0.38f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/LiteRP/Runtime/FrameData/CameraData.cs" />
+    <Compile Include="Assets/LiteRP/Runtime/RenderGraphPasses/DrawObjectsPass.cs" />
     <Compile Include="Assets/LiteRP/Runtime/LiteRenderGraphRecorder.cs" />
     <Compile Include="Assets/LiteRP/Runtime/LiteRenderPipeline.cs" />
     <Compile Include="Assets/LiteRP/Runtime/LiteRPAsset.cs" />
