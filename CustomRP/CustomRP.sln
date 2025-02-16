@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteRP", "LiteRP.csproj", "{a7d1bb9f-99f7-f6fe-809d-42f945278c84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{33e794c6-92fe-24b6-e1bc-b8d2d8b7f712}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteRP.Editor", "LiteRP.Editor.csproj", "{c1eaefd5-6c40-a9cf-7739-c16165972762}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{a7d1bb9f-99f7-f6fe-809d-42f945278c84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{a7d1bb9f-99f7-f6fe-809d-42f945278c84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33e794c6-92fe-24b6-e1bc-b8d2d8b7f712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33e794c6-92fe-24b6-e1bc-b8d2d8b7f712}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{c1eaefd5-6c40-a9cf-7739-c16165972762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{c1eaefd5-6c40-a9cf-7739-c16165972762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,18 @@
+{
+    "name": "LiteRP.Editor",
+    "rootNamespace": "LiteRP.Editor",
+    "references": [
+        "GUID:e142b178cbb0e40bb97ceeec589f8761"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Editor"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
