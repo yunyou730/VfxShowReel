@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaCutOff: 0
+    - _AlphaCutOff: 0.392
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
