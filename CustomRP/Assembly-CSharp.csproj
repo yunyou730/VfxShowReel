@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Assets/LiteRP/Test.cs" />
     <Compile Include="Assets/Scripts/SetupLiteRP.cs" />
+    <None Include="Assets/LiteRP/Shaders/Unlit.shader" />
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Unity/Hub/Editor/6000.0.38f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

@@ -25,32 +25,43 @@ namespace LiteRP
         private void RenderCamera(ScriptableRenderContext context, Camera camera)
         {
             BeginCameraRendering(context, camera);
-            
-            // Culling 
-            ScriptableCullingParameters cullingParams;
-            if (!camera.TryGetCullingParameters(out cullingParams))
             {
-                return;
+                // Culling 
+                if (!camera.TryGetCullingParameters(out var cullingParams))
+                {
+                    return;
+                }
+                CullingResults cullingResults = context.Cull(ref cullingParams);
+                context.SetupCameraProperties(camera);
+            
+                // Prepare command buffer
+                CommandBuffer cmd = CommandBufferPool.Get(camera.name);
+            
+                // 1. Clear render target
+                cmd.ClearRenderTarget(true, true, CoreUtils.ConvertSRGBToActiveColorSpace(camera.backgroundColor));
+            
+                // 2. SortSettings,DrawingSettings,FilterSettings
+                var sortingSettings = new SortingSettings(camera);
+                var drawingSettings = new DrawingSettings(new ShaderTagId("SRPDefaultUnlit"), sortingSettings);
+                var filterSettings = new FilteringSettings(RenderQueueRange.opaque);
+            
+                // 3. Create renderer list
+                var rendererListParams = new RendererListParams(cullingResults,drawingSettings,filterSettings);
+                var rendererList = context.CreateRendererList(ref rendererListParams);
+            
+                // 4. Draw render list
+                cmd.DrawRendererList(rendererList);
+             
+                // Execute command buffer
+                context.ExecuteCommandBuffer(cmd);
+                // Release command buffer             
+                cmd.Clear();
+                CommandBufferPool.Release(cmd);
+                
+                // Context submit                                             
+                context.Submit();
             }
-            CullingResults cullingResults = context.Cull(ref cullingParams);
-            
-            // Prepare command buffer
-            CommandBuffer cmd = CommandBufferPool.Get(camera.name);
-            
-            /*
-             *  1. Clear render target
-             *  2. SortSettings,DrawingSettings,FilterSettings
-             *  3. Create render list
-             *  4. Draw render list
-             */
-            // Execute command buffer
-            context.ExecuteCommandBuffer(cmd);
-            // Release command buffer             
-            cmd.Clear();
-            CommandBufferPool.Release(cmd);
-            // Context submit                                             
-            context.Submit();
-            
+
             EndCameraRendering(context, camera);
         }
         
