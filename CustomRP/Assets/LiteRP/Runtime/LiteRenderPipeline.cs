@@ -35,16 +35,24 @@ namespace LiteRP
                 }
                 CullingResults cullingResults = context.Cull(ref cullingParams);
                 context.SetupCameraProperties(camera);
+                
+                
             
                 // Prepare command buffer
                 CommandBuffer cmd = CommandBufferPool.Get(camera.name);
+                
+                // Clear Flags & Do Clear 
+                bool clearSkybox = camera.clearFlags == CameraClearFlags.Skybox;
+                bool clearDepth = camera.clearFlags != CameraClearFlags.Nothing;
+                bool clearColor = camera.clearFlags == CameraClearFlags.Color;
             
-                // 1. Clear render target
-                cmd.ClearRenderTarget(true, true, CoreUtils.ConvertSRGBToActiveColorSpace(camera.backgroundColor));
-            
+                
+                cmd.ClearRenderTarget(clearDepth, clearColor, CoreUtils.ConvertSRGBToActiveColorSpace(camera.backgroundColor));
+
+
+
                 // 2. SortSettings,DrawingSettings,FilterSettings
                 var sortingSettings = new SortingSettings(camera);
-
                 // Drawing Opaque
                 {
                     // prepare renderer list
@@ -58,6 +66,14 @@ namespace LiteRP
                     
                     // draw 
                     cmd.DrawRendererList(rendererList);                    
+                }
+                
+
+                // Draw skybox
+                if(clearSkybox)
+                {
+                    var skyboxRendererList = context.CreateSkyboxRendererList(camera);
+                    cmd.DrawRendererList(skyboxRendererList);
                 }
                 
                 // Drawing Transparent
