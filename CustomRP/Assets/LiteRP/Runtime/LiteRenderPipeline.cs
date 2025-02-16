@@ -1,16 +1,77 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.RenderGraphModule;
 
 namespace LiteRP
 {
     public class LiteRenderPipeline : RenderPipeline
     {
         private readonly static ShaderTagId s_ShaderTagId = new ShaderTagId("SRPDefaultUnlit");
-        
+
+        private RenderGraph _renderGraph = null;
+        private LiteRenderGraphRecorder _liteRenderGraphRecorder = null;
+        private ContextContainer _contextContainer = null;      // hold frame data
+
+        public LiteRenderPipeline()
+        {
+            InitializeRenderGraph();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            CleanupRenderGraph();
+        }
+
+        private void InitializeRenderGraph()
+        {
+            _renderGraph = new RenderGraph("LiteRPRenderGraph");
+            _liteRenderGraphRecorder = new LiteRenderGraphRecorder();
+            _contextContainer = new ContextContainer();
+        }
+
+        private void CleanupRenderGraph()
+        {   
+            _contextContainer.Dispose();
+            _contextContainer = null;
+
+            _liteRenderGraphRecorder = null;
+            
+            _renderGraph.Cleanup();
+            _renderGraph = null;
+        }
+
+        private bool PrepareFrameData(ScriptableRenderContext context, Camera camera)
+        {
+            // @miao @todo
+            
+            return true;
+        }
+
+        private void RecordAndExecuteRenderGraph(ScriptableRenderContext context,Camera camera, CommandBuffer cmd)
+        {
+            RenderGraphParameters parameters = new RenderGraphParameters()
+            {
+                executionName = camera.name,
+                commandBuffer = cmd,
+                scriptableRenderContext = context,
+                currentFrameIndex = Time.frameCount,
+            };
+            
+            _renderGraph.BeginRecording(parameters);
+            {
+                // Start Recording
+                _liteRenderGraphRecorder.RecordRenderGraph(_renderGraph, _contextContainer);
+            }
+            _renderGraph.EndRecordingAndExecute();
+            
+        }
+
+
         protected override void Render(ScriptableRenderContext context, Camera[] cameras)
         {
-            // base.Render(context, cameras);
+            // do nothing
         }
         
         protected override void Render(ScriptableRenderContext context, List<Camera> cameras)
@@ -20,6 +81,7 @@ namespace LiteRP
             {
                 RenderCamera(context, camera);
             }
+            _renderGraph.EndFrame();
             EndContextRendering(context,cameras);
         }
 
@@ -28,6 +90,11 @@ namespace LiteRP
         {
             BeginCameraRendering(context, camera);
             {
+                if (!PrepareFrameData(context, camera))
+                {
+                    return;
+                }
+                
                 // Culling 
                 if (!camera.TryGetCullingParameters(out var cullingParams))
                 {
@@ -36,21 +103,40 @@ namespace LiteRP
                 CullingResults cullingResults = context.Cull(ref cullingParams);
                 context.SetupCameraProperties(camera);
                 
-                
             
                 // Prepare command buffer
                 CommandBuffer cmd = CommandBufferPool.Get(camera.name);
+
+
+                //RenderByRendererList(camera,context, cmd, ref cullingResults);
+                RecordAndExecuteRenderGraph(context, camera, cmd);
                 
+
+                // Execute command buffer
+                context.ExecuteCommandBuffer(cmd);
+                
+                // Release command buffer             
+                cmd.Clear();
+                CommandBufferPool.Release(cmd);
+                
+                // Context submit                                             
+                context.Submit();
+            }
+
+            EndCameraRendering(context, camera);
+        }
+
+        private void RenderByRendererList(Camera camera,ScriptableRenderContext context,CommandBuffer cmd,ref CullingResults cullingResults)
+        {
+            
                 // Clear Flags & Do Clear 
                 bool clearSkybox = camera.clearFlags == CameraClearFlags.Skybox;
                 bool clearDepth = camera.clearFlags != CameraClearFlags.Nothing;
                 bool clearColor = camera.clearFlags == CameraClearFlags.Color;
             
-                
+            
                 cmd.ClearRenderTarget(clearDepth, clearColor, CoreUtils.ConvertSRGBToActiveColorSpace(camera.backgroundColor));
-
-
-
+                
                 // 2. SortSettings,DrawingSettings,FilterSettings
                 var sortingSettings = new SortingSettings(camera);
                 // Drawing Opaque
@@ -89,18 +175,7 @@ namespace LiteRP
                     cmd.DrawRendererList(rendererList);               
                 }
 
-                // Execute command buffer
-                context.ExecuteCommandBuffer(cmd);
-                // Release command buffer             
-                cmd.Clear();
-                CommandBufferPool.Release(cmd);
-                
-                // Context submit                                             
-                context.Submit();
-            }
-
-            EndCameraRendering(context, camera);
         }
-        
+
     }
 }
