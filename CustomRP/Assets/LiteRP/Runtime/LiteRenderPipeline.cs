@@ -6,6 +6,8 @@ namespace LiteRP
 {
     public class LiteRenderPipeline : RenderPipeline
     {
+        private readonly static ShaderTagId s_ShaderTagId = new ShaderTagId("SRPDefaultUnlit");
+        
         protected override void Render(ScriptableRenderContext context, Camera[] cameras)
         {
             // base.Render(context, cameras);
@@ -42,16 +44,35 @@ namespace LiteRP
             
                 // 2. SortSettings,DrawingSettings,FilterSettings
                 var sortingSettings = new SortingSettings(camera);
-                var drawingSettings = new DrawingSettings(new ShaderTagId("SRPDefaultUnlit"), sortingSettings);
-                var filterSettings = new FilteringSettings(RenderQueueRange.opaque);
-            
-                // 3. Create renderer list
-                var rendererListParams = new RendererListParams(cullingResults,drawingSettings,filterSettings);
-                var rendererList = context.CreateRendererList(ref rendererListParams);
-            
-                // 4. Draw render list
-                cmd.DrawRendererList(rendererList);
-             
+
+                // Drawing Opaque
+                {
+                    // prepare renderer list
+                    sortingSettings.criteria = SortingCriteria.CommonOpaque;
+                    
+                    var drawingSettings = new DrawingSettings(s_ShaderTagId, sortingSettings);
+                    var filterSettings = new FilteringSettings(RenderQueueRange.opaque);
+                    
+                    var rendererListParams = new RendererListParams(cullingResults,drawingSettings,filterSettings);
+                    var rendererList = context.CreateRendererList(ref rendererListParams);
+                    
+                    // draw 
+                    cmd.DrawRendererList(rendererList);                    
+                }
+                
+                // Drawing Transparent
+                {
+                    // prepare renderer list 
+                    sortingSettings.criteria = SortingCriteria.CommonTransparent;
+                    var drawingSettings = new DrawingSettings(s_ShaderTagId, sortingSettings);                    
+                    var filterSettings = new FilteringSettings(RenderQueueRange.transparent);
+                    var rendererListParams = new RendererListParams(cullingResults,drawingSettings,filterSettings);
+                    var rendererList = context.CreateRendererList(ref rendererListParams);
+                    
+                    // draw
+                    cmd.DrawRendererList(rendererList);               
+                }
+
                 // Execute command buffer
                 context.ExecuteCommandBuffer(cmd);
                 // Release command buffer             
