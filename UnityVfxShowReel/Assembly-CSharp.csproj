@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Assets/_RenderFeatureTest/SetupRenderPipeline.cs" />
     <Compile Include="Assets/Common/CameraController.cs" />
+    <Compile Include="Assets/_RenderFeatureTest/AyySplitScreenRenderPass.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderPass.cs" />
@@ -59,10 +60,12 @@
     <None Include="Assets/_RenderFeatureTest/AyyTestShader.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal-config/package.json" />
     <None Include="Packages/com.unity.render-pipelines.core/Shaders/CoreCopy.shader" />
+    <None Include="Assets/_RenderFeatureTest/shaders/BlitWithColor.shader" />
     <None Include="Assets/_GrassWithGeoTess/GrassWithGeoTess.shader" />
     <None Include="Packages/com.unity.render-pipelines.core/ValidationConfig.json" />
     <None Include="Packages/com.unity.render-pipelines.core/package.json" />
     <None Include="Assets/_Tessellation/TessellationWithHeightmap.shader" />
+    <None Include="Assets/_RenderFeatureTest/shaders/SplitScreen.shader" />
     <None Include="Assets/RawAssets/Toon Gas Station/ToonShading/Shaders/ToonLit.shader" />
     <None Include="Assets/_Tessellation/TessellationTest.shader" />
     <None Include="Assets/_DepthIntersection/IntersectorShaderFunc.hlsl" />
