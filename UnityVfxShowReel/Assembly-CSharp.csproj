@@ -46,26 +46,28 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/6000.0.38f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderPass.cs" />
+    <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyySplitScreenRenderPass.cs" />
+    <Compile Include="Assets/_RenderFeatureTest/Ayy2RenderFeature/Ayy2RenderPass.cs" />
     <Compile Include="Assets/_RenderFeatureTest/SetupRenderPipeline.cs" />
     <Compile Include="Assets/Common/CameraController.cs" />
-    <Compile Include="Assets/_RenderFeatureTest/AyySplitScreenRenderPass.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
-    <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature.cs" />
-    <Compile Include="Assets/_RenderFeatureTest/AyyRenderPass.cs" />
+    <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderFeature.cs" />
+    <Compile Include="Assets/_RenderFeatureTest/Ayy2RenderFeature/Ayy2RenderFeature.cs" />
     <None Include="Packages/com.unity.render-pipelines.universal/package.json" />
     <None Include="Assets/_Tessellation/TessellationTestWithSeparateShaderFile.shader" />
     <None Include="Assets/_CameraDepthDecal/CameraDepthDecalShader.hlsl" />
     <None Include="Assets/_Tessellation/SimpleTesselation.hlsl" />
     <None Include="Assets/_Tessellation/LitWithTess.shader" />
-    <None Include="Assets/_RenderFeatureTest/AyyTestShader.shader" />
+    <None Include="Assets/_RenderFeatureTest/Shaders/AyyTestShader.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal-config/package.json" />
     <None Include="Packages/com.unity.render-pipelines.core/Shaders/CoreCopy.shader" />
-    <None Include="Assets/_RenderFeatureTest/shaders/BlitWithColor.shader" />
+    <None Include="Assets/_RenderFeatureTest/Shaders/BlitWithColor.shader" />
     <None Include="Assets/_GrassWithGeoTess/GrassWithGeoTess.shader" />
     <None Include="Packages/com.unity.render-pipelines.core/ValidationConfig.json" />
     <None Include="Packages/com.unity.render-pipelines.core/package.json" />
     <None Include="Assets/_Tessellation/TessellationWithHeightmap.shader" />
-    <None Include="Assets/_RenderFeatureTest/shaders/SplitScreen.shader" />
+    <None Include="Assets/_RenderFeatureTest/Shaders/SplitScreen.shader" />
     <None Include="Assets/RawAssets/Toon Gas Station/ToonShading/Shaders/ToonLit.shader" />
     <None Include="Assets/_Tessellation/TessellationTest.shader" />
     <None Include="Assets/_DepthIntersection/IntersectorShaderFunc.hlsl" />

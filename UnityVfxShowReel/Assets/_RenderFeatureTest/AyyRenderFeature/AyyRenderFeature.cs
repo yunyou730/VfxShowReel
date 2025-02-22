@@ -33,7 +33,6 @@ internal class AyyRenderFeature : ScriptableRendererFeature
             m_RenderPass.SetTarget(renderer.cameraColorTargetHandle, m_Intensity);
             
             // @miao @todo
-            
             _splitScreenPass.ConfigureInput(ScriptableRenderPassInput.Color);
             _splitScreenPass.SetTarget(renderer.cameraColorTargetHandle);
         }
@@ -41,7 +40,10 @@ internal class AyyRenderFeature : ScriptableRendererFeature
 
     public override void Create()
     {
-        m_Material = CoreUtils.CreateEngineMaterial(m_Shader);
+        if(m_Shader != null)
+        {
+            m_Material = CoreUtils.CreateEngineMaterial(m_Shader);    
+        }
         m_RenderPass = new AyyRenderPass(m_Material);
         _splitScreenPass = new AyySplitScreenRenderPass();
     }
