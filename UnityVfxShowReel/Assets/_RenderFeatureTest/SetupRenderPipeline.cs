@@ -1,20 +1,37 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace ayy
 {
-    public class SetupRenderPipeline : MonoBehaviour
+    public class SwitchRenderPipeline : MonoBehaviour
     {
-        [SerializeField] private RenderPipelineAsset _renderPipelineAsset = null;
-     
+        private UniversalAdditionalCameraData _cameraData = null;
+        
         void Start()
         {
-            //GraphicsSettings.defaultRenderPipeline = _renderPipelineAsset;
+            _cameraData = GetComponent<UniversalAdditionalCameraData>();
         }
         
         void Update()
         {
-        
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                SwitchURPRender(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                SwitchURPRender(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                SwitchURPRender(2);
+            }
+        }
+
+        private void SwitchURPRender(int index)
+        {
+            _cameraData.SetRenderer(index);
         }
     }
 }
