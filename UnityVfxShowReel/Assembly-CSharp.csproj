@@ -49,7 +49,7 @@
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderPass.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyySplitScreenRenderPass.cs" />
     <Compile Include="Assets/_RenderFeatureTest/Ayy2RenderFeature/Ayy2RenderPass.cs" />
-    <Compile Include="Assets/_RenderFeatureTest/SetupRenderPipeline.cs" />
+    <Compile Include="Assets/_RenderFeatureTest/SwitchRenderPipeline.cs" />
     <Compile Include="Assets/Common/CameraController.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderFeature.cs" />

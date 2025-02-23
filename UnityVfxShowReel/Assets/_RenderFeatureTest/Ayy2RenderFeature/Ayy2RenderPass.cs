@@ -11,7 +11,7 @@ public class Ayy2RenderPass : ScriptableRenderPass
     {
         _mesh = mesh;
         _material = material;
-        renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
+        renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
     }
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -30,7 +30,7 @@ public class Ayy2RenderPass : ScriptableRenderPass
         cmd.Clear();
         using (new ProfilingScope(profilingSampler))
         {
-            cmd.DrawMesh(_mesh, Matrix4x4.identity, _material,0,1);
+            cmd.DrawMesh(_mesh, Matrix4x4.identity, _material,0,5);
         }
         context.ExecuteCommandBuffer(cmd);
         CommandBufferPool.Release(cmd);

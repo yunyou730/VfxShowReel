@@ -27,6 +27,10 @@ namespace ayy
             {
                 SwitchURPRender(2);
             }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                SwitchURPRender(3);
+            }            
         }
 
         private void SwitchURPRender(int index)
