@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 
 internal class AyyRenderPass : ScriptableRenderPass
 {
-    ProfilingSampler m_ProfilingSampler = new ProfilingSampler("ColorBlit");
+    ProfilingSampler m_ProfilingSampler = new ProfilingSampler("AyyRenderPass");
     Material m_Material;
     RTHandle m_CameraColorTarget;
     float m_Intensity;
