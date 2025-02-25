@@ -86,9 +86,8 @@ Shader "Ayy/LUTShader"
             
                 uv = GetUV(ceil(blueIndex),redIndex,greenIndex);
                 float4 col2 = tex2D(_LUT,uv);
-                return float4(lerp(col1,col2,frac(blueIndex)).rgb,col.a);
+                return float4(lerp(col1,col2,frac(blueIndex)).rgb,col.a);            
             }
-
 
             ENDHLSL
         }
