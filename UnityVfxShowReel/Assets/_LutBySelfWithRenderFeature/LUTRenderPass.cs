@@ -12,7 +12,7 @@ namespace ayy.rendering
         
         public LUTRenderPass(Material material)
         {
-            renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
+            renderPassEvent = RenderPassEvent.AfterRendering;
             _blitMaterial = material;
         }
 
