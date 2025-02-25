@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LUTRenderFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  _lutShader: {fileID: 4800000, guid: abb3ea086b9ff4a4e81263aa874500d9, type: 3}
+  _lutMaterial: {fileID: 2100000, guid: 72310cfd90753324aa75dfdb54de5d45, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

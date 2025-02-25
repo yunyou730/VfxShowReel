@@ -7,12 +7,10 @@ namespace ayy.rendering
     public class LUTRenderFeature : ScriptableRendererFeature
     {
         private LUTRenderPass _lutPass = null;
-        [SerializeField] private Shader _lutShader = null;
-        private Material _lutMaterial = null;
+        [SerializeField] private Material _lutMaterial = null;
         
         public override void Create()
         {
-            _lutMaterial = new Material(_lutShader);
             _lutPass = new LUTRenderPass(_lutMaterial);
         }
 
@@ -30,11 +28,10 @@ namespace ayy.rendering
             renderer.EnqueuePass(_lutPass);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            CoreUtils.Destroy(_lutMaterial);
-        }
+        // protected override void Dispose(bool disposing)
+        // {
+        //     base.Dispose(disposing);
+        // }
     }
 }
 
