@@ -50,6 +50,7 @@
     <Compile Include="Assets\_RenderFeatureTest\AyyRenderFeature\AyySplitScreenRenderPass.cs" />
     <Compile Include="Assets\_RenderFeatureTest\Ayy2RenderFeature\Ayy2RenderPass.cs" />
     <Compile Include="Assets\_LutBySelfWithRenderFeature\LUTRenderPass.cs" />
+    <Compile Include="Assets\_ComputeShaderTest1\CSTest.cs" />
     <Compile Include="Assets\_RenderFeatureTest\SwitchRenderPipeline.cs" />
     <Compile Include="Assets\Common\CameraController.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
@@ -69,6 +70,7 @@
     <None Include="Packages\com.unity.render-pipelines.core\ValidationConfig.json" />
     <None Include="Packages\com.unity.render-pipelines.core\package.json" />
     <None Include="Assets\_Tessellation\TessellationWithHeightmap.shader" />
+    <None Include="Assets\_ComputeShaderTest1\CS1.compute" />
     <None Include="Assets\_RenderFeatureTest\shaders\SplitScreen.shader" />
     <None Include="Assets\RawAssets\Toon Gas Station\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\_Tessellation\TessellationTest.shader" />
