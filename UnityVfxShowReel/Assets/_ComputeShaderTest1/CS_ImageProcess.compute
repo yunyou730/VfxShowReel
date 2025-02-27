@@ -1,0 +1,31 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+Texture2D<float4> InputTex;
+
+
+float4 LinearToGamma(float4 linearColor)
+{
+    float3 gammaColor;
+    gammaColor.r = (linearColor.r <= 0.0031308) ? (12.92 * linearColor.r) : (1.055 * pow(linearColor.r, 1.0 / 2.4) - 0.055);
+    gammaColor.g = (linearColor.g <= 0.0031308) ? (12.92 * linearColor.g) : (1.055 * pow(linearColor.g, 1.0 / 2.4) - 0.055);
+    gammaColor.b = (linearColor.b <= 0.0031308) ? (12.92 * linearColor.b) : (1.055 * pow(linearColor.b, 1.0 / 2.4) - 0.055);
+    return float4(gammaColor, linearColor.a);
+}
+
+float RGBToGrayscale(float3 color)
+{
+    return dot(color, float3(0.2126, 0.7152, 0.0722));
+}
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    float4 originColor = InputTex[id.xy];
+    originColor.rgb = RGBToGrayscale(originColor.rgb);
+    float4 gammaColor = LinearToGamma(originColor);
+    Result[id.xy].rgba = gammaColor.rgba;
+}

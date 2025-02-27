@@ -458,6 +458,8 @@ MonoBehaviour:
   _rt: {fileID: 0}
   _computeShader: {fileID: 7200000, guid: c560b5a8fb6d84443b8de320869d0df1, type: 3}
   _showImage: {fileID: 38780416}
+  _originTexture: {fileID: 2800000, guid: 95bd4218eb490b74489b73bafdc324fd, type: 3}
+  _csImageProcess: {fileID: 7200000, guid: 11c7fe64db922b046bdaef593db02650, type: 3}
 --- !u!114 &1763169133
 MonoBehaviour:
   m_ObjectHideFlags: 0
