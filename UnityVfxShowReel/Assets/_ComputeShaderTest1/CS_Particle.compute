@@ -1,0 +1,29 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+
+struct ParticleData
+{
+    float3 pos;
+    float4 color;
+};
+
+RWStructuredBuffer<ParticleData> ParticlesBuffer;
+float Time;
+
+[numthreads(10,10,10)]
+void CSMain (uint3 id : SV_DispatchThreadID,
+            uint3 gid: SV_GroupID,
+            uint index : SV_GroupIndex)
+{\
+    int pindex = gid.x * 1000 + index;
+    
+    float x = sin(index);
+    float y = cos(index * 1.2f);
+    float3 forward = float3(x,y,-sqrt(1 - x*x - y*y));
+    
+    ParticlesBuffer[pindex].color = float4(forward.x,forward.y,cos(index) * 0.5f + 0.5,1.0);
+    if (Time > gid.x)
+        ParticlesBuffer[pindex].pos += forward * 0.005f;
+}
+    

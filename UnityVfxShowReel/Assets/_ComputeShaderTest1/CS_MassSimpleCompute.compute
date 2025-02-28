@@ -4,7 +4,6 @@
 RWStructuredBuffer<float> inputBuffer;
 RWStructuredBuffer<float> outputBuffer;
 
-
 [numthreads(64,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
