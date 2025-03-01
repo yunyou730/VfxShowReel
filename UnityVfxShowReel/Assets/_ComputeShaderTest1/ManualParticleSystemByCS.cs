@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -26,10 +27,6 @@ namespace ayy
             _buffer.SetData(data);
             
             _particleSystem = GetComponent<ParticleSystem>();
-
-            // var customData = _particleSystem.customData;
-            // customData.enabled = true;
-            // _particleSystem.main.simulationSpace = ParticleSystemSimulationSpace.World;
             
         }
 
@@ -53,9 +50,8 @@ namespace ayy
             _csParticle.SetBuffer(kernel, Shader.PropertyToID("ParticlesBuffer"), _buffer);
             _csParticle.SetFloat(Shader.PropertyToID("Time"), Time.time);
             _csParticle.Dispatch(kernel, Mathf.CeilToInt(_particleCount/1000f),1, 1);
-            
-            
         }
+        
     }
     
 }

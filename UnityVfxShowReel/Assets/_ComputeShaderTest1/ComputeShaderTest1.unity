@@ -5196,6 +5196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particleCount: 1000
+  _csParticle: {fileID: 7200000, guid: 9eee72b9bd3a79740b251df530d84e11, type: 3}
 --- !u!1 &1763169128
 GameObject:
   m_ObjectHideFlags: 0
