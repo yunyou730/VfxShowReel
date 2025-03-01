@@ -52,12 +52,12 @@ Shader "Ayy/GPUParticlesSample1"
                 PS_INPUT output = (PS_INPUT)0;
 
                 // Color
-                //float speed = length(Particles[instance_id].velocity);
-                //float lerpValue = clamp(speed / _HighSpeedValue, 0.0f, 1.0f);
-                //o.color = lerp(_ColorLow, _ColorHigh, lerpValue);
+                float speed = length(Particles[instanceId].velocity);
+                float lerpValue = clamp(speed / _HighSpeedValue, 0.0f, 1.0f);
+                output.color = lerp(_ColorLow, _ColorHigh, lerpValue);
 
                 // @miao @todo
-                output.color = float4(1.0,0.0,0.0,1.0);
+                //output.color = float4(1.0,0.0,0.0,1.0);
                 
                 // Position
                 //output.position = UnityObjectToClipPos(float4(Particles[instanceId].position, 1.0f));                

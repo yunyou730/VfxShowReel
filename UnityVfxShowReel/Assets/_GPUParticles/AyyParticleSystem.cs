@@ -79,7 +79,7 @@ namespace ayy
             var v = Camera.main.ScreenToWorldPoint(mp);
             _mousePos[0] = v.x;
             _mousePos[1] = v.y; 
-            Debug.Log("mouse pos:" + _mousePos[0] + ", " + _mousePos[1] + " mp:" + mp);
+            //Debug.Log("mouse pos:" + _mousePos[0] + ", " + _mousePos[1] + " mp:" + mp);
         }        
 
         void OnDestroy()
