@@ -10,14 +10,12 @@ Shader "Ayy/GPUParticlesSample1"
 
     SubShader
     {
-        //Tags {"Queue" = "Transparent"}
-        
         Pass
         {
             Blend SrcAlpha OneMinusSrcAlpha
 
             CGPROGRAM
-            #pragma target 5.0
+            //#pragma target 5.0
 
             #pragma vertex vert
             #pragma fragment frag
@@ -40,7 +38,7 @@ Shader "Ayy/GPUParticlesSample1"
             };
 
             // Particle's data, shared with the compute shader
-            //StructuredBuffer<Particle> Particles;
+            StructuredBuffer<Particle> Particles;
 
             // Properties variables
             uniform float4 _ColorLow;
@@ -61,10 +59,10 @@ Shader "Ayy/GPUParticlesSample1"
                 output.color = float4(1.0,0.0,0.0,1.0);
                 
                 // Position
-                //o.position = UnityObjectToClipPos(float4(Particles[instance_id].position, 0.0f, 1.0f));
-                output.position = float4(0.0,0.0,0.0,1.0);
+                output.position = UnityObjectToClipPos(float4(Particles[instanceId].position, 0.0f, 1.0f));
+                //output.position = float4(0.0,0.0,0.0,1.0);
 
-                output.pointSize = 20.0;
+                output.pointSize = 1.0;
 
                 return output;
             }

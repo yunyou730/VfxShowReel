@@ -9,10 +9,7 @@ namespace ayy
 {
     public class AyyGPUParticlesRenderFeature : ScriptableRendererFeature
     {
-        [SerializeField,Range(0,1000000)] private int _particleCount = 100;
         [SerializeField] private Material _particleMaterial = null;
-        [SerializeField] private ComputeShader _computeShader = null;
-        
         AyyGPUParticlesRenderPass m_ScriptablePass;
         
         public override void Create()
@@ -23,12 +20,18 @@ namespace ayy
 
         public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
         {
-            m_ScriptablePass.SetupParams(_particleMaterial,_computeShader,_particleCount);
+            if (AyyParticleSystem.sInstance != null)
+            {
+                m_ScriptablePass.SetupParams(_particleMaterial,AyyParticleSystem.sInstance.GetParticlesBuffer());                
+            }
         }        
         
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
-            renderer.EnqueuePass(m_ScriptablePass);
+            if (AyyParticleSystem.sInstance != null)
+            {
+                renderer.EnqueuePass(m_ScriptablePass);                
+            }
         }
     }
 }

@@ -7,20 +7,20 @@ namespace ayy
 {
     class AyyGPUParticlesRenderPass : ScriptableRenderPass
     {
-        private ComputeShader _computeShader = null;
         private Material _particleMaterial = null;
-        private int _particleCount = 100;
+        
+        private ComputeBuffer _particlesBuffer = null;
 
         public AyyGPUParticlesRenderPass()
         {
             renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
         }
 
-        public void SetupParams(Material particleMaterial,ComputeShader computeShader,int particleCount)
+        public void SetupParams(Material particleMaterial,ComputeBuffer particlesBuffer)
         {
-            _computeShader = computeShader;
             _particleMaterial = particleMaterial;
-            _particleCount = particleCount;
+            _particlesBuffer = particlesBuffer;
+            //_particleMaterial.SetBuffer(Shader.PropertyToID("Particles"), _particlesBuffer);
         }
 
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
@@ -44,14 +44,14 @@ namespace ayy
             }
             
             CommandBuffer cmd = CommandBufferPool.Get("AyyGPUParticlesRenderPass");
+            cmd.Clear();
             using (new ProfilingScope(this.profilingSampler))
             {
-                //cmd.DrawProcedural(Matrix4x4.identity, _particleMaterial,0,MeshTopology.Points,1,10);
-                cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,1);
+                cmd.SetGlobalBuffer(Shader.PropertyToID("Particles"), _particlesBuffer);
+                cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,_particlesBuffer.count);
             }
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
-
         }
         
         public override void OnCameraCleanup(CommandBuffer cmd)

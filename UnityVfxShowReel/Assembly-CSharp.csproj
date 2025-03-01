@@ -55,6 +55,7 @@
     <Compile Include="Assets/_RenderFeatureTest/SwitchRenderPipeline.cs" />
     <Compile Include="Assets/_GPUParticles/AyyGPUParticlesRenderFeature.cs" />
     <Compile Include="Assets/Common/CameraController.cs" />
+    <Compile Include="Assets/_GPUParticles/AyyParticleSystem.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderFeature.cs" />
     <Compile Include="Assets/_ComputeShaderTest1/ManualParticleSystemByCS.cs" />
