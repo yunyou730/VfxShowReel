@@ -25,8 +25,8 @@ Shader "Ayy/GPUParticlesSample1"
             // Particle's data
             struct Particle
             {
-                float2 position;
-                float2 velocity;
+                float3 position;
+                float3 velocity;
             };
 
             // Pixel shader input
@@ -39,6 +39,7 @@ Shader "Ayy/GPUParticlesSample1"
 
             // Particle's data, shared with the compute shader
             StructuredBuffer<Particle> Particles;
+            float PointSize;
 
             // Properties variables
             uniform float4 _ColorLow;
@@ -59,10 +60,11 @@ Shader "Ayy/GPUParticlesSample1"
                 output.color = float4(1.0,0.0,0.0,1.0);
                 
                 // Position
-                output.position = UnityObjectToClipPos(float4(Particles[instanceId].position, 0.0f, 1.0f));
+                output.position = UnityObjectToClipPos(float4(Particles[instanceId].position, 1.0f));                
+                //output.position = UnityObjectToClipPos(float4(Particles[instanceId].position, 0.0f, 1.0f));
                 //output.position = float4(0.0,0.0,0.0,1.0);
 
-                output.pointSize = 1.0;
+                output.pointSize = PointSize;
 
                 return output;
             }

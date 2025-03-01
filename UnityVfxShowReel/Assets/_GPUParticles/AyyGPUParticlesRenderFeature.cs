@@ -20,9 +20,10 @@ namespace ayy
 
         public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
         {
-            if (AyyParticleSystem.sInstance != null)
+            var partSys = AyyParticleSystem.sInstance; 
+            if (partSys != null)
             {
-                m_ScriptablePass.SetupParams(_particleMaterial,AyyParticleSystem.sInstance.GetParticlesBuffer());                
+                m_ScriptablePass.SetupParams(_particleMaterial,partSys.GetParticlesBuffer(),partSys.GetParticleSize());                
             }
         }        
         
