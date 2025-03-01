@@ -10,8 +10,8 @@ namespace ayy
 {
     struct Particle
     {
-        public Vector3 position;
-        public Vector3 velocity;
+        public Vector2 position;
+        public Vector2 velocity;
     }
     
     public class AyyParticleSystem : MonoBehaviour
@@ -20,15 +20,25 @@ namespace ayy
         [SerializeField] private float _particleSize = 2.0f;
         private ComputeBuffer _particlesBuffer = null;
         private Particle[] _particlesData = null;
+        
+        [SerializeField] private ComputeShader _csParticleResolver = null;
+        private int _csKernelID = 0;
 
         public static AyyParticleSystem sInstance = null;
         
         Stopwatch _stopwatch = new Stopwatch();
+
+        private float[] _mousePos = new float[2];
         
         void Start()
         {
             sInstance = this;
-            
+            InitParticleBuffer();
+            _csKernelID = _csParticleResolver.FindKernel("CSMain");
+        }
+
+        private void InitParticleBuffer()
+        {
             int dataSize = Marshal.SizeOf<Particle>();
             _particlesBuffer = new ComputeBuffer(_particleCount, dataSize);
             _particlesData = new Particle[_particleCount];
@@ -37,7 +47,7 @@ namespace ayy
             for (int i = 0;i < _particleCount;i++)
             {
                 var particle = new Particle();
-                particle.position = Random.insideUnitSphere * 5.0f;
+                particle.position = Random.insideUnitCircle * 5.0f;
                 particle.velocity = Vector3.zero;
                 _particlesData[i] = particle;
             }
@@ -48,8 +58,27 @@ namespace ayy
 
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                _particlesBuffer.SetData(_particlesData);
+            }
             
+            _csParticleResolver.SetInt(Shader.PropertyToID("shouldMove"), Input.GetMouseButton(0) ? 1:0);
+            RefreshMousePosition();
+            _csParticleResolver.SetFloats(Shader.PropertyToID("mousePosition"), _mousePos);
+            _csParticleResolver.SetFloat(Shader.PropertyToID("dt"), Time.deltaTime);
+            _csParticleResolver.SetBuffer(_csKernelID, Shader.PropertyToID("Particles"), _particlesBuffer);
+            _csParticleResolver.Dispatch(_csKernelID,Mathf.CeilToInt((float)_particleCount/1024),1,1);
         }
+        
+        
+        void RefreshMousePosition()
+        {
+            var mp = Input.mousePosition;
+            var v = Camera.main.ScreenToWorldPoint(mp);
+            _mousePos[0] = v.x;
+            _mousePos[1] = v.y; 
+        }        
 
         void OnDestroy()
         {

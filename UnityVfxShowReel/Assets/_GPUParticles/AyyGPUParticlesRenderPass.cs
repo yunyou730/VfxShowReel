@@ -43,7 +43,7 @@ namespace ayy
             {
                 return;
             }
-            
+
             CommandBuffer cmd = CommandBufferPool.Get("AyyGPUParticlesRenderPass");
             cmd.Clear();
             using (new ProfilingScope(this.profilingSampler))
@@ -51,6 +51,8 @@ namespace ayy
                 cmd.SetGlobalBuffer(Shader.PropertyToID("Particles"), _particlesBuffer);
                 cmd.SetGlobalFloat(Shader.PropertyToID("PointSize"), _particlePointSize);
                 cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,_particlesBuffer.count);
+                
+                //cmd.DrawProcedural();
             }
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);

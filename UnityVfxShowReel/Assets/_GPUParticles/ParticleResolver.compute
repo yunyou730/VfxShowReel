@@ -1,0 +1,31 @@
+#pragma kernel CSMain
+
+struct Particle
+{
+    float2 position;
+    float2 velocity;
+};
+
+float dt;
+int shouldMove;
+float2 mousePosition;
+
+RWStructuredBuffer<Particle> Particles;
+
+[numthreads(1024,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    if (shouldMove > 0)
+    {
+        // 没懂
+        float2 v = float2(mousePosition.x - Particles[id.x].position.x,mousePosition.y - Particles[id.x].position.y);
+        float2 d2 = v.x * v.x + v.y * v.y;
+        Particles[id.x].velocity = Particles[id.x].velocity + 5 * (v / d2) * dt;
+    }
+    // else
+    // {
+    //     Particles[id.x].velocity = Particles[id.x].velocity - 0.2 * dt;
+    // }
+    Particles[id.x].position = Particles[id.x].position + Particles[id.x].velocity * dt;
+    
+}
