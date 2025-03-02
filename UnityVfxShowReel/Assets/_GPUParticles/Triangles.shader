@@ -46,7 +46,21 @@ Shader "Ayy/GPUTriangles"
             {
                 PS_INPUT output = (PS_INPUT)0;
                 // Color
-                output.color = float4(1.0,0.0,0.0,1.0);
+                float4 col;
+                if (vertexId % 3 == 0)
+                {
+                    col = float4(1.0,0.0,0.0,1.0);
+                }
+                else if (vertexId % 3 == 1)
+                {
+                    col = float4(0.0,1.0,0.0,1.0);
+                }
+                else if (vertexId % 3 == 2)
+                {
+                    col = float4(0.0,0.0,1.0,1.0);
+                }                
+                output.color = col;
+                
                 // Position
                 output.position = UnityObjectToClipPos(float4(CustomBufferData[vertexId].position, 1.0f));
                 return output;

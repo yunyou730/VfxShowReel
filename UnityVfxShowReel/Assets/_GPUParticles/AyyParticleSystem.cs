@@ -47,7 +47,7 @@ namespace ayy
             for (int i = 0;i < _particleCount;i++)
             {
                 var particle = new Particle();
-                particle.position = Random.insideUnitCircle * 5.0f;
+                particle.position = Random.insideUnitCircle * 10.0f;
                 particle.velocity = Vector3.zero;
                 _particlesData[i] = particle;
             }

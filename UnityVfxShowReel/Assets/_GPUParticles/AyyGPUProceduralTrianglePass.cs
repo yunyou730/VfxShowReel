@@ -31,21 +31,15 @@ namespace ayy
             {
                 // vertex 1
                 _trianglesData[i * 3] = new CustomVertexAttribute();
-                //Vector2 pos2d = Random.insideUnitSphere * 5.0f;
-                Vector2 pos2d = new Vector2(-1f,-1f) * 5.0f;
-                _trianglesData[i * 3].position = new Vector3(pos2d.x,pos2d.y,0.0f);
+                _trianglesData[i * 3].position = Random.insideUnitSphere * 5.0f;
                 
                 // vertex 2
                 _trianglesData[i * 3 + 1] = new CustomVertexAttribute();
-                //pos2d = Random.insideUnitSphere * 5.0f;
-                pos2d = new Vector2(1f,-1f) * 5.0f;
-                _trianglesData[i * 3 + 1].position = new Vector3(pos2d.x,pos2d.y,0.0f);
+                _trianglesData[i * 3 + 1].position = Random.insideUnitSphere * 5.0f;
                 
                 // vertex 3
                 _trianglesData[i * 3 + 2] = new CustomVertexAttribute();
-                //pos2d = Random.insideUnitSphere * 5.0f;
-                pos2d = new Vector2(0.0f, 1f) * 5.0f;
-                _trianglesData[i * 3 + 2].position = new Vector3(pos2d.x,pos2d.y,0.0f);
+                _trianglesData[i * 3 + 2].position = Random.insideUnitSphere * 5.0f;
             }
 
             int stride = Marshal.SizeOf<CustomVertexAttribute>() * 3;
@@ -91,7 +85,7 @@ namespace ayy
             using (new ProfilingScope(_profilingSampler))
             {
                 cmd.SetGlobalBuffer(Shader.PropertyToID("CustomBufferData"), _buffer);
-                cmd.DrawProcedural(Matrix4x4.identity,_material,0,MeshTopology.Triangles,3,_buffer.count);
+                cmd.DrawProcedural(Matrix4x4.identity,_material,0,MeshTopology.Triangles,_trianglesCount * 3,_buffer.count);
             }
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
