@@ -15,7 +15,7 @@ MonoBehaviour:
   m_Active: 1
   _particleMaterial: {fileID: 2100000, guid: fcd405e55b95848df954c2133bea041e, type: 2}
   _trianglesMaterial: {fileID: 2100000, guid: 1707828bbbd3f467288a58ef2410659f, type: 2}
-  _trianglesCount: 100
+  _trianglesCount: 3
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

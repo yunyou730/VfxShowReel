@@ -85,7 +85,7 @@ namespace ayy
             using (new ProfilingScope(_profilingSampler))
             {
                 cmd.SetGlobalBuffer(Shader.PropertyToID("CustomBufferData"), _buffer);
-                cmd.DrawProcedural(Matrix4x4.identity,_material,0,MeshTopology.Triangles,_trianglesCount * 3,_buffer.count);
+                cmd.DrawProcedural(Matrix4x4.identity,_material,0,MeshTopology.Triangles,_trianglesCount * 3,1);
             }
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
