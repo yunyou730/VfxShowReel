@@ -61,6 +61,7 @@
     <Compile Include="Assets/_ComputeShaderTest1/ManualParticleSystemByCS.cs" />
     <Compile Include="Assets/_GPUParticles/GPUParticle.cs" />
     <Compile Include="Assets/_LutBySelfWithRenderFeature/LUTRenderFeature.cs" />
+    <Compile Include="Assets/_GPUParticles/AyyGPUProceduralTrianglePass.cs" />
     <Compile Include="Assets/_RenderFeatureTest/Ayy2RenderFeature/Ayy2RenderFeature.cs" />
     <None Include="Packages/com.unity.render-pipelines.universal/package.json" />
     <None Include="Assets/_Tessellation/TessellationTestWithSeparateShaderFile.shader" />
@@ -84,6 +85,7 @@
     <None Include="Assets/_Tessellation/TessellationTest.shader" />
     <None Include="Assets/_DepthIntersection/IntersectorShaderFunc.hlsl" />
     <None Include="Assets/RawAssets/Toon Gas Station/ToonShading/Shaders/ToonLitOutline.shader" />
+    <None Include="Assets/_GPUParticles/Triangles.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal/ValidationExceptions.json" />
     <None Include="Assets/_GPUParticles/ParticleResolver.compute" />
     <None Include="Assets/_LutBySelfWithRenderFeature/LUTShader.shader" />

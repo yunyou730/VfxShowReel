@@ -10,12 +10,16 @@ namespace ayy
     public class AyyGPUParticlesRenderFeature : ScriptableRendererFeature
     {
         [SerializeField] private Material _particleMaterial = null;
-        AyyGPUParticlesRenderPass m_ScriptablePass;
+        [SerializeField] private Material _trianglesMaterial = null;
+        [SerializeField] private int _trianglesCount = 1;
+        
+        private AyyGPUParticlesRenderPass _gpuParticleRenderPass = null;
+        private AyyGPUProceduralTrianglePass _proceduralTrianglePass = null;
         
         public override void Create()
         {
-            m_ScriptablePass = new AyyGPUParticlesRenderPass();
-            m_ScriptablePass.renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
+            _gpuParticleRenderPass = new AyyGPUParticlesRenderPass();
+            _proceduralTrianglePass = new AyyGPUProceduralTrianglePass(_trianglesCount);
         }
 
         public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
@@ -23,15 +27,26 @@ namespace ayy
             var partSys = AyyParticleSystem.sInstance; 
             if (partSys != null)
             {
-                m_ScriptablePass.SetupParams(_particleMaterial,partSys.GetParticlesBuffer(),partSys.GetParticleSize());                
+                _gpuParticleRenderPass.SetupParams(_particleMaterial,partSys.GetParticlesBuffer(),partSys.GetParticleSize());                
             }
+            _proceduralTrianglePass.SetupParams(_trianglesMaterial);
         }        
         
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
             if (AyyParticleSystem.sInstance != null)
             {
-                renderer.EnqueuePass(m_ScriptablePass);                
+                renderer.EnqueuePass(_gpuParticleRenderPass);
+                renderer.EnqueuePass(_proceduralTrianglePass);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (disposing)
+            {
+                _proceduralTrianglePass.Cleanup();   
             }
         }
     }
