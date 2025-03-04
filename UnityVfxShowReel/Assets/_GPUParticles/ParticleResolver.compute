@@ -23,8 +23,8 @@ void CSMain (uint3 id : SV_DispatchThreadID)
         // 让 current velocity (也是一个2d向量) ， 加上 速度变化, 从而每一帧 影响 粒子的速度
         // 这样 让 粒子看起来， 仿佛是在被 鼠标点击位置 所指引， 并且还有点 惯性 
         float2 v = float2(mousePosition.x - Particles[id.x].position.x,mousePosition.y - Particles[id.x].position.y);
-        float2 d2 = sqrt(v.x * v.x + v.y * v.y);
-        Particles[id.x].velocity = Particles[id.x].velocity + 5 * (v / d2) * dt;
+        float2 d2 = v.x * v.x + v.y * v.y;
+        Particles[id.x].velocity = Particles[id.x].velocity + 0.5 * (v / d2) * dt;
     }
     // else
     // {
