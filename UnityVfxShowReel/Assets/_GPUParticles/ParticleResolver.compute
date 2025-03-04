@@ -24,7 +24,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
         // 这样 让 粒子看起来， 仿佛是在被 鼠标点击位置 所指引， 并且还有点 惯性 
         float2 v = float2(mousePosition.x - Particles[id.x].position.x,mousePosition.y - Particles[id.x].position.y);
         float2 d2 = v.x * v.x + v.y * v.y;
-        Particles[id.x].velocity = Particles[id.x].velocity + 0.5 * (v / d2) * dt;
+        Particles[id.x].velocity = Particles[id.x].velocity + 5 * (v / d2) * dt;
     }
     // else
     // {
