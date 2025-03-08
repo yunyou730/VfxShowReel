@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   _testMaterial: {fileID: 2100000, guid: aa76cec0bb617469881e27e6a46e1225, type: 2}
-  _testMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  _testMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

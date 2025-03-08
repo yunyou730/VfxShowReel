@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 270450792}
   - component: {fileID: 270450791}
   - component: {fileID: 270450794}
+  - component: {fileID: 270450795}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -256,6 +257,21 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &270450795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270450790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9031c5cf8d1fa0c428b93c038018f338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  rotateSpeed: 50
+  zoomSpeed: 5
 --- !u!1 &1426889931
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +441,6 @@ MonoBehaviour:
   _mesh2: {fileID: 4300002, guid: 577bfc99767cb1b489b74d381e1a0e5d, type: 3}
   _particlesCount: 100
   _csParticleResolver: {fileID: 7200000, guid: 82c315bc41c864b0f91f86b11eb5cc43, type: 3}
-  _particlesMaterial: {fileID: 2100000, guid: a65c559cef62c45b497cc76606dd035c, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
