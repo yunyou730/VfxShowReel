@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace ayy
 {
-    public class ParticlesBuildMesh : MonoBehaviour
+    public class ParticlesBuildMeshMono : MonoBehaviour
     {
         public Mesh _mesh1 = null;
         public Mesh _mesh2 = null;
@@ -18,6 +18,8 @@ namespace ayy
         private ComputeBuffer _mesh1Buffer = null;
         private ComputeBuffer _mesh2Buffer = null;
         
+        public GPUTrianglesDataModel _trianglesDataModel = null;
+        
         struct MeshVertex
         {
             public Vector3 position;
@@ -27,12 +29,15 @@ namespace ayy
         {
             public Vector3 position;
         }
-
+        
         void Start()
         {
             _mesh1Buffer = InitMeshDataBuffer(_mesh1);
             _mesh2Buffer = InitMeshDataBuffer(_mesh2);
             _particlesBuffer = InitParticlesBuffer(_particlesCount);
+            
+            _trianglesDataModel = new GPUTrianglesDataModel();
+            _trianglesDataModel.InitTrianglesData(10);
         }
 
         private ComputeBuffer InitMeshDataBuffer(Mesh mesh)
@@ -87,6 +92,9 @@ namespace ayy
             _particlesBuffer.Release();
             _mesh1Buffer.Release();
             _mesh2Buffer.Release();
+            
+            _trianglesDataModel.Dispose();
+            _trianglesDataModel = null;
         }
 
         private void BuildMesh1()

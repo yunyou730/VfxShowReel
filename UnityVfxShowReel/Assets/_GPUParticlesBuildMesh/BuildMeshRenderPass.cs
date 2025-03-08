@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
@@ -9,21 +10,26 @@ namespace ayy
     {
         private Material _testMaterial = null;
         private Mesh _testMesh = null;
-        
-        //private ComputeBuffer _particlesBuffer = null;
-        //private float _particlePointSize = 1.0f;
 
+        private Material _drawTrianglesMat = null;
+        private ParticlesBuildMeshMono _buildMeshMono = null;
+        private GPUTrianglesDataModel _trianglesDataModel = null;
+        
         public BuildMeshRenderPass()
         {
             renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
+            _drawTrianglesMat = new Material(Shader.Find("Ayy/GPUTrianglesInstance"));
+            _buildMeshMono = GameObject.FindFirstObjectByType<ParticlesBuildMeshMono>();
+            if (_buildMeshMono != null)
+            {
+                _trianglesDataModel = _buildMeshMono._trianglesDataModel;
+            }
         }
 
         public void SetupParams(Material material,Mesh mesh)
         {
             _testMaterial = material;
             _testMesh = mesh;
-            //_particlesBuffer = particlesBuffer;
-            //_particlePointSize = particleSize;
         }
 
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
@@ -31,6 +37,15 @@ namespace ayy
             if (renderingData.cameraData.cameraType != CameraType.Game)
             {
                 return;
+            }
+
+            if (_buildMeshMono == null)
+            {
+                _buildMeshMono = GameObject.FindFirstObjectByType<ParticlesBuildMeshMono>();
+                if (_buildMeshMono != null)
+                {
+                    _trianglesDataModel = _buildMeshMono._trianglesDataModel;
+                }                            
             }
         }
         
@@ -46,15 +61,25 @@ namespace ayy
                 return;
             }
 
+            if (_trianglesDataModel == null)
+            {
+                return;
+            }
+            
             CommandBuffer cmd = CommandBufferPool.Get("BuildMeshRenderPass");
             cmd.Clear();
             using (new ProfilingScope(this.profilingSampler))
             {
-                //cmd.SetGlobalBuffer(Shader.PropertyToID("Particles"), _particlesBuffer);
-                //cmd.SetGlobalFloat(Shader.PropertyToID("PointSize"), _particlePointSize);
-                //cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,_particlesBuffer.count);
-                //cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,_particlesBuffer.count);
                 cmd.DrawMesh(_testMesh, Matrix4x4.identity, _testMaterial);
+                
+                // @miao @todo
+                
+                int verticesCountEachTriangle = _trianglesDataModel.GetVerticesCountEachTriangle();
+                int trianglesCount = _trianglesDataModel.GetTriangleCount(); 
+                cmd.DrawProcedural(Matrix4x4.identity, _drawTrianglesMat,0,
+                                    MeshTopology.Triangles,
+                                    verticesCountEachTriangle * trianglesCount, 
+                                    trianglesCount);
             }
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);

@@ -48,9 +48,10 @@
   <ItemGroup>
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderPass.cs" />
     <Compile Include="Assets/_GPUParticlesBuildMesh/BuildMeshRenderFeature.cs" />
+    <Compile Include="Assets/_GPUParticlesBuildMesh/GPUTrianglesDataModel.cs" />
+    <Compile Include="Assets/_GPUParticlesBuildMesh/ParticlesBuildMeshMono.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyySplitScreenRenderPass.cs" />
     <Compile Include="Assets/_RenderFeatureTest/Ayy2RenderFeature/Ayy2RenderPass.cs" />
-    <Compile Include="Assets/_GPUParticlesBuildMesh/ParticlesBuildMesh.cs" />
     <Compile Include="Assets/_GPUParticles/AyyGPUParticlesRenderPass.cs" />
     <Compile Include="Assets/_LutBySelfWithRenderFeature/LUTRenderPass.cs" />
     <Compile Include="Assets/_ComputeShaderTest1/CSTest.cs" />
@@ -73,6 +74,7 @@
     <None Include="Assets/_Tessellation/SimpleTesselation.hlsl" />
     <None Include="Assets/_Tessellation/LitWithTess.shader" />
     <None Include="Assets/_ComputeShaderTest1/CS_ImageProcess.compute" />
+    <None Include="Assets/_GPUParticlesBuildMesh/GPUTrianglesInstance.shader" />
     <None Include="Assets/_RenderFeatureTest/Shaders/AyyTestShader.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal-config/package.json" />
     <None Include="Packages/com.unity.render-pipelines.core/Shaders/CoreCopy.shader" />
