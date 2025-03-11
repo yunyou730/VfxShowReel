@@ -26,11 +26,15 @@ int _ToIndex;
 float3 _TargetWorldPosition;
 float _ParticleSpeed;
 
+int _From2;
+int _To2;
+
 [numthreads(64,1,1)]
 void CSMoveToMeshVertex(uint3 id : SV_DispatchThreadID)
 {
     int particleIndex = id.x;
-    if (particleIndex >= _StartIndex && particleIndex <= _ToIndex)
+    if ((particleIndex >= _StartIndex && particleIndex <= _ToIndex)
+        || (particleIndex >= _From2 && particleIndex <= _To2))
     {
         int meshVertexIndex = particleIndex - _StartIndex;
         _ParticleBuffer[particleIndex].Position = _TargetWorldPosition + _MeshVertexBuffer[meshVertexIndex].Position;

@@ -58,12 +58,12 @@ namespace ayy
                 EmitParticlesByMeshGPU(_particleMesh,worldPos);
                 
             }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-                EmitParticlesByMeshCPU(_particleMesh, worldPos);
-            }
+            // else if (Input.GetMouseButtonDown(1))
+            // {
+            //     Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
+            //     Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            //     EmitParticlesByMeshCPU(_particleMesh, worldPos);
+            // }
 
             UpdateParticles(Time.deltaTime);
         }
@@ -122,21 +122,53 @@ namespace ayy
             {
                 to = _particlePoolSize - 1;
             }
-            _nextToUseIndex = to;
+            _nextToUseIndex = (to + 1) % _particlePoolSize;
 
-            // do compute particle positions
+
+            int from2 = -1;
+            int to2 = -1;
+            int emittedCnt = (to - from + 1);
+            int wantEmitCnt = mesh.vertices.Length;
+            int notEnoughCnt = wantEmitCnt - emittedCnt;  
+            if (notEnoughCnt > 0 && notEnoughCnt < wantEmitCnt)
+            {
+                from2 = 0;
+                to2 = notEnoughCnt - 1;
+                _nextToUseIndex = (to2 + 1) % _particlePoolSize;
+            }
+            
+            
+            // emit
+            DoComputeMove(mesh,worldPos,from,to,from2,to2);
+            
+            // // 处理 粒子池子不够, 要从头开始算 粒子 的逻辑 
+            // int emittedCnt = (to - from + 1);
+            // int wantEmitCnt = mesh.vertices.Length;
+            // int notEnoughCnt = wantEmitCnt - emittedCnt;  
+            // if (notEnoughCnt > 0 && notEnoughCnt < wantEmitCnt)
+            // {
+            //     from = 0;
+            //     to = notEnoughCnt - 1;
+            //     _nextToUseIndex = (to + 1) % _particlePoolSize;
+            //     DoComputeMove(mesh,worldPos,from,to);
+            // }
+        }
+
+        private void DoComputeMove(Mesh mesh,Vector3 worldPos,int fromParticleIndex,int toParticleIndex,int from2,int to2)
+        {
             float[] worldPosArray = new float[3];
             worldPosArray[0] = worldPos.x;
             worldPosArray[1] = worldPos.y;
             worldPosArray[2] = worldPos.z;
             
-            _particleMovementCS.SetInt(Shader.PropertyToID("_StartIndex"), from);
-            _particleMovementCS.SetInt(Shader.PropertyToID("_ToIndex"), to);
+            _particleMovementCS.SetInt(Shader.PropertyToID("_StartIndex"), fromParticleIndex);
+            _particleMovementCS.SetInt(Shader.PropertyToID("_ToIndex"), toParticleIndex);
+            _particleMovementCS.SetInt(Shader.PropertyToID("_From2"), from2);
+            _particleMovementCS.SetInt(Shader.PropertyToID("_To2"), to2);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_TargetWorldPosition"), worldPosArray);
             _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleSpeed"), _particleInitialSpeed);
             _particleMovementCS.Dispatch(_kernelMoveToMeshVert,Mathf.CeilToInt((float)_particlePoolSize/64),1,1);
         }
-
 
         private void EmitParticlesByMeshCPU(Mesh mesh, Vector3 worldPos)
         {
