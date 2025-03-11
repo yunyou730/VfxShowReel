@@ -16,11 +16,13 @@ namespace ayy
         
         private AyyGPUParticlesRenderPass _gpuParticleRenderPass = null;
         private AyyGPUProceduralTrianglePass _proceduralTrianglePass = null;
+        private CustomParticleRenderPass _meshParticleRenderPass = null;
         
         public override void Create()
         {
             _gpuParticleRenderPass = new AyyGPUParticlesRenderPass();
             _proceduralTrianglePass = new AyyGPUProceduralTrianglePass(_trianglesCount);
+            _meshParticleRenderPass = new CustomParticleRenderPass();
         }
 
         public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
@@ -40,6 +42,7 @@ namespace ayy
                 renderer.EnqueuePass(_gpuParticleRenderPass);
                 renderer.EnqueuePass(_proceduralTrianglePass);
             }
+            renderer.EnqueuePass(_meshParticleRenderPass);
         }
 
         protected override void Dispose(bool disposing)

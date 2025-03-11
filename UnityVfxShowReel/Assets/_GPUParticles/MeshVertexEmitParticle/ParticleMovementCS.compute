@@ -1,0 +1,42 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+RWTexture2D<float4> Result;
+
+struct Particle
+{
+    float3 Position;
+    float3 Velocity;
+    float Active;
+    float ElapsedTime;
+    float LifeTime;
+};
+
+struct MeshVertex
+{
+    float3 Position;
+    float3 Normal;
+};
+
+RWStructuredBuffer<Particle> _ParticleBuffer;
+RWStructuredBuffer<MeshVertex> _MeshVertexBuffer;
+//int _NextAvailableIndex;
+
+int _StartIndex;
+int _ToIndex;
+float3 _TargetWorldPosition;
+
+[numthreads(64,1,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    int particleIndex = id.x;
+    if (particleIndex >= _StartIndex && particleIndex <= _ToIndex)
+    {
+        int meshVertexIndex = particleIndex - _StartIndex;
+        _ParticleBuffer[particleIndex].Position = _TargetWorldPosition + _MeshVertexBuffer[meshVertexIndex].Position;
+        _ParticleBuffer[particleIndex].Velocity = _MeshVertexBuffer[meshVertexIndex].Normal * 5.0f;
+        _ParticleBuffer[particleIndex].Active = 1.0f;
+        _ParticleBuffer[particleIndex].ElapsedTime = 0.0f;
+        _ParticleBuffer[particleIndex].LifeTime = 10.0f;
+    }
+}
