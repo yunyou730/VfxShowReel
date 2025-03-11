@@ -39,7 +39,8 @@ namespace ayy
 
         public ComputeBuffer ParticlesBuffer { get { return _particlesBuffer; } }
 
-        private int _csKernel = 0;
+        private int _kernelMoveToMeshVert = 0;
+        private int _kernelUpdateParticles = 0;
 
         void Start()
         {
@@ -54,9 +55,17 @@ namespace ayy
             {
                 Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-                EmitParticlesByMesh(_particleMesh,worldPos);
+                EmitParticlesByMeshGPU(_particleMesh,worldPos);
+                
             }
-            UpdateParticles();
+            else if (Input.GetMouseButtonDown(1))
+            {
+                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+                EmitParticlesByMeshCPU(_particleMesh, worldPos);
+            }
+
+            UpdateParticles(Time.deltaTime);
         }
 
         private void OnDestroy()
@@ -97,12 +106,14 @@ namespace ayy
 
         private void InitComputeShader()
         {
-            _csKernel = _particleMovementCS.FindKernel("CSMain");
-            _particleMovementCS.SetBuffer(_csKernel, Shader.PropertyToID("_ParticleBuffer"), _particlesBuffer);
-            _particleMovementCS.SetBuffer(_csKernel, Shader.PropertyToID("_MeshVertexBuffer"), _meshVerticesBuffer);
+            _kernelMoveToMeshVert = _particleMovementCS.FindKernel("CSMoveToMeshVertex");
+            _kernelUpdateParticles = _particleMovementCS.FindKernel("CSUpdate");
+            _particleMovementCS.SetBuffer(_kernelMoveToMeshVert, Shader.PropertyToID("_ParticleBuffer"), _particlesBuffer);
+            _particleMovementCS.SetBuffer(_kernelMoveToMeshVert, Shader.PropertyToID("_MeshVertexBuffer"), _meshVerticesBuffer);
+            _particleMovementCS.SetBuffer(_kernelUpdateParticles, Shader.PropertyToID("_ParticleBuffer"), _particlesBuffer);
         }
 
-        private void EmitParticlesByMesh(Mesh mesh,Vector3 worldPos)
+        private void EmitParticlesByMeshGPU(Mesh mesh,Vector3 worldPos)
         {
             // process index
             int from = _nextToUseIndex;
@@ -122,8 +133,13 @@ namespace ayy
             _particleMovementCS.SetInt(Shader.PropertyToID("_StartIndex"), from);
             _particleMovementCS.SetInt(Shader.PropertyToID("_ToIndex"), to);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_TargetWorldPosition"), worldPosArray);
-            _particleMovementCS.Dispatch(_csKernel,Mathf.CeilToInt((float)_particlePoolSize/64),1,1);
-            /*
+            _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleSpeed"), _particleInitialSpeed);
+            _particleMovementCS.Dispatch(_kernelMoveToMeshVert,Mathf.CeilToInt((float)_particlePoolSize/64),1,1);
+        }
+
+
+        private void EmitParticlesByMeshCPU(Mesh mesh, Vector3 worldPos)
+        {
             int count = mesh.vertices.Length;
 
             int emmitCount = 0;
@@ -154,7 +170,6 @@ namespace ayy
             {
                 _particlesBuffer.SetData(_particlesData,fromSubIndex,fromSubIndex,emmitCount);
             }
-            */
         }
 
         private void ResetParticle(ref Particle particle)
@@ -176,9 +191,10 @@ namespace ayy
             particle.LifeTime = lifeTime;
         }
         
-        private void UpdateParticles()
+        private void UpdateParticles(float deltaTime)
         {
-            
+            _particleMovementCS.SetFloats(Shader.PropertyToID("_DeltaTime"), deltaTime);
+            _particleMovementCS.Dispatch(_kernelUpdateParticles,Mathf.CeilToInt((float)_particlePoolSize/64),1,1);            
         }
     }
     

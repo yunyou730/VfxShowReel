@@ -319,7 +319,7 @@ MonoBehaviour:
   _particlePoolSize: 100000
   _particleMesh: {fileID: -6235581406873603593, guid: 40801c0ce24a3af41959b426e7cdad63,
     type: 3}
-  _particleInitialSpeed: 10
+  _particleInitialSpeed: 0.5
   _particleLifeTime: 3
   _particleMovementCS: {fileID: 7200000, guid: 16c361183caef7e428ddeda2049fd2c5, type: 3}
 --- !u!1 &1413688139
