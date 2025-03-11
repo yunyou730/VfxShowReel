@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particleCount: 1000000
-  _particleSize: 2
+  _particleSize: 1
   _csParticleResolver: {fileID: 7200000, guid: aa3aba414281240d1bc0d6089c24b4b4, type: 3}
 --- !u!1 &1533310381
 GameObject:

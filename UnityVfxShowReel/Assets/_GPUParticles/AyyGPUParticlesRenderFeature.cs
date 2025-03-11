@@ -9,6 +9,7 @@ namespace ayy
 {
     public class AyyGPUParticlesRenderFeature : ScriptableRendererFeature
     {
+        [SerializeField] private Mesh _particleMesh = null;
         [SerializeField] private Material _particleMaterial = null;
         [SerializeField] private Material _trianglesMaterial = null;
         [SerializeField] private int _trianglesCount = 1;
@@ -27,7 +28,7 @@ namespace ayy
             var partSys = AyyParticleSystem.sInstance; 
             if (partSys != null)
             {
-                _gpuParticleRenderPass.SetupParams(_particleMaterial,partSys.GetParticlesBuffer(),partSys.GetParticleSize());                
+                _gpuParticleRenderPass.SetupParams(_particleMaterial,partSys.GetParticlesBuffer(),partSys.GetParticleSize(),_particleMesh);                
             }
             _proceduralTrianglePass.SetupParams(_trianglesMaterial);
         }        

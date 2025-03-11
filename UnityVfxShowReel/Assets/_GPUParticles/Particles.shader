@@ -29,6 +29,16 @@ Shader "Ayy/GPUParticlesSample1"
                 float2 velocity;
             };
 
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+
+                uint vertexId : SV_VertexID;
+                uint instanceId : SV_InstanceID;
+            };
+            
+
             // Pixel shader input
             struct PS_INPUT
             {
@@ -47,12 +57,13 @@ Shader "Ayy/GPUParticlesSample1"
             uniform float _HighSpeedValue;
 
             // Vertex shader
-            PS_INPUT vert(uint vertexId : SV_VertexID, uint instanceId : SV_InstanceID)
+            //PS_INPUT vert(uint vertexId : SV_VertexID, uint instanceId : SV_InstanceID)
+            PS_INPUT vert(appdata inData)
             {
                 PS_INPUT output = (PS_INPUT)0;
 
                 // Color
-                float speed = length(Particles[instanceId].velocity);
+                float speed = length(Particles[inData.instanceId].velocity);
                 float lerpValue = clamp(speed / _HighSpeedValue, 0.0f, 1.0f);
                 output.color = lerp(_ColorLow, _ColorHigh, lerpValue);
 
@@ -60,8 +71,11 @@ Shader "Ayy/GPUParticlesSample1"
                 //output.color = float4(1.0,0.0,0.0,1.0);
                 
                 // Position
-                //output.position = UnityObjectToClipPos(float4(Particles[instanceId].position, 1.0f));                
-                output.position = UnityObjectToClipPos(float4(Particles[instanceId].position, 0.0f, 1.0f));
+                //output.position = UnityObjectToClipPos(float4(Particles[instanceId].position, 1.0f));
+
+                float3 pos3d = inData.vertex.xyz + float3(Particles[inData.instanceId].position.xy,0.0) * PointSize;
+                float4 localPosition = float4(pos3d, 1.0f);
+                output.position = UnityObjectToClipPos(localPosition);
                 //output.position = float4(0.0,0.0,0.0,1.0);
 
                 output.pointSize = PointSize;

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AyyGPUParticlesRenderFeature
   m_EditorClassIdentifier: 
   m_Active: 1
+  _particleMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   _particleMaterial: {fileID: 2100000, guid: fcd405e55b95848df954c2133bea041e, type: 2}
   _trianglesMaterial: {fileID: 2100000, guid: 1707828bbbd3f467288a58ef2410659f, type: 2}
   _trianglesCount: 3

@@ -12,16 +12,19 @@ namespace ayy
         private ComputeBuffer _particlesBuffer = null;
         private float _particlePointSize = 1.0f;
 
+        private Mesh _particleMesh = null;
+
         public AyyGPUParticlesRenderPass()
         {
             renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
         }
 
-        public void SetupParams(Material particleMaterial,ComputeBuffer particlesBuffer,float particleSize)
+        public void SetupParams(Material particleMaterial,ComputeBuffer particlesBuffer,float particleSize,Mesh particleMesh)
         {
             _particleMaterial = particleMaterial;
             _particlesBuffer = particlesBuffer;
             _particlePointSize = particleSize;
+            _particleMesh = particleMesh;
         }
 
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
@@ -51,7 +54,8 @@ namespace ayy
                 cmd.SetGlobalBuffer(Shader.PropertyToID("Particles"), _particlesBuffer);
                 cmd.SetGlobalFloat(Shader.PropertyToID("PointSize"), _particlePointSize);
                 //cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,_particlesBuffer.count);
-                cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,_particlesBuffer.count);
+                //cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,_particlesBuffer.count);
+                cmd.DrawMeshInstancedProcedural(_particleMesh,0,_particleMaterial,0,_particlesBuffer.count);
             }
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
