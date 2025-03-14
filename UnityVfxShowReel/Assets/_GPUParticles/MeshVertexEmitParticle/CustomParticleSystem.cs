@@ -17,6 +17,8 @@ namespace ayy
             public float Active;
             public float ElapsedTime;
             public float LifeTime;
+            public Vector3 Color1;
+            public Vector3 Color2;
         }
 
         public struct MeshVertex
@@ -29,9 +31,8 @@ namespace ayy
         [SerializeField] public Mesh _particleMesh = null;
         [SerializeField] public float _particleInitialSpeed = 10.0f;
         [SerializeField] public float _particleLifeTime = 3.0f;
-
         [SerializeField] public ComputeShader _particleMovementCS = null;
-
+        [SerializeField] public Color[] _colors = null;
 
         private ComputeBuffer _particlesBuffer = null;
         private Particle[] _particlesData = null;
@@ -63,7 +64,8 @@ namespace ayy
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            //if (Input.GetMouseButtonDown(0))
+            if(Input.GetMouseButton(0))
             {
                 Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -148,7 +150,7 @@ namespace ayy
 
         private void EmitParticlesByMeshGPU(Mesh mesh, Vector3 worldPos)
         {
-            // 从粒子池发射第一波
+            // 从粒子池发射第一波, 计算新激活粒子的下标范围 from,to
             int from = _nextToUseIndex;
             int to = _nextToUseIndex + mesh.vertices.Length;
             if (to >= _particlePoolSize)
@@ -158,7 +160,7 @@ namespace ayy
 
             _nextToUseIndex = (to + 1) % _particlePoolSize;
 
-            // 如果粒子池已经用到底, 则从头开始复用
+            // 如果粒子池已经用到底, 则从头开始复用, 计算新激活粒子的下标范围 from2,to2
             int from2 = -1;
             int to2 = -1;
             int emittedCnt = (to - from + 1);
@@ -171,7 +173,7 @@ namespace ayy
                 _nextToUseIndex = (to2 + 1) % _particlePoolSize;
             }
 
-            // emit
+            // emit, 只传新激活的 下标范围 [from,to] 和 [from2,to2] 即可
             DoComputeParticlesEmitAndMove(worldPos, from, to, from2, to2);
         }
 
@@ -189,6 +191,11 @@ namespace ayy
             _particleMovementCS.SetInt(Shader.PropertyToID("_To2"), to2);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_TargetWorldPosition"), worldPosArray);
             _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleSpeed"), _particleInitialSpeed);
+            _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleLifeTime"), _particleLifeTime);
+            
+            // @miao @todo
+            _particleMovementCS.SetFloats(Shader.PropertyToID("_emitStartColor"), new float[3]{1.0f,1.0f,1.0f});
+            _particleMovementCS.SetFloats(Shader.PropertyToID("_emitEndColor"), new float[3]{0.0f,1.0f,1.0f});            
             _particleMovementCS.Dispatch(_kernelMoveToMeshVert, Mathf.CeilToInt((float)_particlePoolSize / 64), 1, 1);
         }
 

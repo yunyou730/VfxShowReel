@@ -10,6 +10,8 @@ struct Particle
     float Active;
     float ElapsedTime;
     float LifeTime;
+    float3 Color1;
+    float3 Color2;
 };
 
 struct MeshVertex
@@ -21,13 +23,17 @@ struct MeshVertex
 RWStructuredBuffer<Particle> _ParticleBuffer;
 RWStructuredBuffer<MeshVertex> _MeshVertexBuffer;
 
+// new spawn particle
+// subindex: [_StartIndex,_ToIndex], [_From2,_To2]
 int _StartIndex;
 int _ToIndex;
-float3 _TargetWorldPosition;
-float _ParticleSpeed;
-
 int _From2;
 int _To2;
+float3 _TargetWorldPosition;
+float _ParticleSpeed;
+float _ParticleLifeTime;
+float3 _emitStartColor;
+float3 _emitEndColor;
 
 [numthreads(64,1,1)]
 void CSMoveToMeshVertex(uint3 id : SV_DispatchThreadID)
@@ -36,23 +42,39 @@ void CSMoveToMeshVertex(uint3 id : SV_DispatchThreadID)
     if ((particleIndex >= _StartIndex && particleIndex <= _ToIndex)
         || (particleIndex >= _From2 && particleIndex <= _To2))
     {
+        // 符合这个条件, 即激活新粒子
         int meshVertexIndex = particleIndex - _StartIndex;
         _ParticleBuffer[particleIndex].Position = _TargetWorldPosition + _MeshVertexBuffer[meshVertexIndex].Position;
         _ParticleBuffer[particleIndex].Velocity = _MeshVertexBuffer[meshVertexIndex].Normal * _ParticleSpeed;
         _ParticleBuffer[particleIndex].Active = 1.0f;
         _ParticleBuffer[particleIndex].ElapsedTime = 0.0f;
-        _ParticleBuffer[particleIndex].LifeTime = 10.0f;
+        _ParticleBuffer[particleIndex].LifeTime = _ParticleLifeTime;
+        _ParticleBuffer[particleIndex].Color1 = _emitStartColor;
+        _ParticleBuffer[particleIndex].Color2 = _emitEndColor;
     }
 }
 
 float _DeltaTime;
 
-
 [numthreads(64,1,1)]
 void CSUpdate(uint3 id : SV_DispatchThreadID)
 {
     int particleIndex = id.x;
-    float3 pos = _ParticleBuffer[particleIndex].Position;
-    float3 vel = _ParticleBuffer[particleIndex].Velocity;
-    _ParticleBuffer[particleIndex].Position = pos + vel * _DeltaTime;
+    Particle part = _ParticleBuffer[particleIndex]; 
+    if (part.Active > 0.5f)   // Active 当作 bool用, 0-false, 1-true
+    {
+        float3 pos = part.Position;
+        float3 vel = part.Velocity;
+        part.Position = pos + vel * _DeltaTime;
+        part.ElapsedTime += _DeltaTime;
+
+        if (part.ElapsedTime >= part.LifeTime)
+        {
+            // 符合这个条件,即 回收 老粒子
+            part.ElapsedTime = 0.f;
+            part.LifeTime = 0.f;
+            part.Active = 0.0f;
+        }
+        _ParticleBuffer[particleIndex] = part;
+    }
 }

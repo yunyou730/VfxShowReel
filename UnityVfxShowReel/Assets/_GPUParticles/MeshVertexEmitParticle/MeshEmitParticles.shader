@@ -39,6 +39,7 @@ Shader "Ayy/MeshEmitParticles"
                 float4 position : SV_POSITION;
                 float4 color : COLOR;
                 float pointSize : PSIZE;
+                float active : COLOR1;
             };
 
             // Particle's data, shared with the compute shader
@@ -49,6 +50,8 @@ Shader "Ayy/MeshEmitParticles"
                 float Active;
                 float ElapsedTime;
                 float LifeTime;
+                float3 Color1;
+                float3 Color2;
             };
             StructuredBuffer<Particle> Particles;
 
@@ -66,15 +69,26 @@ Shader "Ayy/MeshEmitParticles"
                 // float speed = length(Particles[inData.instanceId].velocity);
                 // float lerpValue = clamp(speed / _HighSpeedValue, 0.0f, 1.0f);
                 // output.color = lerp(_ColorLow, _ColorHigh, lerpValue);
-                output.color = float4(1.0,1.0,0.0,1.0);
+                Particle particle = Particles[inData.instanceId];
                 
+                float progress = 0.0f;
+                if (particle.LifeTime > 0.0f)
+                {
+                    progress = particle.ElapsedTime / particle.LifeTime;
+                    progress = clamp(progress,0.0,1.0);
+                }
+                float alpha = 1.0 - progress;
+                float3 currentColor = lerp(particle.Color1,particle.Color2,progress);
+                output.color = float4(currentColor,alpha);
                 
                 // Position
-                Particle particle = Particles[inData.instanceId];
+                
                 output.position = UnityObjectToClipPos(float4(particle.Position, 1.0f));
 
                 // Point Size. Mac need this attribute
                 output.pointSize = 1.0f;
+                output.active = particle.Active;
+                
 
                 return output;
             }
@@ -82,6 +96,10 @@ Shader "Ayy/MeshEmitParticles"
             // Pixel shader
             float4 frag(PS_INPUT i) : COLOR
             {
+                if (i.active < 0.5)
+                    discard;
+
+                
                 return i.color;
             }
 
