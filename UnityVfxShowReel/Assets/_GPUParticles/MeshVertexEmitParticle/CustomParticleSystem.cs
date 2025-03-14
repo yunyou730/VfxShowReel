@@ -32,7 +32,6 @@ namespace ayy
         [SerializeField] public float _particleInitialSpeed = 10.0f;
         [SerializeField] public float _particleLifeTime = 3.0f;
         [SerializeField] public ComputeShader _particleMovementCS = null;
-        [SerializeField] public Color[] _colors = null;
 
         private ComputeBuffer _particlesBuffer = null;
         private Particle[] _particlesData = null;
@@ -180,22 +179,18 @@ namespace ayy
         private void DoComputeParticlesEmitAndMove(Vector3 worldPos, int fromParticleIndex, int toParticleIndex,
             int from2, int to2)
         {
-            float[] worldPosArray = new float[3];
-            worldPosArray[0] = worldPos.x;
-            worldPosArray[1] = worldPos.y;
-            worldPosArray[2] = worldPos.z;
-
+            Color fromColor = UnityEngine.Random.ColorHSV();
+            Color toColor = UnityEngine.Random.ColorHSV();
+            
             _particleMovementCS.SetInt(Shader.PropertyToID("_StartIndex"), fromParticleIndex);
             _particleMovementCS.SetInt(Shader.PropertyToID("_ToIndex"), toParticleIndex);
             _particleMovementCS.SetInt(Shader.PropertyToID("_From2"), from2);
             _particleMovementCS.SetInt(Shader.PropertyToID("_To2"), to2);
-            _particleMovementCS.SetFloats(Shader.PropertyToID("_TargetWorldPosition"), worldPosArray);
+            _particleMovementCS.SetFloats(Shader.PropertyToID("_TargetWorldPosition"), new float[3]{worldPos.x,worldPos.y,worldPos.z });
             _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleSpeed"), _particleInitialSpeed);
             _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleLifeTime"), _particleLifeTime);
-            
-            // @miao @todo
-            _particleMovementCS.SetFloats(Shader.PropertyToID("_emitStartColor"), new float[3]{1.0f,1.0f,1.0f});
-            _particleMovementCS.SetFloats(Shader.PropertyToID("_emitEndColor"), new float[3]{0.0f,1.0f,1.0f});            
+            _particleMovementCS.SetFloats(Shader.PropertyToID("_emitStartColor"), new float[3]{fromColor.r,fromColor.g,fromColor.b});
+            _particleMovementCS.SetFloats(Shader.PropertyToID("_emitEndColor"), new float[3]{toColor.r, toColor.g, toColor.b});            
             _particleMovementCS.Dispatch(_kernelMoveToMeshVert, Mathf.CeilToInt((float)_particlePoolSize / 64), 1, 1);
         }
 
