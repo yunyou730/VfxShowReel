@@ -385,11 +385,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _particlePoolSize: 1000000
-  _particleMesh: {fileID: -6235581406873603593, guid: 40801c0ce24a3af41959b426e7cdad63,
+  _particleShapeMesh: {fileID: -6235581406873603593, guid: 40801c0ce24a3af41959b426e7cdad63,
     type: 3}
-  _particleInitialSpeed: 0.3
-  _particleLifeTime: 1
+  _particleShapeScale: 1.26
+  _particleInitialSpeed: 0.8
+  _particleAcc: 0
+  _particleLifeTime: 0.8
   _particleMovementCS: {fileID: 7200000, guid: 16c361183caef7e428ddeda2049fd2c5, type: 3}
+  _skipVertexCount: 1
+  _particleRendererMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  _particleRendererMaterial: {fileID: 2100000, guid: 25df6b943102e41dfa177e3a375356fa,
+    type: 2}
+  _particleRendererMeshScale: 0.104
 --- !u!1 &1413688139
 GameObject:
   m_ObjectHideFlags: 0

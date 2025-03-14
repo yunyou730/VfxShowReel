@@ -1,11 +1,7 @@
-Shader "Ayy/MeshEmitParticles"
+Shader "Ayy/MeshEmitPointParticles"
 {
-
     Properties
     {
-        _ColorLow("Color Slow Speed", Color) = (0, 0, 0.5, 1)
-        _ColorHigh("Color High Speed", Color) = (1, 0, 0, 1)
-        _HighSpeedValue("High speed Value", Range(0, 50)) = 25
     }
 
     SubShader
@@ -54,23 +50,17 @@ Shader "Ayy/MeshEmitParticles"
                 float3 Color2;
             };
             StructuredBuffer<Particle> Particles;
-
-            // Properties variables
-            uniform float4 _ColorLow;
-            uniform float4 _ColorHigh;
-            uniform float _HighSpeedValue;
+            
+            
 
             // Vertex shader
             PS_INPUT vert(appdata inData)
             {
-                PS_INPUT output = (PS_INPUT)0;
+                //PS_INPUT output = (PS_INPUT)0;
+                PS_INPUT output;
+                Particle particle = Particles[inData.instanceId];
 
                 // Color
-                // float speed = length(Particles[inData.instanceId].velocity);
-                // float lerpValue = clamp(speed / _HighSpeedValue, 0.0f, 1.0f);
-                // output.color = lerp(_ColorLow, _ColorHigh, lerpValue);
-                Particle particle = Particles[inData.instanceId];
-                
                 float progress = 0.0f;
                 if (particle.LifeTime > 0.0f)
                 {
@@ -82,7 +72,6 @@ Shader "Ayy/MeshEmitParticles"
                 output.color = float4(currentColor,alpha);
                 
                 // Position
-                
                 output.position = UnityObjectToClipPos(float4(particle.Position, 1.0f));
 
                 // Point Size. Mac need this attribute

@@ -7,15 +7,15 @@ namespace ayy
 {
     class CustomParticleRenderPass : ScriptableRenderPass
     {
-        private Material _particleMaterial = null;
+        private Material _particlePointsMaterial = null;
         private CustomParticleSystem _customParticleSysMono = null;
-        // private float _particlePointSize = 1.0f;
-        // private Mesh _particleMesh = null;
 
+        private Material _particleMeshMaterial = null;
+        
         public CustomParticleRenderPass()
         {
             renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
-            _particleMaterial = new Material(Shader.Find("Ayy/MeshEmitParticles"));
+            _particlePointsMaterial = new Material(Shader.Find("Ayy/MeshEmitPointParticles"));
         }
         
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
@@ -39,7 +39,7 @@ namespace ayy
                 return;
             }
 
-            if (_particleMaterial == null)
+            if (_particlePointsMaterial == null)
             {
                 return;
             }
@@ -56,7 +56,21 @@ namespace ayy
             {
                 var particlesBuffer = _customParticleSysMono.ParticlesBuffer;
                 cmd.SetGlobalBuffer(Shader.PropertyToID("Particles"), particlesBuffer);
-                cmd.DrawProcedural(Matrix4x4.identity,_particleMaterial,0,MeshTopology.Points,1,particlesBuffer.count);
+                
+                
+                if (_customParticleSysMono.ParticleRendererMesh != null
+                    && _customParticleSysMono.ParticleRendererMaterial != null)
+                {
+                    Mesh rendererMesh = _customParticleSysMono.ParticleRendererMesh;
+                    Material rendererMaterial = _customParticleSysMono.ParticleRendererMaterial;
+                    cmd.DrawMeshInstancedProcedural(rendererMesh,0,rendererMaterial,0,particlesBuffer.count);
+                }
+                else
+                {
+                    cmd.DrawProcedural(Matrix4x4.identity,_particlePointsMaterial,0,MeshTopology.Points,1,particlesBuffer.count);                    
+                }
+
+                
             }
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);

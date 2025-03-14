@@ -31,6 +31,7 @@ int _From2;
 int _To2;
 float3 _TargetWorldPosition;
 float _ParticleSpeed;
+float _ParticleAcc;
 float _ParticleLifeTime;
 float3 _emitStartColor;
 float3 _emitEndColor;
@@ -65,6 +66,10 @@ void CSUpdate(uint3 id : SV_DispatchThreadID)
     {
         float3 pos = part.Position;
         float3 vel = part.Velocity;
+        //part.Velocity += _ParticleAcc * _DeltaTime;
+        //part.Velocity = part.Velocity + vel;
+        //part.Velocity = _MeshVertexBuffer[meshVertexIndex].Normal
+        //part.Velocity = part.Velocity * (_ParticleAcc * _DeltaTime);
         part.Position = pos + vel * _DeltaTime;
         part.ElapsedTime += _DeltaTime;
 

@@ -28,10 +28,17 @@ namespace ayy
         }
 
         [SerializeField] public int _particlePoolSize = 100;
-        [SerializeField] public Mesh _particleMesh = null;
+        [SerializeField] public Mesh _particleShapeMesh = null;
+        [SerializeField,Range(0.1f,3.0f)] public float _particleShapeScale = 1.0f;
         [SerializeField] public float _particleInitialSpeed = 10.0f;
+        [SerializeField,Range(-5,5)] public float _particleAcc = 0.0f;
         [SerializeField] public float _particleLifeTime = 3.0f;
         [SerializeField] public ComputeShader _particleMovementCS = null;
+        [SerializeField,Range(1,10)] public int _skipVertexCount = 1;
+
+        [SerializeField] public Mesh _particleRendererMesh = null;
+        [SerializeField] Material _particleRendererMaterial = null;
+        [SerializeField,Range(0,1)] private float _particleRendererMeshScale = 1.0f;
 
         private ComputeBuffer _particlesBuffer = null;
         private Particle[] _particlesData = null;
@@ -39,10 +46,12 @@ namespace ayy
 
         private ComputeBuffer _meshVerticesBuffer = null;
 
-        public ComputeBuffer ParticlesBuffer
-        {
-            get { return _particlesBuffer; }
-        }
+        public ComputeBuffer ParticlesBuffer { get { return _particlesBuffer; } }
+        
+        
+        // 作用在每一个 粒子上的 mesh & material 
+        public Mesh ParticleRendererMesh { get { return _particleRendererMesh; } }
+        public Material ParticleRendererMaterial { get { return _particleRendererMaterial; } }
 
         private int _kernelMoveToMeshVert = 0;
         private int _kernelUpdateParticles = 0;
@@ -55,6 +64,7 @@ namespace ayy
         void Start()
         {
             _stopwatch = new Stopwatch();
+            //_particleRendererMaterial = new Material(_particleRendererShader);
             HoldMeshVertexData();
             InitParticleBuffer();
             InitMeshVerticesBuffer();
@@ -63,19 +73,20 @@ namespace ayy
 
         void Update()
         {
-            //if (Input.GetMouseButtonDown(0))
-            if(Input.GetMouseButton(0))
+            _particleRendererMaterial.SetFloat(Shader.PropertyToID("_Scale"),_particleRendererMeshScale);
+            if (Input.GetMouseButtonDown(0))
+            //if(Input.GetMouseButton(0))
             {
                 Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-                EmitParticlesByMeshGPU(_particleMesh, worldPos);
+                EmitParticlesByMeshGPU(ref _meshVertices,ref _meshNormals, worldPos);
 
             }
             else if (Input.GetKeyDown(KeyCode.C))
             {
                 Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-                EmitParticlesByMeshCPU(_particleMesh, worldPos);
+                EmitParticlesByMeshCPU(ref _meshVertices,ref _meshNormals, worldPos);
             }
 
             UpdateParticles(Time.deltaTime);
@@ -93,8 +104,24 @@ namespace ayy
         private void HoldMeshVertexData()
         {
             _stopwatch.Restart();
-            _meshVertices = _particleMesh.vertices;
-            _meshNormals = _particleMesh.normals;
+
+            // hold all 
+            //_meshVertices = _particleShapeMesh.vertices;
+            //_meshNormals = _particleShapeMesh.normals;
+         
+
+            _meshVertices = new Vector3[_particleShapeMesh.vertexCount / _skipVertexCount];
+            _meshNormals = new Vector3[_particleShapeMesh.vertexCount / _skipVertexCount];
+            for (int i = 0,subIndex = 0;i < _particleShapeMesh.vertexCount;i += _skipVertexCount,subIndex++)
+            {
+                if (i >= _meshVertices.Length)
+                {
+                    break;
+                }
+                _meshVertices[subIndex] = _particleShapeMesh.vertices[i] * _particleShapeScale;
+                _meshNormals[subIndex] = _particleShapeMesh.normals[i];
+            }
+
             _stopwatch.Stop();
             Debug.Log($"HoldMeshVertexData cost {_stopwatch.ElapsedMilliseconds} ms.");
         }
@@ -123,11 +150,12 @@ namespace ayy
         private void InitMeshVerticesBuffer()
         {
             List<MeshVertex> meshVertexData = new List<MeshVertex>();
-            for (int i = 0; i < _particleMesh.vertices.Length; i++)
+            //for (int i = 0; i < .vertices.Length; i++)
+            for(int i = 0;i < _meshVertices.Length;i++)
             {
                 var meshVertex = new MeshVertex();
-                meshVertex.Position = _particleMesh.vertices[i];
-                meshVertex.Normal = _particleMesh.normals[i];
+                meshVertex.Position = _meshVertices[i];
+                meshVertex.Normal = _meshNormals[i];
                 meshVertexData.Add(meshVertex);
             }
 
@@ -147,11 +175,11 @@ namespace ayy
                 _particlesBuffer);
         }
 
-        private void EmitParticlesByMeshGPU(Mesh mesh, Vector3 worldPos)
+        private void EmitParticlesByMeshGPU(ref Vector3[] vertices,ref Vector3[] normals, Vector3 worldPos)
         {
             // 从粒子池发射第一波, 计算新激活粒子的下标范围 from,to
             int from = _nextToUseIndex;
-            int to = _nextToUseIndex + mesh.vertices.Length;
+            int to = _nextToUseIndex + vertices.Length;
             if (to >= _particlePoolSize)
             {
                 to = _particlePoolSize - 1;
@@ -163,7 +191,7 @@ namespace ayy
             int from2 = -1;
             int to2 = -1;
             int emittedCnt = (to - from + 1);
-            int wantEmitCnt = mesh.vertices.Length;
+            int wantEmitCnt = vertices.Length;
             int notEnoughCnt = wantEmitCnt - emittedCnt;
             if (notEnoughCnt > 0 && notEnoughCnt < wantEmitCnt)
             {
@@ -188,17 +216,18 @@ namespace ayy
             _particleMovementCS.SetInt(Shader.PropertyToID("_To2"), to2);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_TargetWorldPosition"), new float[3]{worldPos.x,worldPos.y,worldPos.z });
             _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleSpeed"), _particleInitialSpeed);
+            _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleAcc"), _particleAcc);
             _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleLifeTime"), _particleLifeTime);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_emitStartColor"), new float[3]{fromColor.r,fromColor.g,fromColor.b});
             _particleMovementCS.SetFloats(Shader.PropertyToID("_emitEndColor"), new float[3]{toColor.r, toColor.g, toColor.b});            
             _particleMovementCS.Dispatch(_kernelMoveToMeshVert, Mathf.CeilToInt((float)_particlePoolSize / 64), 1, 1);
         }
 
-        private void EmitParticlesByMeshCPU(Mesh mesh, Vector3 worldPos)
+        private void EmitParticlesByMeshCPU(ref Vector3[] vertices,ref Vector3[] normals, Vector3 worldPos)
         {
             _stopwatch.Restart();
 
-            int count = mesh.vertices.Length;
+            int count = vertices.Length;
 
             int emmitCount = 0;
             int fromSubIndex = _nextToUseIndex;
@@ -209,8 +238,8 @@ namespace ayy
                     break;
                 }
 
-                Vector3 pos = _meshVertices[i];
-                Vector3 normal = _meshNormals[i];
+                Vector3 pos = vertices[i];
+                Vector3 normal = normals[i];
 
                 ref Particle particle = ref _particlesData[_nextToUseIndex];
                 EmitOneParticle(ref particle, pos + worldPos, normal * _particleInitialSpeed, _particleLifeTime);
