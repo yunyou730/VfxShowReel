@@ -39,6 +39,8 @@ namespace ayy
         [SerializeField] public Mesh _particleRendererMesh = null;
         [SerializeField] Material _particleRendererMaterial = null;
         [SerializeField,Range(0,1)] private float _particleRendererMeshScale = 1.0f;
+        
+        [SerializeField] private Transform _shapeCursor = null;
 
         private ComputeBuffer _particlesBuffer = null;
         private Particle[] _particlesData = null;
@@ -74,19 +76,25 @@ namespace ayy
         void Update()
         {
             _particleRendererMaterial.SetFloat(Shader.PropertyToID("_Scale"),_particleRendererMeshScale);
+            
+
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            
             if (Input.GetMouseButtonDown(0))
             //if(Input.GetMouseButton(0))
             {
-                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-                EmitParticlesByMeshGPU(ref _meshVertices,ref _meshNormals, worldPos);
+                EmitParticlesByMeshGPU(ref _meshVertices,ref _meshNormals, mouseWorldPos);
 
             }
             else if (Input.GetKeyDown(KeyCode.C))
             {
-                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-                EmitParticlesByMeshCPU(ref _meshVertices,ref _meshNormals, worldPos);
+                EmitParticlesByMeshCPU(ref _meshVertices,ref _meshNormals, mouseWorldPos);
+            }
+
+            if (_shapeCursor != null)
+            {
+                _shapeCursor.position = mouseWorldPos;
             }
 
             UpdateParticles(Time.deltaTime);
