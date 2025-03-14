@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e058febecf4c649b5c8bf1188fbc19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particlePoolSize: 100000
+  _particlePoolSize: 1000000
   _particleMesh: {fileID: -6235581406873603593, guid: 40801c0ce24a3af41959b426e7cdad63,
     type: 3}
   _particleInitialSpeed: 0.1

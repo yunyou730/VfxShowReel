@@ -38,6 +38,7 @@ Shader "Ayy/MeshEmitParticles"
             {
                 float4 position : SV_POSITION;
                 float4 color : COLOR;
+                float pointSize : PSIZE;
             };
 
             // Particle's data, shared with the compute shader
@@ -57,7 +58,6 @@ Shader "Ayy/MeshEmitParticles"
             uniform float _HighSpeedValue;
 
             // Vertex shader
-            //PS_INPUT vert(uint vertexId : SV_VertexID, uint instanceId : SV_InstanceID)
             PS_INPUT vert(appdata inData)
             {
                 PS_INPUT output = (PS_INPUT)0;
@@ -72,7 +72,9 @@ Shader "Ayy/MeshEmitParticles"
                 // Position
                 Particle particle = Particles[inData.instanceId];
                 output.position = UnityObjectToClipPos(float4(particle.Position, 1.0f));
-                
+
+                // Point Size. Mac need this attribute
+                output.pointSize = 1.0f;
 
                 return output;
             }
