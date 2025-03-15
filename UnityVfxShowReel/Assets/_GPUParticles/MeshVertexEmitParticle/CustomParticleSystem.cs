@@ -30,7 +30,8 @@ namespace ayy
         [SerializeField] public int _particlePoolSize = 100;
         [SerializeField] public Mesh _particleShapeMesh = null;
         [SerializeField,Range(0.1f,3.0f)] public float _particleShapeScale = 1.0f;
-        [SerializeField] public float _particleInitialSpeed = 10.0f;
+        [SerializeField,Range(0.0f,3.0f)] public float _particleInitialSpeedBase = 10.0f;
+        [SerializeField,Range(0.0f,10.0f)] public float _particleInitialSpeedUltra = 10.0f;
         [SerializeField,Range(-5,5)] public float _particleAcc = 0.0f;
         [SerializeField] public float _particleLifeTime = 3.0f;
         [SerializeField] public ComputeShader _particleMovementCS = null;
@@ -276,13 +277,15 @@ namespace ayy
         {
             Color fromColor = UnityEngine.Random.ColorHSV();
             Color toColor = UnityEngine.Random.ColorHSV();
+
+            float speed = _particleInitialSpeedBase + UnityEngine.Random.Range(0, _particleInitialSpeedUltra);
             
             _particleMovementCS.SetInt(Shader.PropertyToID("_StartIndex"), fromParticleIndex);
             _particleMovementCS.SetInt(Shader.PropertyToID("_ToIndex"), toParticleIndex);
             _particleMovementCS.SetInt(Shader.PropertyToID("_From2"), from2);
             _particleMovementCS.SetInt(Shader.PropertyToID("_To2"), to2);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_TargetWorldPosition"), new float[3]{worldPos.x,worldPos.y,worldPos.z });
-            _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleSpeed"), _particleInitialSpeed);
+            _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleSpeed"), speed);
             _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleAcc"), _particleAcc);
             _particleMovementCS.SetFloat(Shader.PropertyToID("_ParticleLifeTime"), _particleLifeTime);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_emitStartColor"), new float[3]{fromColor.r,fromColor.g,fromColor.b});
@@ -309,7 +312,8 @@ namespace ayy
                 Vector3 normal = normals[i];
 
                 ref Particle particle = ref _particlesData[_nextToUseIndex];
-                EmitOneParticle(ref particle, pos + worldPos, normal * _particleInitialSpeed, _particleLifeTime);
+                float speed = _particleInitialSpeedBase + UnityEngine.Random.Range(0, _particleInitialSpeedUltra);                
+                EmitOneParticle(ref particle, pos + worldPos, normal * speed, _particleLifeTime);
                 emmitCount++;
 
                 // iterate

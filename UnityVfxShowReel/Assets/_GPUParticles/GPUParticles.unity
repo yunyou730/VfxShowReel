@@ -222,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 364034721}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -709,7 +709,8 @@ MonoBehaviour:
   _particleShapeMesh: {fileID: -2222346464153789849, guid: fe8124a8720524d2aae03474ec625380,
     type: 3}
   _particleShapeScale: 1
-  _particleInitialSpeed: 1
+  _particleInitialSpeedBase: 0.1
+  _particleInitialSpeedUltra: 1.5
   _particleAcc: 0
   _particleLifeTime: 1
   _particleMovementCS: {fileID: 7200000, guid: 16c361183caef7e428ddeda2049fd2c5, type: 3}
