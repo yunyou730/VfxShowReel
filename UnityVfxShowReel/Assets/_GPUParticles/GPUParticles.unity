@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 364034723}
   - component: {fileID: 364034722}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Suzanne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604255584}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9031c5cf8d1fa0c428b93c038018f338, type: 3}
   m_Name: 
@@ -380,6 +380,55 @@ MonoBehaviour:
   moveSpeed: 10
   rotateSpeed: 50
   zoomSpeed: 5
+--- !u!1 &1039822199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1039822201}
+  - component: {fileID: 1039822200}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1039822200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039822199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: afd61f9d24b4542848310f5aa437aa0c, type: 2}
+--- !u!4 &1039822201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039822199}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.04597521, y: 0.05593741, z: 0.05930841}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1085295679
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,16 +545,19 @@ MonoBehaviour:
   _particleShapeMesh: {fileID: -2222346464153789849, guid: fe8124a8720524d2aae03474ec625380,
     type: 3}
   _particleShapeScale: 1
-  _particleInitialSpeed: 0.8
+  _particleInitialSpeed: 1
   _particleAcc: 0
-  _particleLifeTime: 0.8
+  _particleLifeTime: 1
   _particleMovementCS: {fileID: 7200000, guid: 16c361183caef7e428ddeda2049fd2c5, type: 3}
   _skipVertexCount: 1
   _particleRendererMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   _particleRendererMaterial: {fileID: 2100000, guid: 25df6b943102e41dfa177e3a375356fa,
     type: 2}
-  _particleRendererMeshScale: 0.104
+  _particleRendererMeshScale: 0.1
   _shapeCursor: {fileID: 364034725}
+  _mouseZ: 14.96
+  _mouseScrollSpeed: 3
+  _keyboardMoveSpeed: 3500
 --- !u!1 &1413688139
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,3 +975,4 @@ SceneRoots:
   - {fileID: 1085295682}
   - {fileID: 1484719796}
   - {fileID: 364034725}
+  - {fileID: 1039822201}

@@ -15,6 +15,7 @@ namespace ayy
         public CustomParticleRenderPass()
         {
             renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
+            //renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
             _particlePointsMaterial = new Material(Shader.Find("Ayy/MeshEmitPointParticles"));
         }
         

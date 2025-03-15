@@ -51,6 +51,7 @@ Shader "Ayy/MeshEmitMeshParticles"
                 float2 uv : TEXCOORD0;
                 float pointSize : PSIZE;
                 float active : COLOR1;
+                float3 particleWorldPos : COLOR2;
             };
 
             // Particle's data, shared with the compute shader
@@ -89,7 +90,7 @@ Shader "Ayy/MeshEmitMeshParticles"
                 float3 particleWorldPosition = particle.Position;
                 float3 vertexWorldPosition = vertexLocalPosition + particleWorldPosition;
                 output.position = UnityWorldToClipPos(float4(vertexWorldPosition,1.0));
-                
+                output.particleWorldPos = particleWorldPosition;
 
                 // Point Size. Mac need this attribute
                 output.pointSize = 1.0f;
@@ -99,6 +100,11 @@ Shader "Ayy/MeshEmitMeshParticles"
 
                 return output;
             }
+
+            float remap(float lowBound,float highBound,float value)
+            {
+                return clamp((value - lowBound) / (highBound - lowBound),0.0,1.0);
+            }            
 
             // Pixel shader
             float4 frag(PS_INPUT i) : COLOR
@@ -110,12 +116,18 @@ Shader "Ayy/MeshEmitMeshParticles"
                 //texColor.rgb = texColor.rgb * texColor.a;
                 //texColor.r
 
-                return float4(texColor.rgb * i.color.rgb,texColor.a * i.color.a);
+                float r = remap(-5.0,5.0,i.particleWorldPos.x);
+                float g = remap(-5.0,5.0,i.particleWorldPos.y);
+                float b = remap(-5.0,10.0,i.particleWorldPos.z);
+
+                float3 col = float3(r,g,b); 
+                return float4(texColor.rgb * col.rgb,texColor.a * i.color.a);
+                
+                //return float4(texColor.rgb * i.color.rgb,texColor.a * i.color.a);
                 //return texColor * i.color;
                 return float4(i.uv,0.0,1.0);
                 return i.color;
             }
-
             ENDCG
         }
     }

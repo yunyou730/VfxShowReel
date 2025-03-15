@@ -45,8 +45,13 @@ void CSMoveToMeshVertex(uint3 id : SV_DispatchThreadID)
     {
         // 符合这个条件, 即激活新粒子
         int meshVertexIndex = particleIndex - _StartIndex;
+        float3 normalDir = _MeshVertexBuffer[meshVertexIndex].Normal;
+        //normalDir.z = 0.0f;
+        //normalDir = normalize(normalDir);
+        
+        
         _ParticleBuffer[particleIndex].Position = _TargetWorldPosition + _MeshVertexBuffer[meshVertexIndex].Position;
-        _ParticleBuffer[particleIndex].Velocity = _MeshVertexBuffer[meshVertexIndex].Normal * _ParticleSpeed;
+        _ParticleBuffer[particleIndex].Velocity = normalDir * _ParticleSpeed;
         _ParticleBuffer[particleIndex].Active = 1.0f;
         _ParticleBuffer[particleIndex].ElapsedTime = 0.0f;
         _ParticleBuffer[particleIndex].LifeTime = _ParticleLifeTime;
@@ -66,6 +71,9 @@ void CSUpdate(uint3 id : SV_DispatchThreadID)
     {
         float3 pos = part.Position;
         float3 vel = part.Velocity;
+
+        float3 accDir = normalize(float3(1.0,1.0,0.0));
+        part.Velocity += accDir * _ParticleAcc * _DeltaTime;
         //part.Velocity += _ParticleAcc * _DeltaTime;
         //part.Velocity = part.Velocity + vel;
         //part.Velocity = _MeshVertexBuffer[meshVertexIndex].Normal

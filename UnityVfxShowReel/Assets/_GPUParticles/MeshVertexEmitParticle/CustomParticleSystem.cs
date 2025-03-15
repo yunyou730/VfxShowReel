@@ -41,6 +41,10 @@ namespace ayy
         [SerializeField,Range(0,1)] private float _particleRendererMeshScale = 1.0f;
         
         [SerializeField] private Transform _shapeCursor = null;
+        [SerializeField,Range(5f,20f)] private float _mouseZ = 10.0f;
+        [SerializeField,Range(0,10)] private float _mouseScrollSpeed = 3.0f;
+        
+        [SerializeField,Range(1000,10000)] private float _keyboardMoveSpeed = 2000.0f;
 
         private ComputeBuffer _particlesBuffer = null;
         private Particle[] _particlesData = null;
@@ -75,29 +79,83 @@ namespace ayy
 
         void Update()
         {
-            _particleRendererMaterial.SetFloat(Shader.PropertyToID("_Scale"),_particleRendererMeshScale);
-            
+            UpdateControlByMouse();
+            UpdateControlByKeyboard();
+            UpdateParticles(Time.deltaTime);
+        }
 
-            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f);
+        private void UpdateControlByMouse()
+        {
+            Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _mouseZ);
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
             
             if (Input.GetMouseButtonDown(0))
             //if(Input.GetMouseButton(0))
             {
                 EmitParticlesByMeshGPU(ref _meshVertices,ref _meshNormals, mouseWorldPos);
-
+            
             }
-            else if (Input.GetKeyDown(KeyCode.C))
+            
+            float mouseScroll = Input.GetAxis("Mouse ScrollWheel");
+            float scrollDelta = mouseScroll * _mouseScrollSpeed;// * Time.deltaTime;
+            _mouseZ += scrollDelta;
+            
+            
+            if (Input.GetKeyDown(KeyCode.C))
             {
                 EmitParticlesByMeshCPU(ref _meshVertices,ref _meshNormals, mouseWorldPos);
             }
-
+            
             if (_shapeCursor != null)
             {
                 _shapeCursor.position = mouseWorldPos;
             }
+        }
 
-            UpdateParticles(Time.deltaTime);
+        private void UpdateControlByKeyboard()
+        {
+            if (_shapeCursor == null)
+            {
+                return;
+            }
+            
+            Vector3 moveDir = Vector3.zero;
+            if (Input.GetKey(KeyCode.W))
+            {
+                moveDir += Vector3.up;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                moveDir += Vector3.down;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                moveDir += Vector3.left;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                moveDir += Vector3.right;
+            }
+            if (Input.GetKey(KeyCode.Q))
+            {
+                moveDir += Vector3.forward;
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                moveDir += Vector3.back;
+            }
+
+            if (moveDir.sqrMagnitude > Mathf.Epsilon)
+            {
+                moveDir.Normalize();
+                _shapeCursor.position += moveDir * _keyboardMoveSpeed * Time.deltaTime;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                Vector3 worldPos = _shapeCursor.position;
+                EmitParticlesByMeshGPU(ref _meshVertices,ref _meshNormals, worldPos);
+            }
         }
 
         private void OnDestroy()
@@ -298,6 +356,7 @@ namespace ayy
 
         private void UpdateParticles(float deltaTime)
         {
+            _particleRendererMaterial.SetFloat(Shader.PropertyToID("_Scale"),_particleRendererMeshScale);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_DeltaTime"), deltaTime);
             _particleMovementCS.Dispatch(_kernelUpdateParticles, Mathf.CeilToInt((float)_particlePoolSize / 64), 1, 1);
         }
