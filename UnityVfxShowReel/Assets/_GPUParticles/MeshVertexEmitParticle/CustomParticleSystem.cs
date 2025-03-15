@@ -45,6 +45,7 @@ namespace ayy
         [SerializeField,Range(0,10)] private float _mouseScrollSpeed = 3.0f;
         
         [SerializeField,Range(1000,10000)] private float _keyboardMoveSpeed = 2000.0f;
+        [SerializeField] private bool _bEnableMouseCtrlPos = false;
 
         private ComputeBuffer _particlesBuffer = null;
         private Particle[] _particlesData = null;
@@ -70,7 +71,6 @@ namespace ayy
         void Start()
         {
             _stopwatch = new Stopwatch();
-            //_particleRendererMaterial = new Material(_particleRendererShader);
             HoldMeshVertexData();
             InitParticleBuffer();
             InitMeshVerticesBuffer();
@@ -79,7 +79,11 @@ namespace ayy
 
         void Update()
         {
-            UpdateControlByMouse();
+            if (_bEnableMouseCtrlPos)
+            {
+                UpdateControlByMouse();                
+            }
+
             UpdateControlByKeyboard();
             UpdateParticles(Time.deltaTime);
         }
@@ -174,8 +178,6 @@ namespace ayy
             // hold all 
             //_meshVertices = _particleShapeMesh.vertices;
             //_meshNormals = _particleShapeMesh.normals;
-         
-
             _meshVertices = new Vector3[_particleShapeMesh.vertexCount / _skipVertexCount];
             _meshNormals = new Vector3[_particleShapeMesh.vertexCount / _skipVertexCount];
             for (int i = 0,subIndex = 0;i < _particleShapeMesh.vertexCount;i += _skipVertexCount,subIndex++)
@@ -359,6 +361,14 @@ namespace ayy
             _particleRendererMaterial.SetFloat(Shader.PropertyToID("_Scale"),_particleRendererMeshScale);
             _particleMovementCS.SetFloats(Shader.PropertyToID("_DeltaTime"), deltaTime);
             _particleMovementCS.Dispatch(_kernelUpdateParticles, Mathf.CeilToInt((float)_particlePoolSize / 64), 1, 1);
+        }
+
+        public void EmitParticlesManually()
+        {
+            if (_shapeCursor != null)
+            {
+                EmitParticlesByMeshGPU(ref _meshVertices, ref _meshNormals, _shapeCursor.position);
+            }
         }
     }
 }
