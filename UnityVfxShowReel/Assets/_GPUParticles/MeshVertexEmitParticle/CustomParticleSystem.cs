@@ -79,11 +79,7 @@ namespace ayy
 
         void Update()
         {
-            if (_bEnableMouseCtrlPos)
-            {
-                UpdateControlByMouse();                
-            }
-
+            UpdateControlByMouse();                
             UpdateControlByKeyboard();
             UpdateParticles(Time.deltaTime);
         }
@@ -92,12 +88,15 @@ namespace ayy
         {
             Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _mouseZ);
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
-            
-            if (Input.GetMouseButtonDown(0))
+            if (!_bEnableMouseCtrlPos && _shapeCursor != null)
+            {
+                mouseWorldPos = _shapeCursor.position;
+            }
+
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.L))
             //if(Input.GetMouseButton(0))
             {
                 EmitParticlesByMeshGPU(ref _meshVertices,ref _meshNormals, mouseWorldPos);
-            
             }
             
             float mouseScroll = Input.GetAxis("Mouse ScrollWheel");
@@ -110,7 +109,7 @@ namespace ayy
                 EmitParticlesByMeshCPU(ref _meshVertices,ref _meshNormals, mouseWorldPos);
             }
             
-            if (_shapeCursor != null)
+            if (_shapeCursor != null && _bEnableMouseCtrlPos)
             {
                 _shapeCursor.position = mouseWorldPos;
             }
