@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: half_lambert
+  m_Name: half_lambert 1
   m_Shader: {fileID: -6465566751694194690, guid: 21ff5c115b2c64164a7188b4be6e4bc5,
     type: 3}
   m_Parent: {fileID: 0}
@@ -41,7 +41,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _border_factor: 2.02
+    - _border_factor: 2.49
     m_Colors:
     - _MainColor: {r: 0.12963653, g: 1, b: 0, a: 0}
     - _border_color: {r: 0.21698111, g: 0.14992815, b: 0.12793697, a: 0}
