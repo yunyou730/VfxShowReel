@@ -46,7 +46,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Rotation: 0
-    - _Softness: 0.041
+    - _Softness: 0.059
     - _USE_SCREEN_SPACE: 0
     - _Use_Screen_Space: 0
     - _softness: 0
