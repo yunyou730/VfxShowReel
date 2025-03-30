@@ -40,6 +40,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Circle_Density: 20
+    - _ColorVFactor: 2.87
     - _Falloff_Threshold: 2.5
     - _Lit_Threshold: 2
     - _QueueControl: 0
@@ -50,7 +51,7 @@ Material:
     - _Use_Screen_Space: 0
     - _softness: 0
     m_Colors:
-    - _MainColor: {r: 0.15566039, g: 0.45191997, b: 1, a: 0}
+    - _MainColor: {r: 0, g: 0.32668227, b: 0.936, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &9203530758148029149
