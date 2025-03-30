@@ -103,6 +103,7 @@
     <None Include="Assets/_GPUParticles/MeshVertexEmitParticle/MeshEmitPointParticles.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl" />
     <None Include="Assets/_RenderFeatureTest/Shaders/SplitScreen.shader" />
+    <None Include="Assets/_HalfLambert/halftone/halftone.hlsl" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
     <None Include="Assets/RawAssets/Toon Gas Station/ToonShading/Shaders/ToonLit.shader" />
     <None Include="Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
