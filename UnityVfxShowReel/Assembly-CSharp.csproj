@@ -84,9 +84,11 @@
     <None Include="Assets/_GPUParticlesBuildMesh/GPUTrianglesInstance.shader" />
     <None Include="Assets/_RenderFeatureTest/Shaders/AyyTestShader.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal-config/package.json" />
+    <None Include="Assets/_AOAndShadow/OldSchoolPlus.shader" />
     <None Include="Packages/com.unity.render-pipelines.core/Shaders/CoreCopy.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
     <None Include="Assets/_GPUParticlesBuildMesh/CSParticleUpdate.compute" />
+    <None Include="Assets/_AOAndShadow/ShadowReceiver/ShadowReceiver.shader" />
     <None Include="Assets/_ComputeShaderTest1/CS_MassSimpleCompute.compute" />
     <None Include="Assets/_GPUParticles/MeshVertexEmitParticle/MeshEmitMeshParticles.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
@@ -103,6 +105,7 @@
     <None Include="Assets/_GPUParticles/MeshVertexEmitParticle/MeshEmitPointParticles.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl" />
     <None Include="Assets/_RenderFeatureTest/Shaders/SplitScreen.shader" />
+    <None Include="Assets/_AOAndShadow/CustomLighting.hlsl" />
     <None Include="Assets/_HalfLambert/halftone/halftone.hlsl" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
     <None Include="Assets/RawAssets/Toon Gas Station/ToonShading/Shaders/ToonLit.shader" />
@@ -132,6 +135,7 @@
     <None Include="Packages/com.unity.render-pipelines.universal/ValidationConfig.json" />
     <None Include="Assets/TextMesh Pro/Sprites/EmojiOne.json" />
     <None Include="Assets/_BlendTest/BlendTestByTexture.shader" />
+    <None Include="Assets/Common/UnlitShaderCode.shader" />
     <None Include="Assets/_BlendTest/BlendTestByColor.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" />
     <None Include="Assets/RawAssets/Toon Gas Station/Documentation/Documentation.txt" />
