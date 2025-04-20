@@ -12,19 +12,20 @@ namespace ayy.rendering
     class AyyBlurRenderPass : ScriptableRenderPass
     {
         private Material _blitMaterial = null;
-
-
-        private RTHandle _tempRT = null;
-
+        
+        private RTHandle _tempRT1 = null;
+        private RTHandle _tempRT2 = null;
+        
         private RTHandle _sourceRT = null;
         private RTHandle _targetRT = null;
         
         ProfilingSampler _profilingSampler = new ProfilingSampler(nameof(AyyBlurRenderPass));
 
-
+        private Vector4 _screenSize;
+        
         public AyyBlurRenderPass()
         {
-            _blitMaterial = new Material(Shader.Find("Ayy/BlitShader"));
+            _blitMaterial = new Material(Shader.Find("Ayy/GaussianBlur"));
         }
 
         // NOTE: This method is part of the compatibility rendering path, please use the Render Graph API above instead.
@@ -38,11 +39,30 @@ namespace ayy.rendering
             _sourceRT = renderingData.cameraData.renderer.cameraColorTargetHandle;
             _targetRT = renderingData.cameraData.renderer.cameraColorTargetHandle;;
             
-            var desc = renderingData.cameraData.cameraTargetDescriptor;
-            //_tempRT = RTHandles.Alloc(descriptor);
-            //desc.msaaSamples = 1;
-            desc.depthStencilFormat = GraphicsFormat.None;
-            RenderingUtils.ReAllocateHandleIfNeeded(ref _tempRT, desc, name: "_ayy_blit_temp_rt");
+            VolumeStack volumeStack = VolumeManager.instance.stack;
+            var blurVolume = volumeStack.GetComponent<AyyBlurVolumeComp>();
+            if (blurVolume.IsActive())
+            {
+                float downSampleScale = blurVolume.DownSampleScale.value;
+                
+                var desc = renderingData.cameraData.cameraTargetDescriptor;
+                desc.depthStencilFormat = GraphicsFormat.None;
+                desc.width = (int)(desc.width * downSampleScale);
+                desc.height = (int)(desc.height * downSampleScale);
+            
+                RenderingUtils.ReAllocateHandleIfNeeded(ref _tempRT1, desc, name: "ayy_gaussianblur_temp_rt");
+                _tempRT1.rt.wrapMode = TextureWrapMode.Clamp;
+                
+                RenderingUtils.ReAllocateHandleIfNeeded(ref _tempRT2, desc, name: "ayy_gaussianblur_temp_rt");
+                _tempRT2.rt.wrapMode = TextureWrapMode.Clamp;                
+            
+                _screenSize.x = Screen.width;
+                _screenSize.y = Screen.height;
+                _screenSize.z = 0.0f;
+                _screenSize.w = 0.0f;
+            }
+
+            
         }
 
         // NOTE: This method is part of the compatibility rendering path, please use the Render Graph API above instead.
@@ -58,7 +78,6 @@ namespace ayy.rendering
             }
 
             VolumeStack volumeStack = VolumeManager.instance.stack;
-
             var blurVolume = volumeStack.GetComponent<AyyBlurVolumeComp>();
             if (blurVolume.IsActive())
             {
@@ -66,11 +85,29 @@ namespace ayy.rendering
                 using (new ProfilingScope(cmd, _profilingSampler))
                 {
                     cmd.Clear();
+
+                    cmd.Blit(_sourceRT, _tempRT1);
                     
-                    //Blitter.BlitCameraTexture(cmd,_sourceRT, _tempRT, _blitMaterial,0);
-                    //Blitter.BlitCameraTexture(cmd,_tempRT, _targetRT,_blitMaterial,0);
-                    cmd.Blit(_sourceRT, _tempRT, _blitMaterial,0);
-                    cmd.Blit(_tempRT, _sourceRT);
+                    
+                    int kernelSize = Mathf.FloorToInt(blurVolume.KernelSize.value);
+                    int iterations = Mathf.FloorToInt(blurVolume.Iterations.value);
+                    for (int iteration = 0; iteration < iterations; iteration++)
+                    {
+                        // horizontal blur
+                        cmd.SetGlobalInt(Shader.PropertyToID("_kernelSize"),kernelSize);
+                        cmd.SetGlobalVector(Shader.PropertyToID("_screenSize"),_screenSize);
+                        //cmd.SetGlobalTexture(Shader.PropertyToID("_BlitTexture"),_tempRT1);
+                        cmd.Blit(_tempRT1, _tempRT2, _blitMaterial,0);
+                        
+                        // vertical blur
+                        cmd.SetGlobalInt(Shader.PropertyToID("_kernelSize"),kernelSize);
+                        cmd.SetGlobalVector(Shader.PropertyToID("_screenSize"),_screenSize);
+                        //cmd.SetGlobalTexture(Shader.PropertyToID("_BlitTexture"),_tempRT2);
+                        cmd.Blit(_tempRT2, _tempRT1,_blitMaterial,1);
+                    }
+
+                    cmd.Blit(_tempRT1, _targetRT);
+                    
                     context.ExecuteCommandBuffer(cmd);
                 }                
                 CommandBufferPool.Release(cmd);
@@ -82,8 +119,11 @@ namespace ayy.rendering
         // Cleanup any allocated resources that were created during the execution of this render pass.
         public override void OnCameraCleanup(CommandBuffer cmd)
         {
-            RTHandles.Release(_tempRT);
-            _tempRT = null;
+            RTHandles.Release(_tempRT1);
+            _tempRT1 = null;
+            
+            RTHandles.Release(_tempRT2);
+            _tempRT2 = null;            
         }
     }
     

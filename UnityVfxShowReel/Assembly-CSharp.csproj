@@ -66,6 +66,7 @@
     <Compile Include="Assets/Common/CameraController.cs" />
     <Compile Include="Assets/_GPUParticles/AyyParticleSystem.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
+    <Compile Include="Assets/_DynamicBlur/Shaders/NewMonoBehaviourScript.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderFeature.cs" />
     <Compile Include="Assets/_ComputeShaderTest1/ManualParticleSystemByCS.cs" />
     <Compile Include="Assets/_GPUParticles/GPUParticle.cs" />
@@ -124,7 +125,7 @@
     <None Include="Assets/RawAssets/Toon Gas Station/ToonShading/Shaders/ToonLitOutline.shader" />
     <None Include="Assets/_GPUParticles/Triangles.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
-    <None Include="Assets/_DynamicBlur/Shaders/BlitShader.shader" />
+    <None Include="Assets/_DynamicBlur/Shaders/AyyGaussianBlur.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal/ValidationExceptions.json" />
     <None Include="Assets/_GPUParticles/ParticleResolver.compute" />
     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />

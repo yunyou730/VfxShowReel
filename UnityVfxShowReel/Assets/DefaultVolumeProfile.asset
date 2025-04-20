@@ -648,12 +648,15 @@ MonoBehaviour:
   enable:
     m_OverrideState: 1
     m_Value: 0
-  test1:
+  KernelSize:
     m_OverrideState: 1
-    m_Value: 0.9
-  test:
+    m_Value: 10
+  Iterations:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
+  DownSampleScale:
+    m_OverrideState: 1
+    m_Value: 0.5
 --- !u!114 &-1358613119693524376
 MonoBehaviour:
   m_ObjectHideFlags: 3
