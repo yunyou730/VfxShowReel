@@ -81,7 +81,7 @@ Shader "Ayy/ShadowReceiver"
 
             float3 resultColor = _BaseColor.rgb * shadowAttenuation;
             
-            return float4(resultColor,1.0);
+            //return float4(resultColor,1.0);
             return float4(shadowAttenuation,shadowAttenuation,shadowAttenuation,1.0);
         }
         
@@ -95,6 +95,7 @@ Shader "Ayy/ShadowReceiver"
             
             ENDHLSL
         }
+        
 
         Pass
         {
