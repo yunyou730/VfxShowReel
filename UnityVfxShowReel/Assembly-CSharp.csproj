@@ -46,6 +46,8 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/6000.0.38f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/_DynamicBlur/AyyBlurRenderPass.cs" />
+    <Compile Include="Assets/_DynamicBlur/AyyBlurVolumeComp.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderPass.cs" />
     <Compile Include="Assets/_GPUParticlesBuildMesh/BuildMeshRenderFeature.cs" />
     <Compile Include="Assets/_GPUParticlesBuildMesh/GPUTrianglesDataModel.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="Assets/_LutBySelfWithRenderFeature/LUTRenderPass.cs" />
     <Compile Include="Assets/_ComputeShaderTest1/CSTest.cs" />
     <Compile Include="Assets/_RenderFeatureTest/SwitchRenderPipeline.cs" />
+    <Compile Include="Assets/_DynamicBlur/AyyPostEffectRenderFeature.cs" />
     <Compile Include="Assets/_GPUParticles/MeshVertexEmitParticle/CustomParticleRenderPass.cs" />
     <Compile Include="Assets/_GPUParticles/AyyGPUParticlesRenderFeature.cs" />
     <Compile Include="Assets/Common/CameraController.cs" />
@@ -121,6 +124,7 @@
     <None Include="Assets/RawAssets/Toon Gas Station/ToonShading/Shaders/ToonLitOutline.shader" />
     <None Include="Assets/_GPUParticles/Triangles.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
+    <None Include="Assets/_DynamicBlur/Shaders/BlitShader.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal/ValidationExceptions.json" />
     <None Include="Assets/_GPUParticles/ParticleResolver.compute" />
     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />

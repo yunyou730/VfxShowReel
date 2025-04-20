@@ -632,6 +632,28 @@ MonoBehaviour:
   maxNits:
     m_OverrideState: 1
     m_Value: 1000
+--- !u!114 &-1581413062440666091
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcd83a01dae343738720e4d75496c2a, type: 3}
+  m_Name: AyyBlurVolumeComp
+  m_EditorClassIdentifier: 
+  active: 1
+  enable:
+    m_OverrideState: 1
+    m_Value: 0
+  test1:
+    m_OverrideState: 1
+    m_Value: 0.9
+  test:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-1358613119693524376
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -687,6 +709,7 @@ MonoBehaviour:
   - {fileID: 8480882794604096676}
   - {fileID: 7954187725552609387}
   - {fileID: -6952813190943130940}
+  - {fileID: -1581413062440666091}
 --- !u!114 &1205016649784106620
 MonoBehaviour:
   m_ObjectHideFlags: 3
