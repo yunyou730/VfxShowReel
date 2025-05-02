@@ -29,6 +29,7 @@ public class AudioTexture : MonoBehaviour
         _audioTexture.filterMode = FilterMode.Point;
         _mat = GetComponent<MeshRenderer>().material;
         _mat.SetTexture(Shader.PropertyToID("_AudioTex"), _audioTexture);
+        _mat.SetFloat(Shader.PropertyToID("_SampleCount"), _sampleCount);
     }
     
     void Update()
