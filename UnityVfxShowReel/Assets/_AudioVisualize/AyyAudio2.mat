@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AyyAudio1
-  m_Shader: {fileID: 4800000, guid: 3d118e4cc43534295bbdfe370578c131, type: 3}
+  m_Name: AyyAudio2
+  m_Shader: {fileID: 4800000, guid: e1bbe9fe13541446585205f11b22f473, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -33,8 +33,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BaseLine: 0.3
-    - _TestRange: 10
+    - _BaseLine: 0.5
+    - _TestRange: 300
+    - _TimeScale: 5
+    - _Waves: 8
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

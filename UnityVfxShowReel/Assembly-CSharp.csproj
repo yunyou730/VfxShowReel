@@ -90,6 +90,7 @@
     <None Include="Assets/_RenderFeatureTest/Shaders/AyyTestShader.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal-config/package.json" />
     <None Include="Assets/_AOAndShadow/OldSchoolPlus.shader" />
+    <None Include="Assets/_AudioVisualize/AyyAudio2.shader" />
     <None Include="Packages/com.unity.render-pipelines.core/Shaders/CoreCopy.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
     <None Include="Assets/_GPUParticlesBuildMesh/CSParticleUpdate.compute" />
