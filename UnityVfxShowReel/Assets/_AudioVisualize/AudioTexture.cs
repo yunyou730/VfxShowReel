@@ -36,7 +36,18 @@ public class AudioTexture : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _audioSource.Play();
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();                
+            }
+            else
+            {
+                _audioSource.UnPause();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            _audioSource.Pause();
         }
 
         if (_audioSource.isPlaying)
