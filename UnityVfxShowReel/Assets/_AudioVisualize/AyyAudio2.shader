@@ -7,7 +7,6 @@ Shader "Ayy/Audio2"
         _TestRange("Test Range",Range(1.0,1000.0)) = 7.0
         _TimeScale("Time Scale",Range(1.0,20.0)) = 2.0
         _Waves("Waves",Range(1.0,20.0)) = 8.0
-        //_BaseLine("Base Line",Range(0.0,0.5)) = 0.5
     }
     SubShader
     {

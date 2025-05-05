@@ -1,13 +1,17 @@
-Shader "Ayy/Audio3"
+Shader "Ayy/Audio5"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
         _AudioTex("Audio Texture",2D) = "white" {}
-        _TestRange("Test Range",Range(1.0,1000.0)) = 7.0
-        _TimeScale("Time Scale",Range(1.0,20.0)) = 2.0
-        _BaseLine("Base Line",Range(0.0,1.414)) = 1.0
-        _InnerBorder("Inner border",Range(0.0,1.0)) = 0.0
+        _TestRange("Test Range",Range(1.0,100.0)) = 5.0
+        
+        _Bands("Bands in X",Range(10.0,50.0)) = 30.0
+        _Segs("Segs in Y",Range(10.0,50.0)) = 40.0
+        
+        
+        _UvMinBound("uv min bound",Range(0.0,1.0)) = 0.35
+        _UvMaxBound("uv max bound",Range(0.0,1.0)) = 0.5
     }
     SubShader
     {
@@ -56,47 +60,42 @@ Shader "Ayy/Audio3"
             #pragma fragment frag
             
             float _TestRange;
-            float _TimeScale;
-            float _BaseLine;
-            float _InnerBorder;
             float _SampleCount;
 
+            float _Bands = 30.0;
+            float _Segs = 40.0;
 
-            float3 hsv2rgb(float3 c)
-            {
-                float4 K = float4(1.0,2.0/3.0,1.0/3.0,3.0);
-                float3 p = abs(frac(c.xxx + K.xyz) * 6.0 - K .www);
-                return c.z * lerp(K.xxx,clamp(p - K.xxx,0.0,1.0),c.y);
-            }
-            
+            float _UvMinBound;
+            float _UvMaxBound;
+
+            // reference https://www.shadertoy.com/view/Mlj3WV
             half4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv;
-                uv = uv * 2.0 - 1.0;
 
-                float sdf = length(uv);
+                float2 p;
+                p.x = floor(uv.x * _Bands) / _Bands;
+                p.y = floor(uv.y * _Segs) / _Segs;
 
-                float angle = atan2(uv.y, uv.x) / 6.28; // [-1,+1]
-                angle = (angle + 1.0) * 0.5;    // [0,1]
-
-                float fft = tex2D(_AudioTex,float2(angle,0.25)).r * _TestRange;
-
-                float edge = _BaseLine + fft;// + sin(angle);
-                float v = step(sdf,edge) * smoothstep(_BaseLine - _InnerBorder,_BaseLine,sdf);
-
-                //v = 1.0 - smoothstep(_BaseLine,edge,sdf);
-                //float v = smoothstep(edge,0.1,sdf);
+                float fft = tex2D(_AudioTex,float2(p.x,0.0)).x * _TestRange;
+                //fft = clamp(fft,0.0,0.8);
 
                 
-                angle = atan2(uv.y,uv.x);
-                float hue = (angle + 3.141592653589793) / (2.0 * 3.141592653589793);
-                float3 col = float3(hue,1.0,1.0);
-                col = hsv2rgb(col);
-                col *= v;
+                float3 color = lerp(float3(0.0,2.0,0.0),float3(2.0,0.0,0.0),sqrt(uv.y));
+
+                float mask = (p.y < fft) ? 1.0 : 0.1;
+                // shape
+                float2 d = frac((uv - p) * float2(_Bands,_Segs)) - 0.5;
+                //float2 d = frac(uv * float2(_Bands,_Segs)) - 0.5;
+                float led = smoothstep(_UvMaxBound,_UvMinBound,abs(d.x)) * smoothstep(_UvMaxBound,_UvMinBound,abs(d.y));
+                float3 ledColor = led * color * mask;
                 
-                return float4(col,1.0);
-                
+                //return float4(d,0.0,1.0);
+                //float time = _Time.y;
+                return float4(ledColor,1.0);
             }
+                
+            
             ENDHLSL
         }
     }
