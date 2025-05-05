@@ -61,12 +61,8 @@ Shader "Ayy/Audio1"
                 float2 uv = i.uv;
                 float fft = tex2D(_AudioTex,float2(uv.x,0.0)).r;
                 fft *= _TestRange;      // range 比较大的时候, 能够观察到 fft 的波形
-
-
-                //float baseLine = sin(uv.x * 0.1 + _Time.y) + _BaseLine;
-                float baseLine = _BaseLine;
-
-                float threshold = baseLine + fft;
+                
+                float threshold = _BaseLine + fft;
                 float ret = step(uv.y,threshold);
                 return float4(ret,ret,ret,1.0);
             }

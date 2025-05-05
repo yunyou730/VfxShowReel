@@ -36,10 +36,14 @@ Material:
     - _Bands: 30
     - _BaseLine: 0.3
     - _CosFreq: 1
+    - _RemapOffset: 0
+    - _RemapScale: 1
     - _Segs: 40
     - _SinFreq: 10
-    - _TestRange: 50
+    - _TestRange: 200
     - _Toggle: 0
+    - _UvMaxBound: 0.5
+    - _UvMinBound: 0.35
     - _WaveFreq: 10
     - _WaveMoveSpeed: 0
     - _WaveOffset: 0

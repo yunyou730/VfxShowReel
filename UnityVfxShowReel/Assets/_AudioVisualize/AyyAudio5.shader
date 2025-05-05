@@ -4,14 +4,17 @@ Shader "Ayy/Audio5"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _AudioTex("Audio Texture",2D) = "white" {}
-        _TestRange("Test Range",Range(1.0,100.0)) = 5.0
+        _TestRange("Test Range",Range(1.0,200.0)) = 5.0
         
         _Bands("Bands in X",Range(10.0,50.0)) = 30.0
         _Segs("Segs in Y",Range(10.0,50.0)) = 40.0
         
-        
         _UvMinBound("uv min bound",Range(0.0,1.0)) = 0.35
         _UvMaxBound("uv max bound",Range(0.0,1.0)) = 0.5
+        
+        _Toggle("Enable Remap Sample Range",Range(0.0,1.0)) = 0.0
+        _RemapScale("Remap Scale",Range(0.0,1.0)) = 1.0
+        _RemapOffset("Remap Offset",Range(0.0,1.0)) = 0.0
     }
     SubShader
     {
@@ -68,6 +71,10 @@ Shader "Ayy/Audio5"
             float _UvMinBound;
             float _UvMaxBound;
 
+            float _Toggle;
+            float _RemapScale;
+            float _RemapOffset;
+
             // reference https://www.shadertoy.com/view/Mlj3WV
             half4 frag (v2f i) : SV_Target
             {
@@ -77,7 +84,17 @@ Shader "Ayy/Audio5"
                 p.x = floor(uv.x * _Bands) / _Bands;
                 p.y = floor(uv.y * _Segs) / _Segs;
 
-                float fft = tex2D(_AudioTex,float2(p.x,0.0)).x * _TestRange;
+
+                float sampleX = p.x;        // [0,1]
+                if (_Toggle > 0.5)
+                {
+                    sampleX = sampleX * 2.0 - 1.0;  // [-1,+1]
+                    sampleX *= _RemapScale; // [-0.8,+0.8]
+                    sampleX -= _RemapOffset;
+                    sampleX = sampleX * 0.5 + 0.5;  // remap back to [0,1] but scaled, resut in [0.1,0.9]   
+                }
+                
+                float fft = tex2D(_AudioTex,float2(sampleX,0.0)).x * _TestRange;
                 //fft = clamp(fft,0.0,0.8);
 
                 
@@ -93,6 +110,8 @@ Shader "Ayy/Audio5"
                 //return float4(d,0.0,1.0);
                 //float time = _Time.y;
                 return float4(ledColor,1.0);
+
+                //return float4(sampleX,0.0,0.0,1.0);
             }
                 
             

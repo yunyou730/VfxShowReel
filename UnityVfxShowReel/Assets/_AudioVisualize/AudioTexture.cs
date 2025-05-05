@@ -53,14 +53,22 @@ public class AudioTexture : MonoBehaviour
         if (_audioSource.isPlaying)
         {
             _audioSource.GetSpectrumData(_fftBuffer, 0, _window);
+            float min = Mathf.Infinity;
+            float max = -1.0f;
+            
             Color col = Color.black;
             for (int x = 0; x < _fftBuffer.Length; x++)
             {
                 col.r = _fftBuffer[x];
+                if (col.r < min)
+                    min = col.r;
+                if (col.r > max)
+                    max = col.r;
                 _audioTexture.SetPixel(x, 0, col);
                 _audioTexture.SetPixel(x, 1, Color.black);
             }
             _audioTexture.Apply();
+            Debug.Log(string.Format("!spectrum range:[{0:F3},{1:F3}]", min, max));
         }
     }
 
