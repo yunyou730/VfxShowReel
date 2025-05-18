@@ -51,6 +51,7 @@
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderPass.cs" />
     <Compile Include="Assets/_GPUParticlesBuildMesh/BuildMeshRenderFeature.cs" />
     <Compile Include="Assets/_GPUParticlesBuildMesh/GPUTrianglesDataModel.cs" />
+    <Compile Include="Assets/_Glyph3D/Glyph3DTest.cs" />
     <Compile Include="Assets/_GPUParticlesBuildMesh/ParticlesBuildMeshMono.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyySplitScreenRenderPass.cs" />
     <Compile Include="Assets/_RenderFeatureTest/Ayy2RenderFeature/Ayy2RenderPass.cs" />
@@ -58,14 +59,18 @@
     <Compile Include="Assets/_GPUParticles/MeshVertexEmitParticle/AudioSampler.cs" />
     <Compile Include="Assets/_GPUParticles/AyyGPUParticlesRenderPass.cs" />
     <Compile Include="Assets/_GPUParticles/MeshVertexEmitParticle/CustomParticleSystem.cs" />
+    <Compile Include="Assets/_Glyph3D/ttf_file.cs" />
     <Compile Include="Assets/_LutBySelfWithRenderFeature/LUTRenderPass.cs" />
     <Compile Include="Assets/_ComputeShaderTest1/CSTest.cs" />
     <Compile Include="Assets/_RenderFeatureTest/SwitchRenderPipeline.cs" />
+    <Compile Include="Assets/_AudioVisualize/MicrophoneInput.cs" />
     <Compile Include="Assets/_DynamicBlur/AyyPostEffectRenderFeature.cs" />
     <Compile Include="Assets/_GPUParticles/MeshVertexEmitParticle/CustomParticleRenderPass.cs" />
     <Compile Include="Assets/_GPUParticles/AyyGPUParticlesRenderFeature.cs" />
+    <Compile Include="Assets/_Glyph3D/ttf_glyph.cs" />
     <Compile Include="Assets/Common/CameraController.cs" />
     <Compile Include="Assets/_GPUParticles/AyyParticleSystem.cs" />
+    <Compile Include="Assets/_Glyph3D/TTF2MeshNativeLibrary.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/_DynamicBlur/Shaders/NewMonoBehaviourScript.cs" />
     <Compile Include="Assets/_RenderFeatureTest/AyyRenderFeature/AyyRenderFeature.cs" />
@@ -76,6 +81,7 @@
     <Compile Include="Assets/_GPUParticles/MeshVertexEmitParticle/AutoMove.cs" />
     <Compile Include="Assets/_GPUParticlesBuildMesh/BuildMeshRenderPass.cs" />
     <Compile Include="Assets/_RenderFeatureTest/Ayy2RenderFeature/Ayy2RenderFeature.cs" />
+    <Compile Include="Assets/_Glyph3D/ttf_mesh3d.cs" />
     <None Include="Assets/_GPUParticlesBuildMesh/BuildMesh.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal/package.json" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
@@ -101,6 +107,7 @@
     <None Include="Assets/_RenderFeatureTest/Shaders/BlitWithColor.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
     <None Include="Assets/_GrassWithGeoTess/GrassWithGeoTess.shader" />
+    <None Include="Assets/_AudioVisualize/AyyAudio4.shader" />
     <None Include="Packages/com.unity.render-pipelines.core/ValidationConfig.json" />
     <None Include="Packages/com.unity.render-pipelines.core/package.json" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
@@ -129,6 +136,7 @@
     <None Include="Assets/_GPUParticles/Triangles.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
     <None Include="Assets/_DynamicBlur/Shaders/AyyGaussianBlur.shader" />
+    <None Include="Assets/_AudioVisualize/AyyAudio5.shader" />
     <None Include="Packages/com.unity.render-pipelines.universal/ValidationExceptions.json" />
     <None Include="Assets/_GPUParticles/ParticleResolver.compute" />
     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />

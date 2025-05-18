@@ -50,10 +50,10 @@ namespace ayy.rendering
                 desc.width = (int)(desc.width * downSampleScale);
                 desc.height = (int)(desc.height * downSampleScale);
             
-                RenderingUtils.ReAllocateHandleIfNeeded(ref _tempRT1, desc, name: "ayy_gaussianblur_temp_rt");
+                RenderingUtils.ReAllocateHandleIfNeeded(ref _tempRT1, desc, name: "ayy_gaussianblur_temp_rt1");
                 _tempRT1.rt.wrapMode = TextureWrapMode.Clamp;
                 
-                RenderingUtils.ReAllocateHandleIfNeeded(ref _tempRT2, desc, name: "ayy_gaussianblur_temp_rt");
+                RenderingUtils.ReAllocateHandleIfNeeded(ref _tempRT2, desc, name: "ayy_gaussianblur_temp_rt2");
                 _tempRT2.rt.wrapMode = TextureWrapMode.Clamp;                
             
                 _screenSize.x = Screen.width;
@@ -86,7 +86,8 @@ namespace ayy.rendering
                 {
                     cmd.Clear();
 
-                    cmd.Blit(_sourceRT, _tempRT1);
+                    Blitter.BlitCameraTexture(cmd, _sourceRT, _tempRT1);
+                    //cmd.Blit(_sourceRT, _tempRT1);
                     
                     
                     int kernelSize = Mathf.FloorToInt(blurVolume.KernelSize.value);
@@ -96,17 +97,18 @@ namespace ayy.rendering
                         // horizontal blur
                         cmd.SetGlobalInt(Shader.PropertyToID("_kernelSize"),kernelSize);
                         cmd.SetGlobalVector(Shader.PropertyToID("_screenSize"),_screenSize);
-                        //cmd.SetGlobalTexture(Shader.PropertyToID("_BlitTexture"),_tempRT1);
-                        cmd.Blit(_tempRT1, _tempRT2, _blitMaterial,0);
+                        cmd.SetGlobalTexture(Shader.PropertyToID("_BlitTexture"),_tempRT1);
+                        //cmd.Blit(_tempRT1, _tempRT2, _blitMaterial,0);
+                        Blitter.BlitCameraTexture(cmd,_tempRT1, _tempRT2, _blitMaterial,0);
                         
                         // vertical blur
                         cmd.SetGlobalInt(Shader.PropertyToID("_kernelSize"),kernelSize);
                         cmd.SetGlobalVector(Shader.PropertyToID("_screenSize"),_screenSize);
-                        //cmd.SetGlobalTexture(Shader.PropertyToID("_BlitTexture"),_tempRT2);
-                        cmd.Blit(_tempRT2, _tempRT1,_blitMaterial,1);
+                        cmd.SetGlobalTexture(Shader.PropertyToID("_BlitTexture"),_tempRT2);
+                        //cmd.Blit(_tempRT2, _tempRT1,_blitMaterial,1);
+                        Blitter.BlitCameraTexture(cmd,_tempRT2, _tempRT1, _blitMaterial,0);
                     }
-
-                    cmd.Blit(_tempRT1, _targetRT);
+                    Blitter.BlitCameraTexture(cmd, _tempRT1, _targetRT);
                     
                     context.ExecuteCommandBuffer(cmd);
                 }                

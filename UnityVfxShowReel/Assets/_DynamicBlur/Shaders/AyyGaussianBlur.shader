@@ -11,6 +11,12 @@ Shader "Ayy/GaussianBlur"
         
         HLSLINCLUDE
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Debug/DebuggingFullscreen.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
             
             struct appdata
             {
@@ -27,7 +33,7 @@ Shader "Ayy/GaussianBlur"
             sampler2D _MainTex;
             float4 _MainTex_ST;            
 
-            sampler2D _BlitTexture;
+            //sampler2D _BlitTexture;
             
             v2f vert (appdata v)
             {
@@ -44,11 +50,11 @@ Shader "Ayy/GaussianBlur"
                 return o;
             }
 
-            float4 sampleTexture(sampler2D tex,float2 uv)
-            {
-                uv = clamp(uv,0.0,1.0);
-                return tex2D(tex,uv);
-            }
+            // float4 sampleTexture(sampler2D tex,float2 uv)
+            // {
+            //     uv = clamp(uv,0.0,1.0);
+            //     return tex2D(tex,uv);
+            // }
 
             
         ENDHLSL
@@ -71,8 +77,13 @@ Shader "Ayy/GaussianBlur"
                 for (int x = -_kernelSize; x <= _kernelSize; ++x)
                 {
                     float weight = exp(-(x * x) / (2.0 * _kernelSize * _kernelSize));
+
+                    float2 uv = i.uv + float2(x, 0) * texelSize;
+                    color += SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_LinearClamp, uv) * weight;
+
+                    
                     //color += sampleTexture(_BlitTexture, i.uv + float2(x, 0) * texelSize) * weight;
-                    color += sampleTexture(_MainTex, i.uv + float2(x, 0) * texelSize) * weight;
+                    //color += sampleTexture(_MainTex, i.uv + float2(x, 0) * texelSize) * weight;
                     totalWeight += weight;
                 }
                 return color / totalWeight;
@@ -99,8 +110,11 @@ Shader "Ayy/GaussianBlur"
                 for (int y = -_kernelSize; y <= _kernelSize; ++y)
                 {
                     float weight = exp(-(y * y) / (2.0 * _kernelSize * _kernelSize));
-                    //color += sampleTexture(_BlitTexture, i.uv + float2(0, y) * texelSize) * weight;
-                    color += sampleTexture(_MainTex, i.uv + float2(0, y) * texelSize) * weight;
+
+                    float2 uv =  i.uv + float2(0, y) * texelSize;
+                    color += SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_LinearClamp, uv) * weight;
+                    
+                    //color += sampleTexture(_MainTex, ) * weight;
                     totalWeight += weight;
                 }
                 
