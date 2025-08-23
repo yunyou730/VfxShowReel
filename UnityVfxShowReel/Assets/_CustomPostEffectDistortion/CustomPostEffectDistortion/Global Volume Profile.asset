@@ -39,7 +39,7 @@ MonoBehaviour:
     m_Value: 0.1
   lineColor:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.5512173, g: 0.8773585, b: 0.31038627, a: 1}
   bgColor1:
     m_OverrideState: 1
     m_Value: {r: 1, g: 0, b: 0.55372715, a: 1}
