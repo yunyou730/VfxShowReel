@@ -67,6 +67,6 @@ MonoBehaviour:
   m_Name: CustomRenderPassFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  _shader: {fileID: 4800000, guid: 5e4aa8a70734cff4280f618db076b2ee, type: 3}
+  _material: {fileID: 2100000, guid: 5379ee702144d904b82e036a337e033d, type: 2}
   _renderPassEvent: 500
   _distortionData: {fileID: 11400000, guid: 07e669a0157e9f648a2491ed12f79600, type: 2}

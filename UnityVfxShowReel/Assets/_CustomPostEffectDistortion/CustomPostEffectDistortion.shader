@@ -3,7 +3,6 @@ Shader "Ayy/CustomPostEffectDistortion"
     Properties
     {
         _MainTex("MainTex", 2D) = "white" {}
-    	_MainCol("MainCol",Color) = (1,1,1,1)
     }
 
     SubShader
@@ -33,7 +32,6 @@ Shader "Ayy/CustomPostEffectDistortion"
 			CBUFFER_START(UnityPerMaterial)
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
-			float4 _MainCol;
 
 			float _CenterX;
 			float _CenterY;
@@ -43,6 +41,14 @@ Shader "Ayy/CustomPostEffectDistortion"
 
 			float _ZoomFactor;
 			float _DebugDistortionStrength;
+
+			float _Mode;
+			float _WaveFreq;
+    		float _WaveAmplitude;
+
+			float _ZoomerInner;
+			float _ZoomerOuter;
+			float _ZoomerZoomFactor;
 			CBUFFER_END
 
 			struct Attributes
@@ -78,11 +84,17 @@ Shader "Ayy/CustomPostEffectDistortion"
 				center.x *= ratio;
 
 				float v = length(uv - center);
+				if (abs(_Mode - 2.0) < 0.1)		// sin wave 模式
+				{
+					return sin(v + _Time.y * _WaveFreq) * _WaveAmplitude * 0.5 + 0.5;
+				}
+				if (abs(_Mode - 1.0) < 0.1)		// zoomer 模式
+				{
+					return smoothstep(_ZoomerInner + _ZoomerOuter,_ZoomerInner,v) * _ZoomerZoomFactor;
+				}
+
+				// auto expanding 模式
 				float v1 = smoothstep(_LowerThreshold + _IncThreshold,_LowerThreshold,v);
-				//v1 = v1 * v1;
-				//float v2 = smoothstep(_LowerThreshold,_LowerThreshold - _LowerThreshold * _DecThreshold,v);
-				//return v1 - v2;
-				//return v1;
 				return v1;
 			}
 			
@@ -96,7 +108,7 @@ Shader "Ayy/CustomPostEffectDistortion"
 					return float4(distortStrength,distortStrength,distortStrength,1.0);
 				}
 
-				float scale = 1.0 + distortStrength * _ZoomFactor;//1.0 + distortStrength;
+				float scale = 1.0 + distortStrength * _ZoomFactor;
 				float2 sampleUV = uv;
 				sampleUV = sampleUV - float2(_CenterX,_CenterY);
 				sampleUV /= scale;
@@ -165,7 +177,6 @@ Shader "Ayy/CustomPostEffectDistortion"
 
 				// bg
 				float4 bgColor = lerp(_BgColor1,_BgColor2,smoothstep(0.0,2.0,origUV.x + origUV.y));
-
 				return lerp(bgColor,_LineColor,v);
 			}
 			ENDHLSL			

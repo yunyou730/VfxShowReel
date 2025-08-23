@@ -18,9 +18,9 @@ namespace ayy.CustomPostEffectDistortion
         private readonly string kTempRTName1 = "ayy_custom_post_effect_rt_1";
         private readonly string kTempRTName2 = "ayy_custom_post_effect_rt_2";
 
-        public CustomPostEffectRenderPass(Shader shader,DistortionData distortionData)
+        public CustomPostEffectRenderPass(Material material,DistortionData distortionData)
         {
-            _material = new Material(shader);
+            _material = material;
             _distortionData = distortionData;
         }
 
@@ -80,7 +80,17 @@ namespace ayy.CustomPostEffectDistortion
                 _material.SetFloat(Shader.PropertyToID("_DecThreshold"),_distortionData.DecThreshold);
 
                 // controlled by volume
+                _material.SetFloat(Shader.PropertyToID("_Mode"),(float)volume.Mode.value);
                 _material.SetFloat(Shader.PropertyToID("_DebugDistortionStrength"),volume.debugDistortionStrength.value ? 1.0f : 0.0f);
+                
+                _material.SetFloat(Shader.PropertyToID("_WaveAmplitude"),volume.WaveAmplitude.value);
+                _material.SetFloat(Shader.PropertyToID("_WaveFreq"),volume.WaveFreq.value);
+
+                _material.SetFloat(Shader.PropertyToID("_ZoomerInner"),volume.ZoomerInner.value);
+                _material.SetFloat(Shader.PropertyToID("_ZoomerOuter"),volume.ZoomerOuter.value);
+                _material.SetFloat(Shader.PropertyToID("_ZoomerZoomFactor"),volume.ZoomerZoomFactor.value);
+                
+                // Grids
                 _material.SetFloat(Shader.PropertyToID("_CellsNum"),volume.cellsNum.value);
                 _material.SetFloat(Shader.PropertyToID("_GridBorder"),volume.gridBorderSize.value);
                 _material.SetColor(Shader.PropertyToID("_LineColor"),volume.lineColor.value);

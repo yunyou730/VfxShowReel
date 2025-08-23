@@ -7,14 +7,14 @@ namespace ayy.CustomPostEffectDistortion
 {
     public class CustomRenderPassFeature : ScriptableRendererFeature
     {
-        public Shader _shader;
+        public Material _material;
         public RenderPassEvent _renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
         public DistortionData _distortionData;
         CustomPostEffectRenderPass _renderPass;
 
         public override void Create()
         {
-            _renderPass = new CustomPostEffectRenderPass(_shader,_distortionData)
+            _renderPass = new CustomPostEffectRenderPass(_material,_distortionData)
             {
                 renderPassEvent = _renderPassEvent,
             };
