@@ -49,6 +49,8 @@ Shader "Ayy/CustomPostEffectDistortion"
 			float _ZoomerInner;
 			float _ZoomerOuter;
 			float _ZoomerZoomFactor;
+
+			float _TestScale;
 			CBUFFER_END
 
 			struct Attributes
@@ -116,7 +118,90 @@ Shader "Ayy/CustomPostEffectDistortion"
 				float4 col = tex2D(_MainTex,sampleUV);
 				return col;
 				//return lerp(col,float4(1,1,1,1),distortStrength);
+			}			
+
+
+			half4 Frag1(Varyings input) : SV_Target
+			{
+				float2 uv = input.uv.xy;
+				return tex2D(_MainTex,uv);
 			}
+
+			half4 Frag2(Varyings input) : SV_Target
+			{
+				float2 uv = input.uv.xy;
+
+				uv -= float2(0.5,0.5);
+				uv /= 3.0f;
+				uv += float2(0.5,0.5);
+				
+				return tex2D(_MainTex,uv);
+			}
+
+			half4 Frag3(Varyings input) : SV_Target
+			{
+				float2 uv = input.uv.xy;
+
+				uv -= float2(_CenterX,_CenterY);
+				uv /= 3.0f;
+				uv += float2(_CenterX,_CenterY);
+				
+				return tex2D(_MainTex,uv);
+			}
+
+			half4 Frag4(Varyings input) : SV_Target
+			{
+				float2 uv = input.uv.xy;
+
+				uv -= float2(_CenterX,_CenterY);
+				uv /= _TestScale;
+				uv += float2(_CenterX,_CenterY);
+				
+				return tex2D(_MainTex,uv);
+			}
+
+			half4 Frag5(Varyings input) : SV_Target
+			{
+				float2 uv = input.uv.xy;
+				
+				float2 center = float2(_CenterX,_CenterY);
+				float ratio = _ScreenParams.x / _ScreenParams.y;
+				float2 uv2 = uv * 2.0 - 1.0;
+				uv2.x *= ratio;
+				center = center * 2.0 - 1.0;
+				center.x *= ratio;
+				float v = length(uv2 - center);
+				float distortionStrength = smoothstep(_ZoomerInner + _ZoomerOuter,_ZoomerInner,v) * _ZoomerZoomFactor;
+				
+				float scale = 1.0 + distortionStrength * _ZoomFactor;
+				uv -= float2(_CenterX,_CenterY);
+				uv /= scale;
+				uv += float2(_CenterX,_CenterY);
+				
+				return tex2D(_MainTex,uv);
+			}
+
+			half4 Frag6(Varyings input) : SV_Target
+			{
+				float2 uv = input.uv.xy;
+				
+				float2 center = float2(_CenterX,_CenterY);
+				float ratio = _ScreenParams.x / _ScreenParams.y;
+				float2 uv2 = uv * 2.0 - 1.0;
+				uv2.x *= ratio;
+				center = center * 2.0 - 1.0;
+				center.x *= ratio;
+				float v = length(uv2 - center);
+				float distortionStrength = sin(v + _Time.y * _WaveFreq) * _WaveAmplitude * 0.5 + 0.5;
+				
+				float scale = 1.0 + distortionStrength * _ZoomFactor;
+				uv -= float2(_CenterX,_CenterY);
+				uv /= scale;
+				uv += float2(_CenterX,_CenterY);
+				
+				return tex2D(_MainTex,uv);
+			}			
+
 			ENDHLSL
 		}
 

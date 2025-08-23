@@ -18,25 +18,25 @@ MonoBehaviour:
     m_Value: 1
   Mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   debugDistortionStrength:
     m_OverrideState: 1
     m_Value: 0
   WaveFreq:
     m_OverrideState: 1
-    m_Value: 2.81
+    m_Value: 3.04
   WaveAmplitude:
     m_OverrideState: 1
-    m_Value: 2.17
+    m_Value: 1.56
   ZoomerInner:
     m_OverrideState: 1
-    m_Value: 0.404
+    m_Value: 0.398
   ZoomerOuter:
     m_OverrideState: 1
-    m_Value: 0.015
+    m_Value: 0.056
   ZoomerZoomFactor:
     m_OverrideState: 1
-    m_Value: 8.08
+    m_Value: 8.05
   LowerThreshold:
     m_OverrideState: 1
     m_Value: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
     m_Value: 1
   ZoomFactor:
     m_OverrideState: 1
-    m_Value: 0.13
+    m_Value: 0.21
   cellsNum:
     m_OverrideState: 1
     m_Value: 8

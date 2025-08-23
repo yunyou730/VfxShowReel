@@ -30,9 +30,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableSinWave: 1
-    - _Mode: 1
-    - _WaveAmplitude: 2.17
-    - _WaveFreq: 2.81
+    - _Mode: 0
+    - _WaveAmplitude: 1.56
+    - _WaveFreq: 3.04
     m_Colors:
     - _MainCol: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

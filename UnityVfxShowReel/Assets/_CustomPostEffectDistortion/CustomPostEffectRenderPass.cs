@@ -78,6 +78,7 @@ namespace ayy.CustomPostEffectDistortion
                 _material.SetFloat(Shader.PropertyToID("_LowerThreshold"),_distortionData.LowerThreshold);
                 _material.SetFloat(Shader.PropertyToID("_IncThreshold"),_distortionData.IncThreshold);
                 _material.SetFloat(Shader.PropertyToID("_DecThreshold"),_distortionData.DecThreshold);
+                _material.SetFloat(Shader.PropertyToID("_TestScale"),_distortionData.TestScrollDelta);
 
                 // controlled by volume
                 _material.SetFloat(Shader.PropertyToID("_Mode"),(float)volume.Mode.value);

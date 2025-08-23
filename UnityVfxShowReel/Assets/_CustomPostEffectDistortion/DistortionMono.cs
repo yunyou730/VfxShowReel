@@ -22,11 +22,6 @@ namespace ayy.CustomPostEffectDistortion
         private float _startValue = 0.0f;
         public float DestValue = 4.0f;
         
-        void Start()
-        {
-            
-        }
-
         void Update()
         {
             var stack = VolumeManager.instance.stack;
@@ -38,7 +33,7 @@ namespace ayy.CustomPostEffectDistortion
             var volume = stack.GetComponent<CustomPostEffectVolume>();
             if (volume.IsActive())
             {
-                if (volume.Mode.value == (int)ECustomDistortionMode.AutoExpanding || volume.Mode.value == (int)ECustomDistortionMode.SinWave)
+                if (volume.Mode.value == (int)ECustomDistortionMode.AutoExpanding)
                 {
                     if(Input.GetMouseButtonUp(0))
                     {
@@ -49,7 +44,7 @@ namespace ayy.CustomPostEffectDistortion
                         OnUpdateDistortion();
                     }
                 }
-                else if (volume.Mode.value == (int)ECustomDistortionMode.Zoomer)
+                else if (volume.Mode.value == (int)ECustomDistortionMode.Zoomer || volume.Mode.value == (int)ECustomDistortionMode.SinWave)
                 {
                     if (Input.GetMouseButton(0))
                     {
@@ -59,7 +54,8 @@ namespace ayy.CustomPostEffectDistortion
                 }
             }
 
-
+            float scrollDelta = Input.mouseScrollDelta.y * Time.deltaTime;
+            _data.TestScrollDelta += scrollDelta;
         }
 
         private void OnStartDistortion()
@@ -99,10 +95,7 @@ namespace ayy.CustomPostEffectDistortion
             if (volume.IsActive())
             {
                 _data.ZoomFactor = volume.ZoomFactor.value;
-                //_data.LowerThreshold = volume.LowerThreshold.value;
                 _data.IncThreshold = volume.IncThreshold.value;
-                // _data.DecThreshold = volume.DecThreshold.value;
-
                 _data.LowerThreshold = Mathf.Lerp(_startValue, DestValue, pct);
             }
         }
