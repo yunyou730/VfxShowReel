@@ -5,7 +5,8 @@ Shader "Ayy/OutlineFlameByNoise/FlameByMask"
         _MainTex("MainTex", 2D) = "white" {}
     	_DistortionStrength("DistortionStrength",Range(0,0.5)) = 0.1
     	_NoiseScale("NoiseScale",Range(-100,100)) = 20
-    	_UVOffsetSpeedFactor("UV Offset Speed Factor",Range(-3,3)) = 1.0
+    	_UVOffsetSpeedFactorY("UV Offset Speed Factor y",Range(-3,3)) = 1.0
+    	_UVOffsetSpeedFactorX("UV Offset Speed Factor X",Range(-3,3)) = 1.0
     	
     	_ColorFrom("ColorFrom",Color) = (1,0,0,1)
     	_ColorTo("ColorFrom",Color) = (1,1,0,1)
@@ -40,7 +41,8 @@ Shader "Ayy/OutlineFlameByNoise/FlameByMask"
 			float4 _MainTex_ST;
 			float _DistortionStrength;
 			float _NoiseScale;
-			float _UVOffsetSpeedFactor;
+			float _UVOffsetSpeedFactorY;
+			float _UVOffsetSpeedFactorX;
 			float4 _ColorFrom;
     		float4  _ColorTo;
 			CBUFFER_END
@@ -123,7 +125,8 @@ Shader "Ayy/OutlineFlameByNoise/FlameByMask"
 				float2 uv = input.uv.xy;
 
 				float2 noiseUV = uv;
-				noiseUV.y += _UVOffsetSpeedFactor * _Time.y;
+				noiseUV.y += _UVOffsetSpeedFactorY * _Time.y;
+				noiseUV.x += _UVOffsetSpeedFactorX * _Time.x;
 				
 				float offsetValue = simpleNoise(noiseUV,_NoiseScale);		// offsetValue [0,1]
 				offsetValue = offsetValue * 2.0 - 1.0;		// offsetValue [0,1] => [-1,1]

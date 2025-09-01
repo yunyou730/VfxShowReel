@@ -33,7 +33,7 @@ Material:
     - _NoiseScale: 73
     - _UVOffsetSpeedFactor: -0.23
     m_Colors:
-    - _ColorFrom: {r: 1, g: 0.28795487, b: 0.1462264, a: 1}
-    - _ColorTo: {r: 1, g: 0.8741453, b: 0, a: 1}
+    - _ColorFrom: {r: 0, g: 0.075142145, b: 1, a: 1}
+    - _ColorTo: {r: 1, g: 0, b: 0.9312868, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
