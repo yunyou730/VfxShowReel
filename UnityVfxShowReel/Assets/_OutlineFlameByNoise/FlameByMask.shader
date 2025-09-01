@@ -6,6 +6,9 @@ Shader "Ayy/OutlineFlameByNoise/FlameByMask"
     	_DistortionStrength("DistortionStrength",Range(0,0.5)) = 0.1
     	_NoiseScale("NoiseScale",Range(-100,100)) = 20
     	_UVOffsetSpeedFactor("UV Offset Speed Factor",Range(-3,3)) = 1.0
+    	
+    	_ColorFrom("ColorFrom",Color) = (1,0,0,1)
+    	_ColorTo("ColorFrom",Color) = (1,1,0,1)
     }
 
     SubShader
@@ -38,6 +41,8 @@ Shader "Ayy/OutlineFlameByNoise/FlameByMask"
 			float _DistortionStrength;
 			float _NoiseScale;
 			float _UVOffsetSpeedFactor;
+			float4 _ColorFrom;
+    		float4  _ColorTo;
 			CBUFFER_END
 
 			struct Attributes
@@ -125,7 +130,7 @@ Shader "Ayy/OutlineFlameByNoise/FlameByMask"
 				uv += offsetValue * _DistortionStrength;
 				
 				float4 col = tex2D(_MainTex,uv);
-				col *= float4(1.0,0.0,0.0,1.0);
+				col.rgb *= lerp(_ColorFrom,_ColorTo,smoothstep(-1,1,offsetValue)).rgb;
 				return col;
 			}
 			ENDHLSL
