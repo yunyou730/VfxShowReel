@@ -62,7 +62,7 @@ Material:
     - _NoiseUVOffsetY: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _TestNoiseFactor: 9
+    - _TestNoiseFactor: 6.5
     m_Colors:
     - _MainColor: {r: 0.18792273, g: 0.46544805, b: 0.9716981, a: 0}
   m_BuildTextureStacks: []
