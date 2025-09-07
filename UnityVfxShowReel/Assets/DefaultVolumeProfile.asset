@@ -564,6 +564,67 @@ MonoBehaviour:
   saturation:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &-2218570339894518233
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6336e8e38f998438effbda3970b650, type: 3}
+  m_Name: CustomPostEffectVolume
+  m_EditorClassIdentifier: 
+  active: 1
+  isActive:
+    m_OverrideState: 1
+    m_Value: 1
+  Mode:
+    m_OverrideState: 1
+    m_Value: 0
+  debugDistortionStrength:
+    m_OverrideState: 1
+    m_Value: 0
+  WaveFreq:
+    m_OverrideState: 1
+    m_Value: 1
+  WaveAmplitude:
+    m_OverrideState: 1
+    m_Value: 1
+  ZoomerInner:
+    m_OverrideState: 1
+    m_Value: 0
+  ZoomerOuter:
+    m_OverrideState: 1
+    m_Value: 0.3
+  ZoomerZoomFactor:
+    m_OverrideState: 1
+    m_Value: 0.1
+  LowerThreshold:
+    m_OverrideState: 1
+    m_Value: 0.2
+  IncThreshold:
+    m_OverrideState: 1
+    m_Value: 0.3
+  ZoomFactor:
+    m_OverrideState: 1
+    m_Value: 0.2
+  cellsNum:
+    m_OverrideState: 1
+    m_Value: 1
+  gridBorderSize:
+    m_OverrideState: 1
+    m_Value: 0.5
+  lineColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  bgColor1:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0, b: 0, a: 1}
+  bgColor2:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &-1954263991812501997
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -713,6 +774,7 @@ MonoBehaviour:
   - {fileID: 7954187725552609387}
   - {fileID: -6952813190943130940}
   - {fileID: -1581413062440666091}
+  - {fileID: -2218570339894518233}
 --- !u!114 &1205016649784106620
 MonoBehaviour:
   m_ObjectHideFlags: 3
