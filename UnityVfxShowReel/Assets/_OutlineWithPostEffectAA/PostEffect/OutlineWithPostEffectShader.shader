@@ -3,15 +3,31 @@ Shader "Ayy/OutlineWithPostEffectShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _OutlineColor("OutlineColor",Color) = (1,0,0,1)
         
         [Toggle(SWITCH_MASK_ORIGIN)] _SwitchMaskAndOrigin ("SWITCH_MASK_ORIGIN", Int) = 0
+        
+        // dilate
         _DilateKernelSize ("Dilate Kernel Size",Range(0,20)) = 3 // 膨胀 卷集核 大小 
         _EnableDilate("Enable Dilate",Range(0,1)) = 1.0
         
-        
+        // blur
         _BlurKernelSize ("Blur Kernel Size",Range(0,20)) = 5    // 模糊 卷积核大小
         
+        // Mask
+        _MaskStrength("MaskStrength",Range(0,10)) = 1.0
+        _MaskLower("MaskLower",Range(0,1)) = 0.0
+        _MaskInc("MaskInc",Range(0,1)) = 0.1
         
+        // Distortion
+        _DistortionNoiseScale("Distortion Noise Scale",Range(-100,100)) = 20
+        _DistortionStrengthX("Distortion Strength X",Range(-1.0,1.0)) = 0.1
+        _DistortionStrengthY("Distortion Strength Y",Range(-1.0,1.0)) = 0.1
+        _DistortionSpeedX("Distortion Speed X",Range(-1,1)) = 1.0
+        _DistortionSpeedY("Distortion Speed Y",Range(-1,1)) = 1.0
+        
+        _ColorFrom ("Color From",Color) = (1,0,0,1)
+        _ColorTo ("Color To",Color) = (1,1,0,1)
     }
     SubShader
     {
@@ -54,6 +70,60 @@ Shader "Ayy/OutlineWithPostEffectShader"
                 }
                 return o;
             }
+
+
+ // simple noise begin
+          float noise_randomValue(float2 uv)
+          {
+             return frac(sin(dot(uv, float2(12.9898, 78.233)))*43758.5453);
+          }
+
+          float noise_interpolate(float a, float b, float t)
+          {
+              return (1.0 - t) * a + (t * b);
+          }
+          
+          float noise_valueNoise (float2 uv)
+          {
+              float2 i = floor(uv);
+              float2 f = frac(uv);
+              f = f * f * (3.0 - 2.0 * f);
+
+              uv = abs(frac(uv) - 0.5);
+              float2 c0 = i + float2(0.0, 0.0);
+              float2 c1 = i + float2(1.0, 0.0);
+              float2 c2 = i + float2(0.0, 1.0);
+              float2 c3 = i + float2(1.0, 1.0);
+              float r0 = noise_randomValue(c0);
+              float r1 = noise_randomValue(c1);
+              float r2 = noise_randomValue(c2);
+              float r3 = noise_randomValue(c3);
+
+              float bottomOfGrid = noise_interpolate(r0, r1, f.x);
+              float topOfGrid = noise_interpolate(r2, r3, f.x);
+              float t = noise_interpolate(bottomOfGrid, topOfGrid, f.y);
+              return t;
+          }
+
+          float simpleNoise(float2 UV, float Scale)
+          {
+              float t = 0.0;
+
+              float freq = pow(2.0, float(0));
+              float amp = pow(0.5, float(3-0));
+              t += noise_valueNoise(float2(UV.x*Scale/freq, UV.y*Scale/freq))*amp;
+
+              freq = pow(2.0, float(1));
+              amp = pow(0.5, float(3-1));
+              t += noise_valueNoise(float2(UV.x*Scale/freq, UV.y*Scale/freq))*amp;
+
+              freq = pow(2.0, float(2));
+              amp = pow(0.5, float(3-2));
+              t += noise_valueNoise(float2(UV.x*Scale/freq, UV.y*Scale/freq))*amp;
+
+             return t;
+          }
+          // simple noise end            
             
         ENDHLSL
         
@@ -79,7 +149,7 @@ Shader "Ayy/OutlineWithPostEffectShader"
             {
                 float2 uv = i.uv;
                 float4 col = tex2D(_MainTex,uv);
-                float4 col2 = tex2D(_AyyOutlineMask,uv);
+                //return tex2D(_AyyOutlineMask,uv);
                 
                 if (_SwitchMaskAndOrigin == 1)
                 {
@@ -172,6 +242,65 @@ Shader "Ayy/OutlineWithPostEffectShader"
                     totalWeight += weight;
                 }
                 return float4((color / totalWeight).rgb,1.0);
+            }
+            ENDHLSL
+        }
+        Pass
+        {
+            Name "Ayy_Blit"
+            
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
+
+            TEXTURE2D(_OriginTex);
+
+            float4 _OutlineColor;
+            
+            float _MaskLower;
+            float _MaskInc;
+            
+            float _DistortionNoiseScale;
+            float _DistortionStrengthX;
+            float _DistortionStrengthY;
+            float _DistortionSpeedX;
+            float _DistortionSpeedY;
+
+            float4 _ColorFrom;
+            float4 _ColorTo;
+            
+            half4 frag (v2f i) : SV_Target
+            {
+                float2 uv = i.uv;
+                float2 originUV = uv;
+                
+                // distort uv
+                float2 noiseUV = uv;
+                noiseUV.x += _Time.y * _DistortionSpeedX;
+                noiseUV.y += _Time.y * _DistortionSpeedY;
+                float offset = simpleNoise(noiseUV,_DistortionNoiseScale);
+                offset = offset * 2.0 - 1.0;
+
+                uv.x += offset * _DistortionStrengthX;
+                uv.y += offset * _DistortionStrengthY;
+                
+                float4 mainColor = SAMPLE_TEXTURE2D_X(_OriginTex,sampler_LinearClamp,originUV);
+                float4 maskColor = SAMPLE_TEXTURE2D_X(_MainTex,sampler_LinearClamp,uv);
+                
+                float lower = clamp(_MaskLower,0.0,1.0);
+                float higher = clamp(_MaskLower + _MaskInc,0.0,1.0);
+                float mask = smoothstep(lower,higher,maskColor.r);
+
+
+                float4 outlineColor = lerp(_ColorFrom,_ColorTo,smoothstep(-1.0,1.0,offset));
+                
+                float4 ret = lerp(mainColor,outlineColor,mask);
+
+                //ret = outlineColor;
+                return ret;
             }
             ENDHLSL
         }

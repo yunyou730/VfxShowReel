@@ -82,6 +82,7 @@
     <Compile Include="Assets/_OutlineWithPostEffectAA/PostEffect/OutlineMaskRenderPass.cs" />
     <Compile Include="Assets/_ComputeShaderTest1/ManualParticleSystemByCS.cs" />
     <Compile Include="Assets/_GPUParticles/GPUParticle.cs" />
+    <Compile Include="Assets/_OutlineWithPostEffectAA/PostEffect/OutlineCoverRenderPass.cs" />
     <Compile Include="Assets/_LutBySelfWithRenderFeature/LUTRenderFeature.cs" />
     <Compile Include="Assets/_GPUParticles/AyyGPUProceduralTrianglePass.cs" />
     <Compile Include="Assets/_OutlineWithPostEffectAA/PostEffect/OutlineWithPostEffectRenderPass.cs" />
@@ -155,6 +156,7 @@
     <None Include="Assets/_Portal/MyTwirl.hlsl" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets/_AudioVisualize/AyyAudio1.shader" />
+    <None Include="Assets/_OutlineWithPostEffectAA/SambaDancing/Ch46_ayy_objectWithOutline.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />
     <None Include="Assets/_CustomPostEffectDistortion/CustomPostEffectDistortion.shader" />

@@ -67,7 +67,11 @@ MonoBehaviour:
   m_Name: OutlineWithPostEffectRenderFeature
   m_EditorClassIdentifier: 
   m_Active: 1
+  _enableOutlinePass: 1
   _blitMaterial: {fileID: 2100000, guid: e90fda318daa54624b2804f014cfeb50, type: 2}
-  _postEffectEvent: 600
+  _postEffectEvent: 400
   _blurTimes: 3
-  _outlineMaskEvent: 500
+  _enableMaskPass: 1
+  _outlineMaskEvent: 400
+  _enableCoverPass: 1
+  _outlineCoverEvent: 500

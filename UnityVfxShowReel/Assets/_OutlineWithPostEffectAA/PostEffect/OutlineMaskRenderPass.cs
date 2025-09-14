@@ -18,17 +18,18 @@ namespace ayy.OutlineWithPostEffect
         private readonly string kRTName = "OutlineMaskRT";
         private readonly ShaderTagId kShaderTagId = new ShaderTagId("Ayy_OutlineMask");
         
-        public OutlineMaskRenderPass()
-        {
-            
-        }
-
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
         {
             var desc = renderingData.cameraData.cameraTargetDescriptor;
             desc.depthStencilFormat = GraphicsFormat.None;
             desc.colorFormat = RenderTextureFormat.R8;
-            RenderingUtils.ReAllocateHandleIfNeeded(ref _outlineMaskRT, desc, filterMode:FilterMode.Bilinear,name: kRTName);
+            RenderingUtils.ReAllocateHandleIfNeeded(
+                ref _outlineMaskRT,
+                desc,
+                filterMode:FilterMode.Bilinear,
+                TextureWrapMode.Clamp,
+                1,0,kRTName
+                );
         }
         
         public override void OnCameraCleanup(CommandBuffer cmd)

@@ -87,7 +87,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BlurKernelSize: 8
+    - _BlurKernelSize: 5.6
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -95,7 +95,14 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DilateKernelSize: 5
+    - _DilateKernelSize: 5.5
+    - _DistortionNoiseScale: 100
+    - _DistortionSpeed: 0.216
+    - _DistortionSpeedX: 0
+    - _DistortionSpeedY: -0.18
+    - _DistortionStrength: 0.08
+    - _DistortionStrengthX: 0.01
+    - _DistortionStrengthY: 0.09
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnableDilate: 1
@@ -103,6 +110,9 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _MaskInc: 0.654
+    - _MaskLower: 0
+    - _MaskStrength: 3.64
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -120,7 +130,10 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorFrom: {r: 0, g: 0.23238325, b: 1, a: 1}
+    - _ColorTo: {r: 1, g: 0, b: 0.38724613, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0, g: 1, b: 0.929394, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

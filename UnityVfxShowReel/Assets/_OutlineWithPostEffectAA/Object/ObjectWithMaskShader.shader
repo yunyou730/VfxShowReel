@@ -6,6 +6,8 @@ Shader "ayy/ObjectWithMask"
         _BaseMap ("Base Map", 2D) = "white" {}
         _Metallic ("Metallic", Range(0,1)) = 0.0
         _Smoothness ("Smoothness", Range(0,1)) = 0.5
+        
+        _MaskObjectId("Mask Object Id",Range(0,1)) = 0.0
     }
 
     SubShader
@@ -55,36 +57,49 @@ Shader "ayy/ObjectWithMask"
             output.normalWS = TransformObjectToWorldNormal(input.normalOS);
             return output;
         }
+
+        half4 FragInGame(Varyings input) : SV_Target
+        {
+            half4 baseMapColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv) * _BaseColor;
+            half3 normalWS = normalize(input.normalWS);
+            Light mainLight = GetMainLight();
+            
+            // lambert light model
+            half3 diffuse = baseMapColor.rgb * mainLight.color * max(dot(normalWS, mainLight.direction), 0.0);
+            half3 ambient = baseMapColor.rgb * SampleSH(normalWS);
+            
+            // specular: blinn-phong
+            half3 viewDir = normalize(_WorldSpaceCameraPos - input.positionWS);
+            half3 halfDir = normalize(mainLight.direction + viewDir);
+            half specularTerm = pow(max(dot(normalWS, halfDir), 0.0), _Smoothness * 100.0);
+            half3 specular = mainLight.color * specularTerm * _Metallic;
+
+            // combine lambert & blinn-phong
+            half3 finalColor = diffuse + ambient + specular;
+            
+            return half4(finalColor, baseMapColor.a);
+        }        
         ENDHLSL
 
         Pass // 正常游戏内展示的 Pass
         {
-            
             Name "Game"
+            HLSLPROGRAMTags
+            #pragma vertex VertCommon
+            #pragma fragment FragInGame
+            ENDHLSL
+        }
+
+        Pass // 描边之后,覆盖在最上层的 pass 
+        {
+            Name "Game"
+            Tags
+            {
+                "LightMode" = "Ayy_OutlineCover"
+            }            
             HLSLPROGRAM
             #pragma vertex VertCommon
-            #pragma fragment Frag
-            half4 Frag(Varyings input) : SV_Target
-            {
-                half4 baseMapColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv) * _BaseColor;
-                half3 normalWS = normalize(input.normalWS);
-                Light mainLight = GetMainLight();
-                
-                // lambert light model
-                half3 diffuse = baseMapColor.rgb * mainLight.color * max(dot(normalWS, mainLight.direction), 0.0);
-                half3 ambient = baseMapColor.rgb * SampleSH(normalWS);
-                
-                // specular: blinn-phong
-                half3 viewDir = normalize(_WorldSpaceCameraPos - input.positionWS);
-                half3 halfDir = normalize(mainLight.direction + viewDir);
-                half specularTerm = pow(max(dot(normalWS, halfDir), 0.0), _Smoothness * 100.0);
-                half3 specular = mainLight.color * specularTerm * _Metallic;
-
-                // combine lambert & blinn-phong
-                half3 finalColor = diffuse + ambient + specular;
-                
-                return half4(finalColor, baseMapColor.a);
-            }
+            #pragma fragment FragInGame
             ENDHLSL
         }
 
@@ -119,9 +134,11 @@ Shader "ayy/ObjectWithMask"
             HLSLPROGRAM
             #pragma vertex VertCommon
             #pragma fragment Frag
+
+            float _MaskObjectId;
             half4 Frag(Varyings input) : SV_Target
             {
-                return float4(1.0,1.0,1.0,1.0);
+                return float4(1.0,_MaskObjectId,1.0,1.0);
             }
             ENDHLSL            
         }
