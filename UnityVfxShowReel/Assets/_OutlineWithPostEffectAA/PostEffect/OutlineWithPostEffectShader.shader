@@ -3,7 +3,6 @@ Shader "Ayy/OutlineWithPostEffectShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _OutlineColor("OutlineColor",Color) = (1,0,0,1)
         
         [Toggle(SWITCH_MASK_ORIGIN)] _SwitchMaskAndOrigin ("SWITCH_MASK_ORIGIN", Int) = 0
         
@@ -20,6 +19,7 @@ Shader "Ayy/OutlineWithPostEffectShader"
         _MaskInc("MaskInc",Range(0,1)) = 0.1
         
         // Distortion
+        [Toggle(ENABLE_NOISE_DISTORTION)] _EnableNoiseDistortion ("ENABLE_NOISE_DISTORTION",Int) = 1 
         _DistortionNoiseScale("Distortion Noise Scale",Range(-100,100)) = 20
         _DistortionStrengthX("Distortion Strength X",Range(-1.0,1.0)) = 0.1
         _DistortionStrengthY("Distortion Strength Y",Range(-1.0,1.0)) = 0.1
@@ -257,12 +257,11 @@ Shader "Ayy/OutlineWithPostEffectShader"
             SAMPLER(sampler_MainTex);
 
             TEXTURE2D(_OriginTex);
-
-            float4 _OutlineColor;
             
             float _MaskLower;
             float _MaskInc;
             
+            int _EnableNoiseDistortion;     // switch
             float _DistortionNoiseScale;
             float _DistortionStrengthX;
             float _DistortionStrengthY;
@@ -277,15 +276,17 @@ Shader "Ayy/OutlineWithPostEffectShader"
                 float2 uv = i.uv;
                 float2 originUV = uv;
                 
-                // distort uv
-                float2 noiseUV = uv;
-                noiseUV.x += _Time.y * _DistortionSpeedX;
-                noiseUV.y += _Time.y * _DistortionSpeedY;
-                float offset = simpleNoise(noiseUV,_DistortionNoiseScale);
-                offset = offset * 2.0 - 1.0;
-
-                uv.x += offset * _DistortionStrengthX;
-                uv.y += offset * _DistortionStrengthY;
+                float noiseOffset = 0.0;
+                if (_EnableNoiseDistortion) // distort uv with noise
+                {
+                    float2 noiseUV = uv;
+                    noiseUV.x += _Time.y * _DistortionSpeedX;
+                    noiseUV.y += _Time.y * _DistortionSpeedY;
+                    noiseOffset = simpleNoise(noiseUV,_DistortionNoiseScale);
+                    noiseOffset = noiseOffset * 2.0 - 1.0;
+                    uv.x += noiseOffset * _DistortionStrengthX;
+                    uv.y += noiseOffset * _DistortionStrengthY;   
+                }
                 
                 float4 mainColor = SAMPLE_TEXTURE2D_X(_OriginTex,sampler_LinearClamp,originUV);
                 float4 maskColor = SAMPLE_TEXTURE2D_X(_MainTex,sampler_LinearClamp,uv);
@@ -293,18 +294,13 @@ Shader "Ayy/OutlineWithPostEffectShader"
                 float lower = clamp(_MaskLower,0.0,1.0);
                 float higher = clamp(_MaskLower + _MaskInc,0.0,1.0);
                 float mask = smoothstep(lower,higher,maskColor.r);
-
-
-                float4 outlineColor = lerp(_ColorFrom,_ColorTo,smoothstep(-1.0,1.0,offset));
                 
+                float4 outlineColor = lerp(_ColorFrom,_ColorTo,smoothstep(-1.0,1.0,noiseOffset));
                 float4 ret = lerp(mainColor,outlineColor,mask);
-
-                //ret = outlineColor;
                 return ret;
             }
             ENDHLSL
         }
     }
-    //FallBack "Diffuse"
 }
     

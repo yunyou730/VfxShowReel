@@ -4,9 +4,6 @@ Shader "ayy/ObjectWithOutlineForSkeletonAnim"
     {
         _BaseColor ("Base Color", Color) = (1,1,1,1)
         _BaseMap ("Base Map", 2D) = "white" {}
-        //_Metallic ("Metallic", Range(0,1)) = 0.0
-        //_Smoothness ("Smoothness", Range(0,1)) = 0.5
-        
         _MaskObjectId("Mask Object Id",Range(0,1)) = 0.0
     }
 
