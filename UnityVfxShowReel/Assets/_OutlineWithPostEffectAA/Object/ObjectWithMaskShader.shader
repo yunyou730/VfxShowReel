@@ -84,7 +84,7 @@ Shader "ayy/ObjectWithMask"
         Pass // 正常游戏内展示的 Pass
         {
             Name "Game"
-            HLSLPROGRAMTags
+            HLSLPROGRAM
             #pragma vertex VertCommon
             #pragma fragment FragInGame
             ENDHLSL
