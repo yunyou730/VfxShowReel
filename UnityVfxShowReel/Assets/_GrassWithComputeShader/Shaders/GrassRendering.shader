@@ -41,7 +41,7 @@ Shader "Ayy/GrassRendering"
             {
                 float4 position : SV_POSITION;
                 float2 uv : TEXCOORD0;
-                float instanceID : COLOR0;
+                //float instanceID : COLOR0;
             };
 
             struct Grass
@@ -66,14 +66,14 @@ Shader "Ayy/GrassRendering"
                 //output.position = mul(_ayy_MatrixIdentity, float4(vertexLocalPosition, 1.0));
                 output.uv = inData.uv;
 
-                output.instanceID = inData.instanceId / 128.0;
+                //output.instanceID = inData.instanceId / 128.0;
 
                 return output;
             }
 
             float4 frag(PS_INPUT i) : COLOR
             {
-                return float4(i.instanceID,0.0,0.0,1.0);
+                return float4(1.0,1.0,0.0,1.0);
             }
             ENDCG
         }

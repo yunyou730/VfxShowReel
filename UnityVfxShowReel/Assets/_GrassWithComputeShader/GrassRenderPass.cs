@@ -33,8 +33,8 @@ namespace ayy
             _grassCS.SetBuffer(_grassGeneratorKernel, Shader.PropertyToID("_GrassBuffer"), _grassBuffer);
             _grassCS.Dispatch(_grassGeneratorKernel,_grassNum / 64,1,1);
             
-            GrassRenderData[] data = new GrassRenderData[_grassNum];
-            _grassBuffer.GetData(data);
+            // GrassRenderData[] data = new GrassRenderData[_grassNum];
+            // _grassBuffer.GetData(data);
             //Debug.Log(data);
         }
 
