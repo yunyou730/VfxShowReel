@@ -1,0 +1,24 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+//RWTexture2D<float4> Result;
+
+struct Grass
+{
+    float3 Position;
+};
+
+RWStructuredBuffer<Grass> _GrassBuffer;
+
+[numthreads(64,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    Grass grass;
+    grass.Position = float3(id.x,0.0,0.0);
+    _GrassBuffer[id.x] = grass;
+    // TODO: insert actual code here!
+    //id.x;
+    //Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+}

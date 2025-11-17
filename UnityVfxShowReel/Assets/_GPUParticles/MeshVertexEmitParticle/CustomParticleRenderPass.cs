@@ -49,16 +49,13 @@ namespace ayy
             {
                 return;
             }
-            
-            
             CommandBuffer cmd = CommandBufferPool.Get("CustomParticleRenderPass");
             cmd.Clear();
             using (new ProfilingScope(this.profilingSampler))
             {
                 var particlesBuffer = _customParticleSysMono.ParticlesBuffer;
                 cmd.SetGlobalBuffer(Shader.PropertyToID("Particles"), particlesBuffer);
-                
-                
+
                 if (_customParticleSysMono.ParticleRendererMesh != null
                     && _customParticleSysMono.ParticleRendererMaterial != null)
                 {
@@ -70,8 +67,6 @@ namespace ayy
                 {
                     cmd.DrawProcedural(Matrix4x4.identity,_particlePointsMaterial,0,MeshTopology.Points,1,particlesBuffer.count);                    
                 }
-
-                
             }
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
