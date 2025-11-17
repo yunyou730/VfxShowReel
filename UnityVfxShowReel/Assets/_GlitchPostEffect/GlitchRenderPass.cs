@@ -6,12 +6,12 @@ using UnityEngine.Rendering.Universal;
 namespace ayy.glitch
 {
     [Obsolete("Obsolete")]
-    class RGBSplit : ScriptableRenderPass
+    class GlitchRenderPass : ScriptableRenderPass
     {
         private Material _material = null;
         private RenderTargetHandle _tempRT;
 
-        public RGBSplit(Material material)
+        public GlitchRenderPass(Material material)
         {
             _material = material;
         }
@@ -31,9 +31,9 @@ namespace ayy.glitch
         
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-            CommandBuffer cmdBuf = CommandBufferPool.Get(nameof(RGBSplit));
+            CommandBuffer cmdBuf = CommandBufferPool.Get(nameof(GlitchRenderPass));
             cmdBuf.Clear();
-            using (new ProfilingSample(cmdBuf, nameof(RGBSplit)))
+            using (new ProfilingSample(cmdBuf, nameof(GlitchRenderPass)))
             {
                 RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
                 cmdBuf.Blit(source, _tempRT.Identifier(), _material);

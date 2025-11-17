@@ -18,6 +18,7 @@ MonoBehaviour:
   _RGBSplitVertical: {fileID: 2100000, guid: feec7c914feca844bab18471ce88f29b, type: 2}
   _RGBSplitHorizontalVertical: {fileID: 2100000, guid: fddde9aa94f92fd4192260bc91c58344,
     type: 2}
+  _imageBlock: {fileID: 2100000, guid: f20f6b03f9362f542b101c0d888e95b3, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

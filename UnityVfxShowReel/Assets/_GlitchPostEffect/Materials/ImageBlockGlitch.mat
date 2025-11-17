@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GlitchRGBSplitHorizontalVertical
-  m_Shader: {fileID: 4800000, guid: 970ab089fee2fb24699f9acd3f11a4f2, type: 3}
+  m_Name: ImageBlockGlitch
+  m_Shader: {fileID: 4800000, guid: 047dab2748d313747903605a8e14f6b4, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -29,9 +29,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amount: 0.27
-    - _Amplitude: 1.66
-    - _Intensity: 0.011
+    - _Amount: 1
+    - _Amplitude: 1
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
