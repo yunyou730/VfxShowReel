@@ -7,7 +7,7 @@ Shader "ayy/Glitch/ImageBlockGlitch"
 //        _Amount("Amount",Range(0.0,5.0)) = 1.0
         _BlockSize("BlockSize",Range(1,10)) = 5
         _Speed("Speed",Range(0,10)) = 1
-        _DisplacementMoveSpeed("DisplacementMoveSpeed",Range(0,5)) = 0.1
+        _BlockChangeSpeed("BlockChangeSpeed",Range(0,100)) = 0.1
         _Strength("Strength",Range(0,3)) = 1
     }
     SubShader
@@ -40,7 +40,7 @@ Shader "ayy/Glitch/ImageBlockGlitch"
             
             float _BlockSize;
             float _Speed;
-            float _DisplacementMoveSpeed;
+            float _BlockChangeSpeed;
             float _Strength;
             
             v2f vert (appdata v)
@@ -63,8 +63,8 @@ Shader "ayy/Glitch/ImageBlockGlitch"
             
             fixed4 frag (v2f i) : SV_Target
             {
-                float displace = rand2D(floor(i.uv * rand1D(_Time.y * _DisplacementMoveSpeed) * _BlockSize));
-                //float displace = rand2D(floor((i.uv + _Time.y * _DisplacementMoveSpeed)* _BlockSize));
+                float displace = rand2D(floor(i.uv * _BlockSize));
+                displace = rand2D(displace + floor(_Time.y * _BlockChangeSpeed));
                 displace = pow(displace,8.0) * pow(displace,3.0);
                 
                 float r1 = rand1D(_Time.y * _Speed * 7.0);
