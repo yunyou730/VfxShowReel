@@ -52,20 +52,22 @@ Shader "ayy/Glitch/GlitchRGBSplitHorizontalVertical"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float splitAmout = (1.0 + sin(_Time.y * 6.0)) * 0.5;
-                splitAmout *= (1.0 + sin(_Time.y * 16.0)) * 0.5;
-                splitAmout *= (1.0 + sin(_Time.y * 19.0)) * 0.5;
-                splitAmout *= (1.0 + sin(_Time.y * 27.0)) * 0.5;
-                splitAmout = pow(splitAmout,_Amplitude);
-                splitAmout *= (0.05 * _Amount);
+                float splitAmount = (1.0 + sin(_Time.y * 6.0)) * 0.5;
+                splitAmount *= 1.0 + sin(_Time.y * 16.0) * 0.5;
+                splitAmount *= 1.0 + sin(_Time.y * 19.0) * 0.5;
+                splitAmount *= 1.0 + sin(_Time.y * 27.0) * 0.5;
+                splitAmount = pow(splitAmount,_Amplitude);
+                splitAmount *= (0.05 * _Amount);
                 
                 float2 uv = i.uv;
-                float r = tex2D(_MainTex,uv + float2(splitAmout,splitAmout)).r;
+                float r = tex2D(_MainTex,uv + float2(splitAmount,splitAmount)).r;
                 float g = tex2D(_MainTex,uv + float2(0.0,0.0)).g;
-                float b = tex2D(_MainTex,uv + float2(-splitAmout,-splitAmout)).b;
+                float b = tex2D(_MainTex,uv + float2(-splitAmount,-splitAmount)).b;
 
+                float3 finalColor = float3(r,g,b);
+                finalColor *= (1.0 - splitAmount * 0.5);
                 
-                return float4(r,g,b,1.0);
+                return float4(finalColor,1.0);
             }
             ENDCG
         }
