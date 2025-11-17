@@ -147,7 +147,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.9009434, g: 1, b: 0.95253146, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 11
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
