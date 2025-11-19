@@ -6,8 +6,8 @@ Shader "ayy/Glitch/LineBlockGlitch"
         _Strength ("Strength",Range(0,10)) = 1
         
         _LinesWidth ("LinesWidth",Float) = 0.1
-        _Offset ("Offset",Float) = 0.0
-        _Amount ("Amount",Float) = 3.0
+        _Offset ("Offset",Range(0,1)) = 0.0
+        _Threshold ("Threshold",Range(0,1)) = 0.5
     	
     	_Alpha ("Alpha",Range(0,1)) = 0.5
     }
@@ -43,7 +43,7 @@ Shader "ayy/Glitch/LineBlockGlitch"
 
             float _LinesWidth;
             float _Offset;
-            float _Amount;
+            float _Threshold;
             float _Alpha;
             
             v2f vert (appdata v)
@@ -69,12 +69,6 @@ Shader "ayy/Glitch/LineBlockGlitch"
                 return floor(x * numLevels) / numLevels;
             }
 
-            float trunc(float2 x,float2 numLevels)
-            {
-                return floor(x * numLevels) / numLevels;
-            }
-
-	
 			float3 rgb2yuv(float3 rgb)
 			{
 				float3 yuv;
@@ -92,28 +86,27 @@ Shader "ayy/Glitch/LineBlockGlitch"
 				rgb.b = yuv.x + yuv.y * 2.03211;
 				return rgb;
 			}
-	            
-            
+
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv;
 
                 //	[1] 生成随机强度梯度线条
-		        float truncTime = trunc(_Time.y, 4.0);
-		        float uv_trunc = rand1D(trunc(uv.yy, float2(8, 8)) + 100.0 * truncTime);
-		        float uv_randomTrunc = 6.0 * trunc(_Time.y, 24.0 * uv_trunc);
+            	float uv_trunc = rand1D(trunc(uv.y, 8) + floor(_Time.y * 4.0));
+            	float uv_randomTrunc = 6.0 * floor(_Time.y * 24.0 * uv_trunc);
 		        
 		        // [2] 生成随机非均匀宽度线条
-		        float blockLine_random = 0.5 * rand1D(trunc(uv.yy + uv_randomTrunc, float2(8 * _LinesWidth, 8 * _LinesWidth)));
-		        blockLine_random += 0.5 * rand1D(trunc(uv.yy + uv_randomTrunc, float2(7, 7)));
+				float blockLine_random = 0.5 * rand1D(trunc(uv.y + uv_randomTrunc, 8 * _LinesWidth));
+		        blockLine_random += 0.5 * rand1D(trunc(uv.y + uv_randomTrunc, 7));
 		        blockLine_random = blockLine_random * 2.0 - 1.0;
-		        blockLine_random = sign(blockLine_random) * saturate((abs(blockLine_random) - _Amount) / (0.4));
+            	float strength = (abs(blockLine_random) - _Threshold) * _Strength;
+            	blockLine_random = sign(blockLine_random) * clamp(strength,0.0,1.0);
 		        blockLine_random = lerp(0, blockLine_random, _Offset);
-                
+            	
                 // [3] 生成源色调的blockLine Glitch
-		        float2 uv_blockLine = uv;
-		        uv_blockLine = saturate(uv_blockLine + float2(0.1 * blockLine_random, 0));
-		        float4 blockLineColor = tex2D(_MainTex, abs(uv_blockLine));
+            	// 在原有颜色基础上, 只用 噪声灰度值,做了少许 uv 偏移 
+		        float2 uv_blockLine = abs(saturate(uv + float2(0.1 * blockLine_random, 0)));
+		        float4 blockLineColor = tex2D(_MainTex, uv_blockLine);
 
 				// [4] 将RGB转到YUV空间，并做色调偏移
 				// RGB -> YUV
@@ -127,23 +120,6 @@ Shader "ayy/Glitch/LineBlockGlitch"
 				// [5] 与源场景图进行混合
 				float4 sceneColor = tex2D(_MainTex,uv);
 				return lerp(sceneColor, float4(blockLineColor_rgb, blockLineColor.a), _Alpha);
-            	
-
-                //float4 col = tex2D(_MainTex,i.uv);
-                //return col;
-                // float displace = rand2D(floor(i.uv * _BlockSize));
-                // displace = rand2D(displace + floor(_Time.y * _BlockChangeSpeed));
-                // displace = pow(displace,8.0) * pow(displace,3.0);
-                //
-                // float r1 = rand1D(_Time.y * _Speed * 7.0);
-                // float r2 = rand1D(_Time.y * _Speed * 1.0);
-                //
-                // float r = tex2D(_MainTex,i.uv).r;
-                // float g = tex2D(_MainTex,i.uv + float2(displace * 0.05 * r1,0.0)).g;
-                // float b = tex2D(_MainTex,i.uv - float2(displace * 0.05 * r2,0.0)).b;
-                //
-                // //return float4(displace,displace,displace,1.0);
-                // return float4(r,g,b,1.0);
             }
             ENDCG
         }
