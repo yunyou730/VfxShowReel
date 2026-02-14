@@ -50,7 +50,10 @@ Shader "Ayy/LiquidGlass"
             float4 _Color;
             float _BlurEdge;
             float _AAEdge;
-            
+
+            #pragma shader_feature _ENABLE_DEBUG_BLUR_WEIGHT         // 调试 模糊权重
+            #pragma shader_feature _ENABLE_DEBUG_DISTORTION_WEIGHT   // 调试 扭曲权重
+
             v2f vert (appdata v)
             {
                 v2f o;
@@ -70,11 +73,7 @@ Shader "Ayy/LiquidGlass"
             {
                 return distance(uv,center) - radius;
             }
-
-            // 正方形SDF函数（有符号距离函数）
-            // uv：当前像素的UV坐标
-            // center：正方形的中心坐标
-            // sideLength：正方形的边长（整体边长，比如传0.4表示正方形宽高都是0.4）
+            
             float sdfSquare(float2 uv, float2 center, float sideLength)
             {
                 float2 localUV = uv - center;
@@ -87,33 +86,35 @@ Shader "Ayy/LiquidGlass"
 
             half4 frag (v2f i) : SV_Target
             {
-                float ratio = _MainTex_TexelSize.z / _MainTex_TexelSize.w;  // 宽度 : 高度
-
-                
+                float ratio = _MainTex_TexelSize.z / _MainTex_TexelSize.w; // 宽高比
                 float2 originUV = i.uv;
 
+                // 构建 SDF
                 float2 uv = convertCoord(originUV,ratio);
                 float2 c1 = convertCoord(float2(_CenterX,_CenterY),ratio);
-
-                //float sd1 = sdfCircle(uv,c1,_Radius);
                 float sd1 = sdfSquare(uv,c1,_Radius);
                 float sdf = sd1;
 
-                float2 dir = uv - c1;
-                float dis = length(dir);
-
+                // 模糊 和 清晰图 的权重.
                 float aaRange = 0.01f;
                 float smoothEdge = smoothstep(_BlurEdge + aaRange, _BlurEdge - aaRange, sdf);
+                #if _ENABLE_DEBUG_BLUR_WEIGHT    // debug, 显示权重
+                return float4(smoothEdge,smoothEdge,smoothEdge,1.0);    
+                #endif 
 
-                //float smoothEdge = smoothstep(sdf,_BlurEdge,_BlurEdge + 0.01);
+                // uv distortion 强度的权重
+                float2 dir = uv - c1;
+                float dis = length(dir);
                 float distortion = lerp(0.0,_Offset * pow(dis,_PowFactor),smoothEdge);
-                
-                //return float4(distortion,distortion,distortion,1.0);
 
-                float2 uvOffset = normalize(dir) * -1.0 * distortion;
+                #if _ENABLE_DEBUG_DISTORTION_WEIGHT    // debug, 显示权重
+                return float4(distortion,distortion,distortion,1.0);
+                #endif
+
+                // 扭曲 uv distortion
+                float2 uvOffset = normalize(dir) * -1.0 * distortion;        
                 uv = originUV + uvOffset;
 
-                
                 // 原图,模糊图, 根据 sdf值做混合 
                 half4 originTexColor = tex2D(_MainTex,uv);
                 half4 blurTexColor = tex2D(_LiquidBlurRenderTexture,uv) * _Color;

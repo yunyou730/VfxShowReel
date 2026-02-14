@@ -20,7 +20,11 @@ namespace ayy
         public Color _col = Color.white;
         [Range(0, 0.3f)] public float _edge = 0.05f;
         [Range(0, 0.1f)] public float _aaEdge = 0.01f;
-        
+
+
+        [Header("Debug")] 
+        public bool _enableDebugBlur = false;
+        public bool _enableDebugDistortion = false;
 
         private LiquidGlassRenderPass _liquidGlassPass = null;
         private LiquidBlurRenderPass _blurPass = null;
@@ -37,6 +41,24 @@ namespace ayy
 
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
         {
+            if (_enableDebugBlur)
+            {
+                _liquidGlassMaterial.EnableKeyword("_ENABLE_DEBUG_BLUR_WEIGHT");
+            }
+            else
+            {
+                _liquidGlassMaterial.DisableKeyword("_ENABLE_DEBUG_BLUR_WEIGHT");
+            }
+
+            if (_enableDebugDistortion)
+            {
+                _liquidGlassMaterial.EnableKeyword("_ENABLE_DEBUG_DISTORTION_WEIGHT");
+            }
+            else
+            {
+                _liquidGlassMaterial.DisableKeyword("_ENABLE_DEBUG_DISTORTION_WEIGHT");
+            }
+            
             _blurPass.SetParams(_blurDownSampleScale,_blurIterations,_blurKernelSize);
             renderer.EnqueuePass(_blurPass);
             _liquidGlassPass.SetParams(_radius,_offset,_pow,_edge,_aaEdge,_col);
