@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering.RenderGraphModule;
 
 namespace ayy
 {
@@ -9,10 +7,18 @@ namespace ayy
     {
         public Material _liquidGlassMaterial = null;
         public Material _liquidBlurMaterial = null;
-
+        
+        [Header("Blur")]
         [Range(1,10)]public int _blurIterations = 4;
         [Range(0.1f,1.0f)]public float _blurDownSampleScale = 0.5f;
         [Range(1,5)] public int _blurKernelSize = 5;
+
+        [Header("Distortion")] 
+        [Range(0, 1)] public float _radius = 0.5f;
+        [Range(0, 0.3f)] public float _offset = 0.15f;
+        [Range(1.0f, 6.0f)] public float _pow = 2.5f;
+        public Color _col = Color.white;
+        [Range(0, 0.3f)] public float _edge = 0.05f;
 
         private LiquidGlassRenderPass _liquidGlassPass = null;
         private LiquidBlurRenderPass _blurPass = null;
@@ -31,6 +37,7 @@ namespace ayy
         {
             _blurPass.SetParams(_blurDownSampleScale,_blurIterations,_blurKernelSize);
             renderer.EnqueuePass(_blurPass);
+            _liquidGlassPass.SetParams(_radius,_offset,_pow,_edge,_col);
             renderer.EnqueuePass(_liquidGlassPass);
         }
     }

@@ -13,8 +13,6 @@ namespace ayy
         private RTHandle _tempRT1;
         private RTHandle _tempRT2;
         
-        
-        
         private const string kCmdBufName = "cmdbuf_" + nameof(LiquidBlurRenderPass);
         private const string kProfilingSamplerName = "profiler_" + nameof(LiquidBlurRenderPass);
         
@@ -108,7 +106,6 @@ namespace ayy
                     cmd.Blit(_tempRT1, _tempRT2, _blurMaterial, 0);
                     cmd.Blit(_tempRT2, _tempRT1, _blurMaterial, 1);
                 }
-                 
                 cmd.Blit(_tempRT1, _blurResultRT,_blurMaterial,2);      // 绘制在 离屏buffer上
                 cmd.SetGlobalTexture(kBlurResultTextureID, _blurResultRT);
             }

@@ -12,6 +12,13 @@ namespace ayy
         private Material _material = null;
         private RenderTargetHandle _tempRT;
         
+        private float _radius;
+        //private Vector2 _center;
+        private float _offset;
+        private float _pow;
+        private float _edge;
+        private Color _col;
+        
         public LiquidGlassRenderPass(Material material)
         {
             _material = material;
@@ -27,6 +34,16 @@ namespace ayy
         public override void OnCameraCleanup(CommandBuffer cmd)
         {
             cmd.ReleaseTemporaryRT(_tempRT.id);
+        }
+
+        public void SetParams(float radius,float offset,float pow,float edge,Color color)
+        {
+            _radius = radius;
+            //_center = center;
+            _offset = offset;
+            _pow = pow;
+            _edge = edge;
+            _col = color;
         }
         
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -44,6 +61,12 @@ namespace ayy
             cmdBuf.Clear();
             using (new ProfilingSample(cmdBuf, nameof(LiquidGlassRenderPass)))
             {
+                cmdBuf.SetGlobalFloat(Shader.PropertyToID("_Radius"),_radius);
+                cmdBuf.SetGlobalFloat(Shader.PropertyToID("_Offset"),_offset);
+                cmdBuf.SetGlobalFloat(Shader.PropertyToID("_PowFactor"),_pow);
+                cmdBuf.SetGlobalFloat(Shader.PropertyToID("_BlurEdge"),_edge);
+                cmdBuf.SetGlobalColor(Shader.PropertyToID("_Color"),_col);
+                
                 RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
                 cmdBuf.Blit(source, _tempRT.Identifier(), _material);
                 cmdBuf.Blit(_tempRT.Identifier(),source);

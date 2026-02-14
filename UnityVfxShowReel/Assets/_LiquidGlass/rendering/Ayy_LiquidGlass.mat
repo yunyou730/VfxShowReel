@@ -24,18 +24,19 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6c35388fd23a0af4a9993ccbdae7bf44, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BlurEdge: 0.047
     - _BlurStep: 3
-    - _CenterX: 0.27183098
-    - _CenterY: 0.44864866
-    - _Offset: 0.544
-    - _PowFactor: 2.4
-    - _Radius: 0.333
+    - _CenterX: 0.51329786
+    - _CenterY: 0.47325101
+    - _Offset: 0.126
+    - _PowFactor: 4
+    - _Radius: 0.228
     m_Colors:
-    - _Color: {r: 0.6707013, g: 0.85163236, b: 0.9056604, a: 1}
+    - _Color: {r: 0, g: 0.04080534, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -3,15 +3,15 @@ Shader "Ayy/LiquidGlass"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Radius ("Radius",Range(0,1)) = 0.5
-        _CenterX ("CenterX",Range(-1,1)) = 0
-        _CenterY ("CenterY",Range(-1,1)) = 0
-        
-        _Offset("Offset",Range(0,0.3)) = 0.15
-        _PowFactor("PowFactor",Range(1.0,5.0)) = 2.5
-
-        _Color("Color",Color) = (1,1,1,1)
-        _BlurEdge("Blur Edge",Range(0,0.3)) = 0.05
+//        _Radius ("Radius",Range(0,1)) = 0.5
+//        _CenterX ("CenterX",Range(-1,1)) = 0
+//        _CenterY ("CenterY",Range(-1,1)) = 0
+//        
+//        _Offset("Offset",Range(0,1.0)) = 0.15
+//        _PowFactor("PowFactor",Range(1.0,5.0)) = 2.5
+//
+//        _Color("Color",Color) = (1,1,1,1)
+//        _BlurEdge("Blur Edge",Range(0,0.3)) = 0.05
     }
 
     SubShader
@@ -104,8 +104,7 @@ Shader "Ayy/LiquidGlass"
                 
                 // 原图,模糊图, 根据 sdf值做混合 
                 half4 originTexColor = tex2D(_MainTex,uv);
-                half4 blurTexColor = tex2D(_LiquidBlurRenderTexture,uv);
-                blurTexColor *= _Color;
+                half4 blurTexColor = tex2D(_LiquidBlurRenderTexture,uv) * _Color;
                 half4 ret = lerp(originTexColor,blurTexColor,smoothEdge);
                 return ret;
             }
