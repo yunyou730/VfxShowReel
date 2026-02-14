@@ -96,8 +96,7 @@ Shader "Ayy/LiquidGlass"
                 float sdf = sd1;
 
                 // 模糊 和 清晰图 的权重.
-                float aaRange = 0.01f;
-                float smoothEdge = smoothstep(_BlurEdge + aaRange, _BlurEdge - aaRange, sdf);
+                float smoothEdge = smoothstep(_BlurEdge + _AAEdge, _BlurEdge - _AAEdge, sdf);
                 #if _ENABLE_DEBUG_BLUR_WEIGHT    // debug, 显示权重
                 return float4(smoothEdge,smoothEdge,smoothEdge,1.0);    
                 #endif 
