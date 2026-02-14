@@ -7,10 +7,11 @@ Shader "Ayy/LiquidGlass"
         _CenterX ("CenterX",Range(-1,1)) = 0
         _CenterY ("CenterY",Range(-1,1)) = 0
         
-        _Offset("Offset",Range(0,1)) = 0.1
+        _Offset("Offset",Range(0,0.3)) = 0.15
         _PowFactor("PowFactor",Range(1.0,5.0)) = 2.5
 
         _Color("Color",Color) = (1,1,1,1)
+        _BlurEdge("Blur Edge",Range(0,0.3)) = 0.05
     }
 
     SubShader
@@ -54,6 +55,7 @@ Shader "Ayy/LiquidGlass"
             float _PowFactor;
 
             float4 _Color;
+            float _BlurEdge;
             
             v2f vert (appdata v)
             {
@@ -86,33 +88,25 @@ Shader "Ayy/LiquidGlass"
                 float2 c1 = convertCoord(float2(_CenterX,_CenterY),ratio);
 
                 float sd1 = sdfCircle(uv,c1,_Radius);
-                //float sd2 = sdfCircle(uv,float2(0.5,0.5),_Radius * 0.5);
-
                 float sdf = sd1;
 
-                //return float4(sdf,sdf,sdf,1.0);
-                
                 float2 dir = uv - c1;
                 float dis = length(dir);
 
-                float distortion = 0.0;
-                float2 uvOffset = float2(0.0,0.0);
-                float test = 0.0;
-                if (sdf < 0.0)      // 这里不应该硬切, 应该过度一下 
-                {
-                    distortion = _Offset * pow(dis,_PowFactor);
-                    uvOffset = normalize(dir) * -1.0 * distortion;
-
-                    test = 1.0;
-                }
-                uv = originUV + uvOffset;
+                float smoothEdge = step(sdf,_BlurEdge);
+                float distortion = lerp(0.0,_Offset * pow(dis,_PowFactor),smoothEdge);
                 
+                //return float4(distortion,distortion,distortion,1.0);
+
+                float2 uvOffset = normalize(dir) * -1.0 * distortion;
+                uv = originUV + uvOffset;
+
+                
+                // 原图,模糊图, 根据 sdf值做混合 
                 half4 originTexColor = tex2D(_MainTex,uv);
                 half4 blurTexColor = tex2D(_LiquidBlurRenderTexture,uv);
-
-                half4 ret = lerp(originTexColor,blurTexColor,step(0.5,test));
-                
-                
+                blurTexColor *= _Color;
+                half4 ret = lerp(originTexColor,blurTexColor,smoothEdge);
                 return ret;
             }
             ENDHLSL
