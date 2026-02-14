@@ -615,7 +615,7 @@ MonoBehaviour:
   - {fileID: 1807783553}
   - {fileID: 1294580585}
   _rotateSpeed: 90
-  _revolutionSpeed: 90
+  _revolutionSpeed: 30
   _glassMaterial: {fileID: 2100000, guid: ca147edc47daaf040a0e061705609253, type: 2}
 --- !u!1 &2106628531
 GameObject:

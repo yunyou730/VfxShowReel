@@ -72,4 +72,10 @@ MonoBehaviour:
   _liquidBlurMaterial: {fileID: 2100000, guid: cb7971f93a98ab744b05d89e9a3bbba5, type: 2}
   _blurIterations: 1
   _blurDownSampleScale: 1
-  _blurKernelSize: 2
+  _blurKernelSize: 3
+  _radius: 0.332
+  _offset: 0.162
+  _pow: 2.47
+  _col: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
+  _edge: 0.171
+  _aaEdge: 0.01

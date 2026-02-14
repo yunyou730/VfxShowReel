@@ -31,8 +31,8 @@ Material:
     m_Floats:
     - _BlurEdge: 0.047
     - _BlurStep: 3
-    - _CenterX: 0.51329786
-    - _CenterY: 0.47325101
+    - _CenterX: 0.7189716
+    - _CenterY: 0.46296296
     - _Offset: 0.126
     - _PowFactor: 4
     - _Radius: 0.228
