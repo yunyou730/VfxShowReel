@@ -69,3 +69,7 @@ MonoBehaviour:
   m_Active: 1
   _liquidGlassMaterial: {fileID: 2100000, guid: ca147edc47daaf040a0e061705609253,
     type: 2}
+  _liquidBlurMaterial: {fileID: 2100000, guid: cb7971f93a98ab744b05d89e9a3bbba5, type: 2}
+  _blurIterations: 4
+  _blurDownSampleScale: 0.5
+  _blurKernelSize: 5

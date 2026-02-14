@@ -611,8 +611,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9f218e8a4421b646828f3fdec5a8820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _globalRotateObjects: []
-  _localRotateObjects: []
+  _globalRotateObjects:
+  - {fileID: 1807783553}
+  - {fileID: 1294580585}
+  _rotateSpeed: 90
   _glassMaterial: {fileID: 2100000, guid: ca147edc47daaf040a0e061705609253, type: 2}
 --- !u!1 &2106628531
 GameObject:

@@ -31,6 +31,15 @@ namespace ayy
         
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
+            if (renderingData.cameraData.cameraType != CameraType.Game)
+            {
+                return;
+            }
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+            
             CommandBuffer cmdBuf = CommandBufferPool.Get(nameof(LiquidGlassRenderPass));
             cmdBuf.Clear();
             using (new ProfilingSample(cmdBuf, nameof(LiquidGlassRenderPass)))

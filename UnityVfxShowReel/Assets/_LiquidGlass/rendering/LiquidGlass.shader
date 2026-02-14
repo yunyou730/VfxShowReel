@@ -8,7 +8,7 @@ Shader "Ayy/LiquidGlass"
         _CenterY ("CenterY",Range(-1,1)) = 0
         
         _Offset("Offset",Range(0,1)) = 0.1
-        _PowFactor("PowFactor",Range(1.0,10.0)) = 5.0
+        _PowFactor("PowFactor",Range(1.0,5.0)) = 2.5
 
         _Color("Color",Color) = (1,1,1,1)
     }
@@ -44,6 +44,10 @@ Shader "Ayy/LiquidGlass"
             float4 _MainTex_ST;
             float4 _MainTex_TexelSize;  // x: 1/w, y: 1/h, z:w, w:h
 
+            // 经过模糊后的图像
+            sampler2D _LiquidBlurRenderTexture; 
+            
+
             float _Radius;
             float _CenterX,_CenterY;
             float _Offset;
@@ -66,34 +70,49 @@ Shader "Ayy/LiquidGlass"
                 return uv;
             }
 
+            float sdfCircle(float2 uv,float2 center,float radius)
+            {
+                return distance(uv,center) - radius;
+            }
+
             half4 frag (v2f i) : SV_Target
             {
                 float ratio = _MainTex_TexelSize.z / _MainTex_TexelSize.w;  // 宽度 : 高度
 
-                float2 texelSize = _MainTex_TexelSize.xy;
+                
                 float2 originUV = i.uv;
 
                 float2 uv = convertCoord(originUV,ratio);
-                float2 center = convertCoord(float2(_CenterX,_CenterY),ratio);
-                float2 dir = uv - center;
+                float2 c1 = convertCoord(float2(_CenterX,_CenterY),ratio);
 
-                half4 ret = half4(0.0,0.0,0.0,1.0);
-                float dis = length(dir); 
-                if (dis < _Radius)
-                {
-                    dir = normalize(dir) * _Offset * pow(dis,_PowFactor);
-                    
-                    //uv += dir;
+                float sd1 = sdfCircle(uv,c1,_Radius);
+                //float sd2 = sdfCircle(uv,float2(0.5,0.5),_Radius * 0.5);
 
-                    uv = originUV - dir;
-                    ret = tex2D(_MainTex,uv) * _Color;
-                    //ret = float4(dir,0.0,1.0);
-                    //return float4(1.0,1.0,0.0,1.0);
-                }
-                else
+                float sdf = sd1;
+
+                //return float4(sdf,sdf,sdf,1.0);
+                
+                float2 dir = uv - c1;
+                float dis = length(dir);
+
+                float distortion = 0.0;
+                float2 uvOffset = float2(0.0,0.0);
+                float test = 0.0;
+                if (sdf < 0.0)      // 这里不应该硬切, 应该过度一下 
                 {
-                    ret = tex2D(_MainTex,originUV);    
+                    distortion = _Offset * pow(dis,_PowFactor);
+                    uvOffset = normalize(dir) * -1.0 * distortion;
+
+                    test = 1.0;
                 }
+                uv = originUV + uvOffset;
+                
+                half4 originTexColor = tex2D(_MainTex,uv);
+                half4 blurTexColor = tex2D(_LiquidBlurRenderTexture,uv);
+
+                half4 ret = lerp(originTexColor,blurTexColor,step(0.5,test));
+                
+                
                 return ret;
             }
             ENDHLSL

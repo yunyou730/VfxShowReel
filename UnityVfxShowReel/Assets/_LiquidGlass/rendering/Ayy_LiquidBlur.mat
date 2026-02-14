@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ayy_LiquidGlass
-  m_Shader: {fileID: 4800000, guid: 48077118e045662478d0d651fe422e7b, type: 3}
+  m_Name: Ayy_LiquidBlur
+  m_Shader: {fileID: 4800000, guid: 5a5519f754328044b893edb944289c03, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,18 +24,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6c35388fd23a0af4a9993ccbdae7bf44, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _BlurStep: 3
-    - _CenterX: 0.27183098
-    - _CenterY: 0.44864866
-    - _Offset: 0.544
-    - _PowFactor: 2.4
-    - _Radius: 0.333
-    m_Colors:
-    - _Color: {r: 0.6707013, g: 0.85163236, b: 0.9056604, a: 1}
+    m_Floats: []
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
