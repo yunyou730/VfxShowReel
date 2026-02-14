@@ -3,15 +3,8 @@ Shader "Ayy/LiquidGlass"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-//        _Radius ("Radius",Range(0,1)) = 0.5
-//        _CenterX ("CenterX",Range(-1,1)) = 0
-//        _CenterY ("CenterY",Range(-1,1)) = 0
-//        
-//        _Offset("Offset",Range(0,1.0)) = 0.15
-//        _PowFactor("PowFactor",Range(1.0,5.0)) = 2.5
-//
-//        _Color("Color",Color) = (1,1,1,1)
-//        _BlurEdge("Blur Edge",Range(0,0.3)) = 0.05
+        _CenterX ("CenterX",Range(-1,1)) = 0
+        _CenterY ("CenterY",Range(-1,1)) = 0
     }
 
     SubShader
@@ -56,6 +49,7 @@ Shader "Ayy/LiquidGlass"
 
             float4 _Color;
             float _BlurEdge;
+            float _AAEdge;
             
             v2f vert (appdata v)
             {
@@ -77,6 +71,20 @@ Shader "Ayy/LiquidGlass"
                 return distance(uv,center) - radius;
             }
 
+            // 正方形SDF函数（有符号距离函数）
+            // uv：当前像素的UV坐标
+            // center：正方形的中心坐标
+            // sideLength：正方形的边长（整体边长，比如传0.4表示正方形宽高都是0.4）
+            float sdfSquare(float2 uv, float2 center, float sideLength)
+            {
+                float2 localUV = uv - center;
+                float halfSide = sideLength * 0.5;
+                float2 distToEdge = abs(localUV) - halfSide;
+                float outsideDist = length(max(distToEdge, 0.0));
+                float insideDist = min(max(distToEdge.x, distToEdge.y), 0.0);
+                return outsideDist + insideDist;
+            }
+
             half4 frag (v2f i) : SV_Target
             {
                 float ratio = _MainTex_TexelSize.z / _MainTex_TexelSize.w;  // 宽度 : 高度
@@ -87,13 +95,17 @@ Shader "Ayy/LiquidGlass"
                 float2 uv = convertCoord(originUV,ratio);
                 float2 c1 = convertCoord(float2(_CenterX,_CenterY),ratio);
 
-                float sd1 = sdfCircle(uv,c1,_Radius);
+                //float sd1 = sdfCircle(uv,c1,_Radius);
+                float sd1 = sdfSquare(uv,c1,_Radius);
                 float sdf = sd1;
 
                 float2 dir = uv - c1;
                 float dis = length(dir);
 
-                float smoothEdge = step(sdf,_BlurEdge);
+                float aaRange = 0.01f;
+                float smoothEdge = smoothstep(_BlurEdge + aaRange, _BlurEdge - aaRange, sdf);
+
+                //float smoothEdge = smoothstep(sdf,_BlurEdge,_BlurEdge + 0.01);
                 float distortion = lerp(0.0,_Offset * pow(dis,_PowFactor),smoothEdge);
                 
                 //return float4(distortion,distortion,distortion,1.0);

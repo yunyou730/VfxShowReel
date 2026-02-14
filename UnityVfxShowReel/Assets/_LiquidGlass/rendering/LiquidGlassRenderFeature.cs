@@ -19,6 +19,8 @@ namespace ayy
         [Range(1.0f, 6.0f)] public float _pow = 2.5f;
         public Color _col = Color.white;
         [Range(0, 0.3f)] public float _edge = 0.05f;
+        [Range(0, 0.1f)] public float _aaEdge = 0.01f;
+        
 
         private LiquidGlassRenderPass _liquidGlassPass = null;
         private LiquidBlurRenderPass _blurPass = null;
@@ -37,7 +39,7 @@ namespace ayy
         {
             _blurPass.SetParams(_blurDownSampleScale,_blurIterations,_blurKernelSize);
             renderer.EnqueuePass(_blurPass);
-            _liquidGlassPass.SetParams(_radius,_offset,_pow,_edge,_col);
+            _liquidGlassPass.SetParams(_radius,_offset,_pow,_edge,_aaEdge,_col);
             renderer.EnqueuePass(_liquidGlassPass);
         }
     }

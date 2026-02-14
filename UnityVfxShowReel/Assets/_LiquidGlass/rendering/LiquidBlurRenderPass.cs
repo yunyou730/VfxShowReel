@@ -24,12 +24,11 @@ namespace ayy
         private RTHandle _blurResultRT;
         public static readonly int kBlurResultTextureID = Shader.PropertyToID("_LiquidBlurRenderTexture");
 
-
         private float _downSampleScale = 0.5f;
         private int _iterations = 4;
         private int _kernelSize = 5;
         private Vector4 _renderTextureSize = Vector4.one;
-        
+
         private static class ShaderParams
         {
             public static int KernelSize = Shader.PropertyToID("_KernelSize");
