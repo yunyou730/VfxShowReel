@@ -93,6 +93,7 @@ Shader "Ayy/LiquidGlass"
                 float2 uv = convertCoord(originUV,ratio);
                 float2 c1 = convertCoord(float2(_CenterX,_CenterY),ratio);
                 float sd1 = sdfSquare(uv,c1,_Radius);
+                //float sd1 = sdfCircle(uv,c1,_Radius);
                 float sdf = sd1;
 
                 // 模糊 和 清晰图 的权重.
